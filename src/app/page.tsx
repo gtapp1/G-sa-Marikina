@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { MapTrifold, SquaresFour } from "@phosphor-icons/react/dist/ssr";
+import {
+  MapTrifold,
+  SquaresFour,
+  NavigationArrow,
+  Sparkle,
+} from "@phosphor-icons/react/dist/ssr";
 import { listings } from "@/data/listings";
 import { ListingCard } from "@/components/listing-card";
 import { CategoryPills } from "@/components/category-pills";
@@ -52,8 +57,32 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Category pills */}
+      {/* Quick explore */}
       <section className="mx-auto max-w-[1200px] px-6 pt-10">
+        <div className="flex flex-wrap gap-3">
+          <Link
+            href="/near-me"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 text-sm font-semibold text-[var(--color-text-primary)] transition-colors hover:border-[var(--color-primary)]"
+          >
+            <span className="text-[var(--color-primary)]">
+              <NavigationArrow size={18} weight="fill" />
+            </span>
+            Near me
+          </Link>
+          <Link
+            href="/collections"
+            className="inline-flex items-center gap-2 rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-2.5 text-sm font-semibold text-[var(--color-text-primary)] transition-colors hover:border-[var(--color-primary)]"
+          >
+            <span className="text-[var(--color-primary)]">
+              <Sparkle size={18} weight="fill" />
+            </span>
+            Collections
+          </Link>
+        </div>
+      </section>
+
+      {/* Category pills */}
+      <section className="mx-auto max-w-[1200px] px-6 pt-6">
         <CategoryPills />
       </section>
 

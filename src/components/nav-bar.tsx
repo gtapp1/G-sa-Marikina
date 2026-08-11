@@ -76,6 +76,12 @@ export function NavBar() {
             </SignedOut>
             <SignedIn>
               <Link
+                href="/dashboard"
+                className="text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
+              >
+                Your spots
+              </Link>
+              <Link
                 href="/for-businesses/new"
                 className="text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
               >
@@ -87,6 +93,29 @@ export function NavBar() {
             </SignedIn>
           </div>
         </nav>
+      </header>
+
+      {/* Mobile: slim top bar with wordmark + auth */}
+      <header className="md:hidden sticky top-0 z-40 flex h-14 items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-background)]/90 px-4 backdrop-blur">
+        <Link href="/" className="flex items-center gap-2">
+          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
+            <MapPin size={14} weight="fill" />
+          </span>
+          <span className="font-[family-name:var(--font-heading)] text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
+            G sa Marikina
+          </span>
+        </Link>
+        <SignedOut>
+          <Link
+            href="/sign-in"
+            className="rounded-[var(--radius-sm)] bg-[var(--color-primary)] px-3 py-1.5 text-xs font-semibold text-white"
+          >
+            Sign in
+          </Link>
+        </SignedOut>
+        <SignedIn>
+          <UserButton appearance={{ variables: { colorPrimary: "#F97316" } }} />
+        </SignedIn>
       </header>
 
       {/* Mobile: floating dock */}

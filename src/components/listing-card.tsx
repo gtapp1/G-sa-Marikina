@@ -3,12 +3,14 @@ import { Listing, CATEGORY_LABELS } from "@/types/listing";
 import { StarRating } from "./star-rating";
 import { CategoryIcon } from "./category-icon";
 import { PhotoPlaceholder } from "./photo-placeholder";
+import { formatDistance } from "@/lib/distance";
 
 interface ListingCardProps {
   listing: Listing;
+  distanceKm?: number;
 }
 
-export function ListingCard({ listing }: ListingCardProps) {
+export function ListingCard({ listing, distanceKm }: ListingCardProps) {
   const category = CATEGORY_LABELS[listing.category];
 
   return (
@@ -58,6 +60,12 @@ export function ListingCard({ listing }: ListingCardProps) {
             ({listing.reviewCount})
           </span>
         </div>
+
+        {typeof distanceKm === "number" && (
+          <p className="mt-1.5 text-xs font-medium text-[var(--color-primary-text)]">
+            {formatDistance(distanceKm)}
+          </p>
+        )}
       </div>
     </Link>
   );
