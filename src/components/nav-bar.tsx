@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ComponentType } from "react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import {
   House,
   MagnifyingGlass,
@@ -62,6 +63,28 @@ export function NavBar() {
                 </Link>
               );
             })}
+
+            <span className="mx-1 h-5 w-px bg-[var(--color-border)]" />
+
+            <SignedOut>
+              <Link
+                href="/sign-in"
+                className="rounded-[var(--radius-sm)] bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)]"
+              >
+                Sign in
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              <Link
+                href="/for-businesses/new"
+                className="text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
+              >
+                List your spot
+              </Link>
+              <UserButton
+                appearance={{ variables: { colorPrimary: "#F97316" } }}
+              />
+            </SignedIn>
           </div>
         </nav>
       </header>

@@ -10,6 +10,7 @@ import { ListingLocation } from "@/components/listing-location";
 import { ShareButton } from "@/components/share-button";
 import { CategoryIcon } from "@/components/category-icon";
 import { PhotoPlaceholder } from "@/components/photo-placeholder";
+import { Reviews } from "@/components/reviews";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -137,6 +138,9 @@ export default async function ListingPage({ params }: PageProps) {
             &ldquo;{listing.foundersReview}&rdquo;
           </p>
         </div>
+
+        {/* Reviews */}
+        <Reviews slug={listing.slug} />
 
         {/* Location map */}
         <ListingLocation
