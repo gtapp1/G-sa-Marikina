@@ -119,9 +119,16 @@ Note: Shadows are warm-tinted (brown base, not black) to match the brand.
 - Entire card is clickable (navigates to listing page)
 - No description on card (save for listing page)
 
+### Icons
+- Library: **Phosphor Icons** (`@phosphor-icons/react`). One family across the whole app.
+- Server components import from `@phosphor-icons/react/dist/ssr`; client components from `@phosphor-icons/react`.
+- Category icons map to Phosphor glyphs (Cookie, Coffee, Hamburger, CookingPot, ForkKnife, Cake) via `CategoryIcon`.
+- Weights: `regular` default, `fill` for active/selected, `duotone` for feature spots, `light` for large muted placeholders.
+- No emoji in UI chrome, buttons, headings, or as photo placeholders. Emoji read as AI-slop; use icon glyphs instead.
+
 ### Category Pill
 - Shape: `--radius-full` (fully rounded)
-- Content: emoji icon + text label
+- Content: Phosphor category icon + text label
 - Border: 1px `--border`
 - Padding: `--space-sm` horizontal, `--space-xs` vertical
 - Active state: `--primary` background, white text
@@ -133,8 +140,13 @@ Note: Shadows are warm-tinted (brown base, not black) to match the brand.
 - Size: 16px inline, 20px on listing page header
 - Accessibility: `aria-label="Rated [N] out of 5 stars"`
 
+### Photo Placeholder
+- For listings without a photo yet: soft cream-to-beige gradient
+  (`from-[#FFF6EA] to-[#F5E6D3]`) with a single muted Phosphor category
+  icon (`light` weight, `--primary` at 40% opacity). Quiet, not a giant emoji.
+
 ### Map Pin
-- Orange circle (`--map-pin`) with white food emoji inside
+- Orange circle (`--map-pin`) with white Phosphor category icon (`fill`) inside
 - `--shadow-card` for depth
 - Tap behavior: compact popup card (200px wide)
 - Popup content: photo thumbnail + name + rating + "View →" link
@@ -242,7 +254,8 @@ These patterns make the platform look generic/AI-generated:
 - ❌ Uniform border-radius on every element
 - ❌ Centered-everything layout
 - ❌ Cards with colored left borders
-- ❌ Emoji as heading decorations (emoji only in category pills)
+- ❌ Emoji anywhere in UI (buttons, nav, headings, placeholders) — use Phosphor icons
+- ❌ Giant emoji as photo placeholders — use the branded gradient placeholder
 - ❌ Stock photos or illustrations (use real food photos only)
 - ❌ Default gray OSM map tiles (use warm-toned custom style)
 - ❌ system-ui or -apple-system as display font

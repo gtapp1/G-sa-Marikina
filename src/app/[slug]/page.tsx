@@ -1,9 +1,16 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
+import { Phone, FacebookLogo, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { listings } from "@/data/listings";
 import { CATEGORY_LABELS } from "@/types/listing";
 import { StarRating } from "@/components/star-rating";
+import { PhotoGallery } from "@/components/photo-gallery";
+import { ListingLocation } from "@/components/listing-location";
+import { ShareButton } from "@/components/share-button";
+import { CategoryIcon } from "@/components/category-icon";
+import { PhotoPlaceholder } from "@/components/photo-placeholder";
+import { Reviews } from "@/components/reviews";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -42,17 +49,17 @@ export default async function ListingPage({ params }: PageProps) {
   return (
     <main className="min-h-screen pb-24">
       {/* Back link */}
-      <div className="px-4 pt-4">
+      <div className="px-6 pt-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+          className="inline-flex items-center gap-1 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-text)] transition-colors"
         >
-          ← Back to all spots
+          <ArrowLeft size={16} /> Back to all spots
         </Link>
       </div>
 
       {/* Hero photo */}
-      <div className="mt-4 aspect-[16/9] md:aspect-[21/9] bg-[var(--color-border)] relative overflow-hidden md:rounded-[var(--radius-md)] md:mx-4 md:max-w-[1200px] md:mx-auto">
+      <div className="mt-4 aspect-[16/9] md:aspect-[21/9] bg-[var(--color-border)] relative overflow-hidden md:rounded-[var(--radius-md)] md:max-w-[1200px] md:mx-auto">
         {listing.photos[0] ? (
           <img
             src={listing.photos[0]}
@@ -60,14 +67,12 @@ export default async function ListingPage({ params }: PageProps) {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-6xl">
-            {category.icon}
-          </div>
+          <PhotoPlaceholder category={listing.category} />
         )}
       </div>
 
       {/* Content */}
-      <div className="px-4 mt-6 max-w-[800px] mx-auto">
+      <div className="px-6 mt-8 max-w-[760px] mx-auto">
         {/* Header */}
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -75,8 +80,9 @@ export default async function ListingPage({ params }: PageProps) {
               {listing.name}
             </h1>
             <div className="flex items-center gap-2 mt-2">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full border border-[var(--color-border)] text-[var(--color-text-secondary)]">
-                {category.icon} {category.label}
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 text-xs rounded-full border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+                <CategoryIcon category={listing.category} size={14} />
+                {category.label}
               </span>
               <span className="text-sm text-[var(--color-text-secondary)]">
                 {listing.barangay}
@@ -96,10 +102,13 @@ export default async function ListingPage({ params }: PageProps) {
           {listing.description}
         </p>
 
+        {/* Photo Gallery */}
+        <PhotoGallery photos={listing.photos} name={listing.name} />
+
         {/* Products / Menu */}
         <div className="mt-8">
           <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[var(--color-text-primary)] mb-3">
-            Menu / Products
+            Menu
           </h2>
           <ul className="space-y-2">
             {listing.products.map((product, i) => (
@@ -123,12 +132,23 @@ export default async function ListingPage({ params }: PageProps) {
         {/* Founder's Review */}
         <div className="mt-8 p-4 bg-[var(--color-surface)] rounded-[var(--radius-md)] border border-[var(--color-border)]">
           <p className="text-xs font-semibold text-[var(--color-primary-text)] uppercase tracking-wide mb-2">
-            G sa Marikina Review
+            Our take
           </p>
           <p className="text-sm text-[var(--color-text-primary)] leading-relaxed italic">
             &ldquo;{listing.foundersReview}&rdquo;
           </p>
         </div>
+
+        {/* Reviews */}
+        <Reviews slug={listing.slug} />
+
+        {/* Location map */}
+        <ListingLocation
+          latitude={listing.latitude}
+          longitude={listing.longitude}
+          barangay={listing.barangay}
+          category={listing.category}
+        />
 
         {/* Contact buttons */}
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -137,7 +157,7 @@ export default async function ListingPage({ params }: PageProps) {
               href={`tel:${listing.contactPhone}`}
               className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-[var(--radius-sm)] hover:bg-[var(--color-primary-hover)] transition-colors text-sm"
             >
-              📞 Call
+              <Phone size={18} weight="bold" /> Call
             </a>
           )}
           {listing.contactFacebook && (
@@ -147,9 +167,10 @@ export default async function ListingPage({ params }: PageProps) {
               rel="noopener noreferrer"
               className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-[var(--radius-sm)] hover:bg-[var(--color-primary-hover)] transition-colors text-sm"
             >
-              💬 Facebook
+              <FacebookLogo size={18} weight="bold" /> Facebook
             </a>
           )}
+          <ShareButton title={listing.name} slug={listing.slug} />
         </div>
       </div>
 

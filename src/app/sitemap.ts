@@ -5,7 +5,15 @@ import { CategoryEnum } from "@/types/listing";
 const BASE_URL = "https://gsamarikina.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/map", "/categories", "/about"].map((route) => ({
+  const staticRoutes = [
+    "",
+    "/map",
+    "/categories",
+    "/search",
+    "/near-me",
+    "/collections",
+    "/about",
+  ].map((route) => ({
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),
   }));

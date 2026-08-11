@@ -1,47 +1,130 @@
 @import "tailwindcss";
 
-@theme {
-  /* Colors — Warm Market palette */
+/*
+  Design tokens in :root, used via arbitrary values like bg-[var(--color-primary)].
+  Not in @theme (that collides with Tailwind's max-w/rounded scales).
+  Single light theme — monochrome background with an orange halftone texture.
+*/
+:root {
   --color-primary: #F97316;
   --color-primary-hover: #EA580C;
   --color-primary-text: #C2410C;
-  --color-background: #FFFBF5;
+  --color-background: #FFFFFF;
   --color-surface: #FFFFFF;
-  --color-text-primary: #3D2C1E;
-  --color-text-secondary: #78716C;
-  --color-success: #4ADE80;
+  --color-surface-2: #F5F5F5;
+  --color-text-primary: #171717;
+  --color-text-secondary: #737373;
+  --color-success: #16A34A;
   --color-error: #EF4444;
-  --color-border: #F5E6D3;
+  --color-border: #E9E9E9;
   --color-map-pin: #F97316;
 
-  /* Typography */
-  --font-heading: "Plus Jakarta Sans", sans-serif;
-  --font-body: "Inter", sans-serif;
-
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-
-  /* Radius */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-full: 9999px;
+
+  --shadow-card: 0 2px 8px rgba(10, 10, 10, 0.06);
+  --shadow-hover: 0 10px 30px rgba(10, 10, 10, 0.10);
 }
 
-/* Base styles */
+html {
+  color-scheme: light;
+}
+
 body {
-  font-family: var(--font-body);
+  font-family: var(--font-body), system-ui, sans-serif;
   color: var(--color-text-primary);
   background-color: var(--color-background);
 }
 
+/*
+  Halftone dot texture (bryl-minimal), tinted with the brand orange.
+  A fixed field of tiny orange dots behind all content, faded with a soft
+  radial mask so it reads as seasoning, not wallpaper. Sits at z-index -1 so
+  opaque surfaces (hero photo, cards) cover it and it shows through whitespace.
+*/
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle,
+    rgba(249, 115, 22, 0.16) 1.1px,
+    transparent 1.6px
+  );
+  background-size: 11px 11px;
+  -webkit-mask-image: radial-gradient(
+    130% 90% at 50% 28%,
+    black 0%,
+    black 46%,
+    transparent 86%
+  );
+  mask-image: radial-gradient(
+    130% 90% at 50% 28%,
+    black 0%,
+    black 46%,
+    transparent 86%
+  );
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.2;
+}
+
+/* Highlighter-marker effect for emphasizing a word in a heading */
+.mark {
+  background-image: linear-gradient(
+    transparent 62%,
+    color-mix(in srgb, var(--color-primary) 32%, transparent) 62%
+  );
+  padding: 0 0.1em;
+}
+
+/* Accent bar before section headings */
+.heading-accent {
+  position: relative;
+  padding-left: 0.9rem;
+}
+.heading-accent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.15em;
+  width: 4px;
+  border-radius: 9999px;
+  background: var(--color-primary);
+}
+
+/* Accessibility: visible keyboard focus indicator */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Accessibility: respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hide scrollbar on horizontal scroll rows */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

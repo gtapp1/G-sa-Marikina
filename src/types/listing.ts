@@ -33,16 +33,17 @@ export const ListingSchema = z.object({
   rating: z.number().min(1).max(5),
   reviewCount: z.number(),
   foundersReview: z.string(),
+  dateAdded: z.string(), // ISO date, used for "New" sorting
 });
 
 export type Listing = z.infer<typeof ListingSchema>;
 
-export const CATEGORY_LABELS: Record<Category, { label: string; icon: string }> = {
-  cookies: { label: "Cookies", icon: "🍪" },
-  milk_tea: { label: "Milk Tea", icon: "🧋" },
-  street_food: { label: "Street Food", icon: "🍢" },
-  home_cooked: { label: "Home Cooked", icon: "🍲" },
-  resto: { label: "Restaurants", icon: "🍜" },
-  bakery: { label: "Bakery", icon: "🍰" },
-  other: { label: "Other", icon: "🍽️" },
+export const CATEGORY_LABELS: Record<Category, { label: string }> = {
+  cookies: { label: "Cookies" },
+  milk_tea: { label: "Milk Tea" },
+  street_food: { label: "Street Food" },
+  home_cooked: { label: "Home Cooked" },
+  resto: { label: "Restaurants" },
+  bakery: { label: "Bakery" },
+  other: { label: "Other" },
 };

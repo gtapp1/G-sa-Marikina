@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
 import { listings } from "@/data/listings";
-import { CATEGORY_LABELS, CategoryEnum, Category } from "@/types/listing";
+import { CATEGORY_LABELS, CategoryEnum } from "@/types/listing";
 import { ListingCard } from "@/components/listing-card";
+import { CategoryIcon } from "@/components/category-icon";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -37,7 +38,7 @@ export default async function CategoryPage({ params }: PageProps) {
   const filtered = listings.filter((l) => l.category === parsed.data);
 
   return (
-    <main className="min-h-screen px-4 pt-6 pb-16 max-w-[1200px] mx-auto">
+    <main className="min-h-screen px-6 pt-6 pb-16 max-w-[1200px] mx-auto">
       <Link
         href="/categories"
         className="inline-flex items-center gap-1 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
@@ -45,8 +46,11 @@ export default async function CategoryPage({ params }: PageProps) {
         ← All categories
       </Link>
 
-      <h1 className="mt-4 font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)]">
-        {category.icon} {category.label}
+      <h1 className="mt-4 flex items-center gap-2 font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)]">
+        <span className="text-[var(--color-primary)]">
+          <CategoryIcon category={parsed.data} size={28} weight="duotone" />
+        </span>
+        {category.label}
       </h1>
 
       {filtered.length > 0 ? (
@@ -56,14 +60,15 @@ export default async function CategoryPage({ params }: PageProps) {
           ))}
         </div>
       ) : (
-        <div className="mt-12 text-center">
-          <p className="text-5xl mb-4">{category.icon}</p>
+        <div className="mt-12 flex flex-col items-center text-center">
+          <span className="text-[var(--color-primary)]/40 mb-4">
+            <CategoryIcon category={parsed.data} size={56} weight="light" />
+          </span>
           <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[var(--color-text-primary)]">
-            No {category.label.toLowerCase()} spots yet
+            No {category.label.toLowerCase()} spots listed yet
           </h2>
           <p className="mt-2 text-[var(--color-text-secondary)] max-w-sm mx-auto">
-            Know a great {category.label.toLowerCase()} spot in Marikina? Soon
-            you&apos;ll be able to add it here.
+            Check back soon, or browse another category.
           </p>
         </div>
       )}

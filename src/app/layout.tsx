@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/footer";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -17,13 +19,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "G sa Marikina — Discover Local Food",
+  title: "G sa Marikina — Local Food Directory",
   description:
-    "Discover the best food spots in Marikina City. From home-baked cookies to hidden street food gems. Reviews, photos, and directions.",
+    "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats. Photos, menus, and directions.",
   openGraph: {
-    title: "G sa Marikina — Discover Local Food",
+    title: "G sa Marikina — Local Food Directory",
     description:
-      "Discover the best food spots in Marikina City. Reviews, photos, and directions for every local food business.",
+      "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
     siteName: "G sa Marikina",
     locale: "en_PH",
     type: "website",
@@ -36,11 +38,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${inter.variable}`}>
-      <body className="antialiased pb-[56px] md:pb-0">
-        <NavBar />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html
+        lang="en"
+        className={`${plusJakartaSans.variable} ${inter.variable}`}
+      >
+        <body className="antialiased pt-20 pb-24 md:pb-0 md:pt-24">
+          <NavBar />
+          {children}
+          <Footer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

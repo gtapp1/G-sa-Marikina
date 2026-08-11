@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Map, { Marker, Popup, NavigationControl } from "react-map-gl/maplibre";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { Listing, CATEGORY_LABELS } from "@/types/listing";
+import { Listing } from "@/types/listing";
 import { StarRating } from "./star-rating";
+import { CategoryIcon } from "./category-icon";
+import { PhotoPlaceholder } from "./photo-placeholder";
 
 interface FoodMapProps {
   listings: Listing[];
@@ -59,9 +61,9 @@ export function FoodMap({ listings }: FoodMapProps) {
           >
             <button
               aria-label={`Location of ${listing.name} in ${listing.barangay}`}
-              className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-primary)] text-white shadow-[0_2px_8px_rgba(61,44,30,0.3)] hover:scale-110 transition-transform text-sm"
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-primary)] text-white shadow-[0_2px_8px_rgba(61,44,30,0.3)] hover:scale-110 transition-transform"
             >
-              {CATEGORY_LABELS[listing.category].icon}
+              <CategoryIcon category={listing.category} size={16} weight="fill" />
             </button>
           </Marker>
         ))}
@@ -85,9 +87,7 @@ export function FoodMap({ listings }: FoodMapProps) {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-2xl">
-                    {CATEGORY_LABELS[selected.category].icon}
-                  </div>
+                  <PhotoPlaceholder category={selected.category} />
                 )}
               </div>
               <h3 className="font-[family-name:var(--font-heading)] text-sm font-bold text-[var(--color-text-primary)] leading-tight">
