@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Listing, CATEGORY_LABELS } from "@/types/listing";
 import { StarRating } from "./star-rating";
+import { CategoryIcon } from "./category-icon";
+import { PhotoPlaceholder } from "./photo-placeholder";
 
 interface ListingCardProps {
   listing: Listing;
@@ -16,17 +18,17 @@ export function ListingCard({ listing }: ListingCardProps) {
     >
       {/* Photo */}
       <div className="aspect-[4/3] bg-[var(--color-border)] relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
         {listing.photos[0] ? (
-          <img
-            src={listing.photos[0]}
-            alt={`${listing.name} - food photo`}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-          />
+          <>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent z-10" />
+            <img
+              src={listing.photos[0]}
+              alt={`${listing.name} - food photo`}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
+          </>
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-4xl">
-            {category.icon}
-          </div>
+          <PhotoPlaceholder category={listing.category} />
         )}
       </div>
 
@@ -38,8 +40,9 @@ export function ListingCard({ listing }: ListingCardProps) {
 
         <div className="flex items-center gap-2 mt-2">
           {/* Category pill */}
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full border border-[var(--color-border)] text-[var(--color-text-secondary)]">
-            {category.icon} {category.label}
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 text-xs rounded-full border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+            <CategoryIcon category={listing.category} size={14} />
+            {category.label}
           </span>
 
           {/* Barangay */}

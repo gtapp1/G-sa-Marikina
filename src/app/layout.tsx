@@ -17,13 +17,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "G sa Marikina — Discover Local Food",
+  title: "G sa Marikina — Local Food Directory",
   description:
-    "Discover the best food spots in Marikina City. From home-baked cookies to hidden street food gems. Reviews, photos, and directions.",
+    "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats. Photos, menus, and directions.",
   openGraph: {
-    title: "G sa Marikina — Discover Local Food",
+    title: "G sa Marikina — Local Food Directory",
     description:
-      "Discover the best food spots in Marikina City. Reviews, photos, and directions for every local food business.",
+      "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
     siteName: "G sa Marikina",
     locale: "en_PH",
     type: "website",
@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${inter.variable}`}>
-      <body className="antialiased pb-[56px] md:pb-0">
+      <body className="antialiased pb-24 md:pb-0">
         <NavBar />
         {children}
       </body>

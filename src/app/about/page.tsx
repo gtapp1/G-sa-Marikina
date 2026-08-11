@@ -3,36 +3,32 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About — G sa Marikina",
   description:
-    "G sa Marikina is a local food discovery platform for Marikina City. Helping small food businesses get discovered.",
+    "G sa Marikina is a local food directory for Marikina City, built to help small food businesses get found.",
 };
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen px-4 pt-6 pb-16 max-w-[720px] mx-auto">
+    <main className="min-h-screen px-6 pt-10 pb-16 max-w-[680px] mx-auto">
       <h1 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)]">
-        About G sa Marikina
+        About
       </h1>
 
-      <div className="mt-6 space-y-4 text-base text-[var(--color-text-primary)] leading-relaxed">
+      <div className="mt-6 space-y-5 text-base leading-relaxed text-[var(--color-text-primary)]">
         <p>
-          G sa Marikina is a food discovery platform built for one city:
-          Marikina. It&apos;s a place where small food businesses, from
-          home-based bakers to starting restos, can be found by the people who
-          want to eat their food.
+          G sa Marikina is a food directory for one city: Marikina. Each spot
+          gets a page with photos, a menu, a location, and a way to order.
         </p>
         <p>
-          Small food businesses in Marikina make great products but struggle
-          to get discovered. Their marketing is scattered across Facebook
-          groups, tarpaulin signs, and word of mouth. G sa Marikina gives them
-          one home: a shareable page with photos, menu, location, and reviews.
+          Most small food sellers here rely on Facebook posts, group shares,
+          and tarpaulin signs. Those work, but the reach fades fast and there
+          is no single place to send someone. This gives every spot one link.
         </p>
         <p>
-          For food lovers, it&apos;s the easiest way to find your next favorite
-          spot. Browse by category, explore the map, and support local
-          Marikeño businesses.
+          If you are looking for something to eat, browse by category or open
+          the map to see what is near you.
         </p>
         <p className="text-[var(--color-text-secondary)]">
-          Made with 💛 for the Marikina food community.
+          Built for the Marikina food community.
         </p>
       </div>
     </main>

@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
-@theme {
+/*
+  Custom design tokens live in :root as plain CSS variables so they are
+  referenced via arbitrary values (e.g. bg-[var(--color-primary)]) WITHOUT
+  polluting Tailwind's built-in utility scales. Naming a @theme token
+  --spacing-lg / --radius-md silently overrides max-w-lg / rounded-md, which
+  is what collapsed the hero text. Keeping them here avoids that entirely.
+*/
+:root {
   /* Colors — Warm Market palette */
   --color-primary: #F97316;
   --color-primary-hover: #EA580C;
@@ -14,19 +21,7 @@
   --color-border: #F5E6D3;
   --color-map-pin: #F97316;
 
-  /* Typography */
-  --font-heading: "Plus Jakarta Sans", sans-serif;
-  --font-body: "Inter", sans-serif;
-
-  /* Spacing */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-2xl: 48px;
-
-  /* Radius */
+  /* Border radius */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 16px;
@@ -35,13 +30,41 @@
 
 /* Base styles */
 body {
-  font-family: var(--font-body);
+  font-family: var(--font-body), system-ui, sans-serif;
   color: var(--color-text-primary);
   background-color: var(--color-background);
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading), system-ui, sans-serif;
   font-weight: 700;
   line-height: 1.2;
+}
+
+/* Accessibility: visible keyboard focus indicator */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Accessibility: respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Hide scrollbar on horizontal scroll rows (category pills, gallery) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

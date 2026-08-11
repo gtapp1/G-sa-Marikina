@@ -25,6 +25,7 @@ export const listings: Listing[] = [
     reviewCount: 12,
     foundersReview:
       "These cookies are dangerously good. The ube crinkles are soft inside with a perfect crackle on top. Worth the walk to Malanday.",
+    dateAdded: "2026-08-01",
   },
   {
     slug: "kuya-rods-ihaw-ihaw",
@@ -50,6 +51,7 @@ export const listings: Listing[] = [
     reviewCount: 8,
     foundersReview:
       "Kuya Rod has been here for years. The sauce is the secret. Spicy vinegar with onions. Pairs perfectly with ice-cold Mountain Dew from the sari-sari next door.",
+    dateAdded: "2026-08-03",
   },
   {
     slug: "tea-kayo-milktea",
@@ -76,6 +78,7 @@ export const listings: Listing[] = [
     reviewCount: 15,
     foundersReview:
       "Real tea, not that powdered stuff. The brown sugar fresh milk hits different when you're walking around Shoe Ave on a hot day. Affordable and the staff is super friendly.",
+    dateAdded: "2026-08-05",
   },
   {
     slug: "nanay-litas-karinderya",
@@ -101,6 +104,7 @@ export const listings: Listing[] = [
     reviewCount: 22,
     foundersReview:
       "This is the real deal. Nanay Lita cooks everything fresh in the morning. The sinigang has that perfect sour kick. Get there before noon or the kare-kare runs out.",
+    dateAdded: "2026-08-07",
   },
   {
     slug: "cafe-marikina-grounds",
@@ -127,5 +131,57 @@ export const listings: Listing[] = [
     reviewCount: 18,
     foundersReview:
       "If you need a quiet place to work or just want good coffee that isn't a chain, this is it. The Benguet pour-over is smooth. Pastries are baked fresh every morning.",
+    dateAdded: "2026-08-09",
+  },
+  {
+    slug: "aling-bebs-puto-bumbong",
+    name: "Aling Beb's Puto Bumbong",
+    description:
+      "Traditional puto bumbong and bibingka, available all year round (not just Christmas!). Cooked over real bamboo tubes. Find the cart near the Sta. Elena church.",
+    category: "street_food",
+    barangay: "Sta. Elena",
+    latitude: 14.6431,
+    longitude: 121.1075,
+    contactPhone: null,
+    contactFacebook: null,
+    photos: [
+      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/dessert1.jpg",
+    ],
+    products: [
+      { name: "Puto Bumbong (order)", price: "₱60" },
+      { name: "Bibingka (small)", price: "₱50" },
+      { name: "Bibingka (large)", price: "₱90" },
+    ],
+    rating: 5,
+    reviewCount: 9,
+    foundersReview:
+      "You don't have to wait for Simbang Gabi to get real puto bumbong. Aling Beb makes it fresh with actual bamboo. The butter and muscovado on top is perfect.",
+    dateAdded: "2026-08-10",
+  },
+  {
+    slug: "riles-bakehouse",
+    name: "Riles Bakehouse",
+    description:
+      "Artisan sourdough and pandesal baked daily near the old railway. Small-batch, sells out fast. Pre-order recommended for weekends.",
+    category: "bakery",
+    barangay: "Barangka",
+    latitude: 14.6298,
+    longitude: 121.0876,
+    contactPhone: "09451234567",
+    contactFacebook: "https://facebook.com/rilesbakehouse",
+    photos: [
+      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/bread1.jpg",
+    ],
+    products: [
+      { name: "Classic Sourdough Loaf", price: "₱220" },
+      { name: "Pandesal (12pcs)", price: "₱60" },
+      { name: "Cheese Sourdough", price: "₱260" },
+      { name: "Cinnamon Roll", price: "₱75" },
+    ],
+    rating: 5,
+    reviewCount: 14,
+    foundersReview:
+      "The sourdough here has a proper crust and chewy crumb. Their pandesal is a modern take, softer and buttery. Pre-order on weekends or you'll miss out.",
+    dateAdded: "2026-08-11",
   },
 ];
