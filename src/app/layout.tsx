@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
+import { Footer } from "@/components/footer";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -42,9 +43,10 @@ export default function RootLayout({
         lang="en"
         className={`${plusJakartaSans.variable} ${inter.variable}`}
       >
-        <body className="antialiased pb-24 md:pb-0">
+        <body className="antialiased pt-20 pb-24 md:pb-0 md:pt-24">
           <NavBar />
           {children}
+          <Footer />
         </body>
       </html>
     </ClerkProvider>

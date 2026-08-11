@@ -19,8 +19,9 @@ export default function HomePage() {
 
   return (
     <main>
-      {/* Hero — real food photo, warm overlay, balanced centered composition */}
-      <section className="relative flex min-h-[66vh] md:min-h-[76vh] items-center justify-center overflow-hidden">
+      {/* Hero — real food photo, warm overlay, balanced centered composition.
+          On desktop, pull up under the floating nav for a full-bleed top. */}
+      <section className="relative flex min-h-[66vh] md:min-h-[80vh] items-center justify-center overflow-hidden -mt-20 md:-mt-24">
         <div className="absolute inset-0">
           <img
             src="https://res.cloudinary.com/demo/image/upload/v1/samples/food/spices.jpg"
@@ -32,7 +33,11 @@ export default function HomePage() {
 
         <div className="relative z-10 mx-auto w-full max-w-2xl px-6 text-center">
           <h1 className="text-balance text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight text-white">
-            Find good food in Marikina
+            Find good food in{" "}
+            <span className="relative whitespace-nowrap text-[var(--color-primary)]">
+              Marikina
+              <span className="absolute -bottom-1 left-0 h-1 w-full rounded-full bg-[var(--color-primary)]/60" />
+            </span>
           </h1>
           <p className="mx-auto mt-6 max-w-md text-pretty text-base md:text-lg leading-relaxed text-white/85">
             A directory of local spots — home bakers, milk tea shops,
@@ -88,7 +93,7 @@ export default function HomePage() {
 
       {/* Featured spots */}
       <section className="mx-auto max-w-[1200px] px-6 pt-10 md:pt-14">
-        <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
+        <h2 className="heading-accent font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
           Featured spots
         </h2>
         <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -99,8 +104,8 @@ export default function HomePage() {
       </section>
 
       {/* Recently added */}
-      <section className="mx-auto max-w-[1200px] px-6 pt-14 md:pt-20 pb-16">
-        <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
+      <section className="mx-auto max-w-[1200px] px-6 pt-14 md:pt-20 pb-4">
+        <h2 className="heading-accent font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">
           Recently added
         </h2>
         <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -109,18 +114,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-[var(--color-border)] px-6 py-10">
-        <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-1 text-center">
-          <span className="font-[family-name:var(--font-heading)] font-bold text-[var(--color-text-primary)]">
-            G sa Marikina
-          </span>
-          <span className="text-sm text-[var(--color-text-secondary)]">
-            A local food directory for Marikina City.
-          </span>
-        </div>
-      </footer>
     </main>
   );
 }

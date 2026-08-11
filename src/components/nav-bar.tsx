@@ -13,6 +13,7 @@ import {
   MapPin,
 } from "@phosphor-icons/react";
 
+
 type NavIcon = ComponentType<{ size?: number; weight?: "regular" | "fill" }>;
 
 const NAV_ITEMS: { href: string; label: string; icon: NavIcon }[] = [
@@ -31,59 +32,50 @@ export function NavBar() {
 
   return (
     <>
-      {/* Desktop: top bar with located wordmark + accent-underline links */}
-      <header className="hidden md:block sticky top-0 z-50 h-16 border-b border-[var(--color-border)] bg-[var(--color-background)]/90 backdrop-blur">
-        <nav className="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6">
+      {/* Desktop: floating capsule nav */}
+      <header className="hidden md:block fixed inset-x-0 top-4 z-50 px-6">
+        <nav className="mx-auto flex max-w-[1040px] items-center justify-between gap-6 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 py-2 pl-5 pr-2.5 shadow-[var(--shadow-hover)] backdrop-blur-md">
           <Link href="/" className="flex items-center gap-2">
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
               <MapPin size={16} weight="fill" />
             </span>
-            <span className="font-[family-name:var(--font-heading)] text-lg font-extrabold tracking-tight text-[var(--color-text-primary)]">
+            <span className="font-[family-name:var(--font-heading)] text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
               G sa Marikina
             </span>
           </Link>
 
-          <div className="flex items-center gap-7">
+          <div className="flex items-center gap-1">
             {NAV_ITEMS.map((item) => {
               const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative py-1 text-sm font-semibold transition-colors ${
+                  className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors ${
                     active
-                      ? "text-[var(--color-text-primary)]"
-                      : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+                      ? "bg-[var(--color-primary)] text-white"
+                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text-primary)]"
                   }`}
                 >
                   {item.label}
-                  {active && (
-                    <span className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-[var(--color-primary)]" />
-                  )}
                 </Link>
               );
             })}
+          </div>
 
-            <span className="mx-1 h-5 w-px bg-[var(--color-border)]" />
-
+          <div className="flex items-center gap-2">
             <SignedOut>
               <Link
                 href="/sign-in"
-                className="rounded-[var(--radius-sm)] bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)]"
+                className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)]"
               >
                 Sign in
               </Link>
             </SignedOut>
             <SignedIn>
               <Link
-                href="/dashboard"
-                className="text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
-              >
-                Your spots
-              </Link>
-              <Link
                 href="/for-businesses/new"
-                className="text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
+                className="rounded-full px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
               >
                 List your spot
               </Link>
@@ -95,8 +87,8 @@ export function NavBar() {
         </nav>
       </header>
 
-      {/* Mobile: slim top bar with wordmark + auth */}
-      <header className="md:hidden sticky top-0 z-40 flex h-14 items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-background)]/90 px-4 backdrop-blur">
+      {/* Mobile: floating capsule top bar (wordmark + theme + auth) */}
+      <header className="md:hidden fixed inset-x-3 top-3 z-40 flex items-center justify-between gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 py-2 pl-4 pr-2 shadow-[var(--shadow-hover)] backdrop-blur-md">
         <Link href="/" className="flex items-center gap-2">
           <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
             <MapPin size={14} weight="fill" />
@@ -105,21 +97,23 @@ export function NavBar() {
             G sa Marikina
           </span>
         </Link>
-        <SignedOut>
-          <Link
-            href="/sign-in"
-            className="rounded-[var(--radius-sm)] bg-[var(--color-primary)] px-3 py-1.5 text-xs font-semibold text-white"
-          >
-            Sign in
-          </Link>
-        </SignedOut>
-        <SignedIn>
-          <UserButton appearance={{ variables: { colorPrimary: "#F97316" } }} />
-        </SignedIn>
+        <div className="flex items-center gap-1.5">
+          <SignedOut>
+            <Link
+              href="/sign-in"
+              className="rounded-full bg-[var(--color-primary)] px-3.5 py-1.5 text-xs font-semibold text-white"
+            >
+              Sign in
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <UserButton appearance={{ variables: { colorPrimary: "#F97316" } }} />
+          </SignedIn>
+        </div>
       </header>
 
       {/* Mobile: floating dock */}
-      <nav className="md:hidden fixed inset-x-3 bottom-3 z-50 flex items-stretch gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/95 p-1.5 shadow-[0_6px_24px_rgba(61,44,30,0.16)] backdrop-blur">
+      <nav className="md:hidden fixed inset-x-3 bottom-3 z-50 flex items-stretch gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 p-1.5 shadow-[0_6px_24px_rgba(61,44,30,0.16)] backdrop-blur-md">
         {NAV_ITEMS.map((item) => {
           const active = isActive(item.href);
           const Icon = item.icon;
