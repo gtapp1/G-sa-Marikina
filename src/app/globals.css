@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors — Warm Market palette */
+  --color-primary: #F97316;
+  --color-primary-hover: #EA580C;
+  --color-primary-text: #C2410C;
+  --color-background: #FFFBF5;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #3D2C1E;
+  --color-text-secondary: #78716C;
+  --color-success: #4ADE80;
+  --color-error: #EF4444;
+  --color-border: #F5E6D3;
+  --color-map-pin: #F97316;
+
+  /* Typography */
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}

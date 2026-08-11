@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GStack Skills — Web Platform Development Guide</title>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-hover: #222633;
+            --border: #2a2e3a;
+            --text: #e4e6eb;
+            --text-muted: #9ca3af;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --green: #10b981;
+            --orange: #f59e0b;
+            --pink: #ec4899;
+            --cyan: #06b6d4;
+            --red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 0;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f1117 50%, #042f2e 100%);
+            padding: 80px 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--accent-light), var(--cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .toc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 60px;
+        }
+
+        .toc h2 {
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+            color: var(--accent-light);
+        }
+
+        .toc ol {
+            list-style: none;
+            counter-reset: toc-counter;
+        }
+
+        .toc ol li {
+            counter-increment: toc-counter;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .toc ol li:last-child {
+            border-bottom: none;
+        }
+
+        .toc ol li a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc ol li a:hover {
+            color: var(--accent-light);
+        }
+
+        .toc ol li::before {
+            content: counter(toc-counter) ". ";
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .phase {
+            margin-bottom: 64px;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .phase-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .phase-1 .phase-number { background: var(--accent); color: white; }
+        .phase-2 .phase-number { background: var(--pink); color: white; }
+        .phase-3 .phase-number { background: var(--green); color: white; }
+        .phase-4 .phase-number { background: var(--orange); color: white; }
+        .phase-5 .phase-number { background: var(--red); color: white; }
+        .phase-6 .phase-number { background: var(--cyan); color: white; }
+
+        .phase-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .phase-description {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+        }
+
+        .skill-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent);
+            background: var(--surface-hover);
+        }
+
+        .skill-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .skill-card-header .step-num {
+            background: var(--border);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .skill-card-header h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .skill-card-header h3 code {
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-light);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .skill-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .skill-card .output {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 3px solid var(--green);
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+            color: var(--green);
+        }
+
+        .tip-box {
+            background: rgba(6, 182, 212, 0.08);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: 10px;
+            padding: 20px 24px;
+            margin: 32px 0;
+        }
+
+        .tip-box h4 {
+            color: var(--cyan);
+            margin-bottom: 8px;
+        }
+
+        .tip-box p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 48px 20px; }
+            .hero h1 { font-size: 2rem; }
+            .container { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <h1>GStack Web Platform Workflow</h1>
+        <p>A comprehensive, linear guide to building a web platform from idea to production using the gstack skill suite.</p>
+    </div>
+
+    <div class="container">
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#phase-1">Phase 1 — Ideation &amp; Planning</a></li>
+                <li><a href="#phase-2">Phase 2 — Design System &amp; Visual Direction</a></li>
+                <li><a href="#phase-3">Phase 3 — Implementation</a></li>
+                <li><a href="#phase-4">Phase 4 — QA &amp; Polish</a></li>
+                <li><a href="#phase-5">Phase 5 — Ship &amp; Monitor</a></li>
+                <li><a href="#phase-6">Phase 6 — Ongoing &amp; Maintenance</a></li>
+            </ol>
+        </div>
+
+        <!-- PHASE 1 -->
+        <section class="phase phase-1" id="phase-1">
+            <div class="phase-header">
+                <div class="phase-number">1</div>
+                <h2>Ideation &amp; Planning</h2>
+            </div>
+            <p class="phase-description">
+                Before writing any code, validate your idea, define scope, and lock in the technical and design plan. These skills feed into each other sequentially — each one refines the output of the previous.
+            </p>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 1</span>
+                    <h3><code>/office-hours</code> — Validate the Idea</h3>
+                </div>
+                <p>
+                    Start here. Two modes available: <strong>Startup mode</strong> asks six forcing questions that expose demand reality, status quo alternatives, and your narrowest wedge. <strong>Builder mode</strong> runs design-thinking brainstorming for side projects or hackathons. Either way, it produces a design doc that feeds everything downstream.
+                </p>
+                <div class="output">Output: Design document with validated problem statement and approach</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 2</span>
+                    <h3><code>/plan-ceo-review</code> — Stress-Test Ambition</h3>
+                </div>
+                <p>
+                    CEO/founder-mode review of your plan. Rethink the problem, find the 10-star product, challenge premises. Four modes: <strong>Scope Expansion</strong> (dream big), <strong>Selective Expansion</strong> (hold scope + cherry-pick), <strong>Hold Scope</strong> (maximum rigor), <strong>Scope Reduction</strong> (strip to essentials). Ensures you're building the right thing at the right ambition level.
+                </p>
+                <div class="output">Output: Refined product vision with locked scope decision</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 3</span>
+                    <h3><code>/plan-design-review</code> — UI/UX Plan Review</h3>
+                </div>
+                <p>
+                    Designer's-eye review of the plan's UI/UX dimensions. Rates each design axis 0-10, explains what would make it a 10, then fixes the plan to get there. Catches usability issues, accessibility gaps, and interaction design flaws before any pixels are placed.
+                </p>
+                <div class="output">Output: Plan updated with design improvements and scores</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 4</span>
+                    <h3><code>/plan-eng-review</code> — Engineering Review</h3>
+                </div>
+                <p>
+                    Eng-manager mode. Lock in the execution plan — architecture, data flow, diagrams, edge cases, test coverage, performance considerations. Walks through issues interactively with opinionated recommendations. This is your last chance to catch structural mistakes before implementation.
+                </p>
+                <div class="output">Output: Architecture diagram, data flow, edge case coverage, test plan</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 5</span>
+                    <h3><code>/plan-devex-review</code> — Developer Experience Review</h3>
+                </div>
+                <p>
+                    <em>Use if your platform has developer-facing features (APIs, SDKs, CLIs, docs).</em> Explores developer personas, benchmarks against competitors, designs magical moments, traces friction points. Three modes: DX Expansion, DX Polish, DX Triage.
+                </p>
+                <div class="output">Output: DX scorecard with actionable improvements</div>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Shortcut: Auto-Review</h4>
+                <p>Use <code>/autoplan</code> to run all planning reviews (CEO, Design, Eng, DX) sequentially with auto-decisions. One command, fully reviewed plan out. Best when you trust the defaults and want speed.</p>
+            </div>
+        </section>
+
+
+        <!-- PHASE 2 -->
+        <section class="phase phase-2" id="phase-2">
+            <div class="phase-header">
+                <div class="phase-number">2</div>
+                <h2>Design System &amp; Visual Direction</h2>
+            </div>
+            <p class="phase-description">
+                With a validated and reviewed plan, define your visual identity and produce production-ready markup. These skills build on each other: system → exploration → finalization.
+            </p>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 6</span>
+                    <h3><code>/design-consultation</code> — Define the Design System</h3>
+                </div>
+                <p>
+                    Understands your product, researches the landscape, and proposes a complete design system: aesthetic direction, typography, color palette, layout grid, spacing scale, and motion principles. Creates <code>DESIGN.md</code> as your project's single source of truth for all visual decisions.
+                </p>
+                <div class="output">Output: DESIGN.md with complete design system specification</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 7</span>
+                    <h3><code>/design-shotgun</code> — Explore Visual Variants</h3>
+                </div>
+                <p>
+                    Generate multiple AI design variants for key pages and components. Opens a comparison board for side-by-side evaluation. Collect structured feedback and iterate until you find the right direction. Great for landing pages, dashboards, and complex UI flows.
+                </p>
+                <div class="output">Output: Approved design direction with feedback annotations</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 8</span>
+                    <h3><code>/design-html</code> — Finalize as Production HTML/CSS</h3>
+                </div>
+                <p>
+                    Takes approved mockups from <code>/design-shotgun</code>, CEO plans, or design review context and generates production-quality HTML/CSS. Text actually reflows, heights are computed, layouts are dynamic. 30KB overhead, zero dependencies. Smart API routing picks the right patterns for each design type.
+                </p>
+                <div class="output">Output: Production-ready HTML/CSS files</div>
+            </div>
+        </section>
+
+        <!-- PHASE 3 -->
+        <section class="phase phase-3" id="phase-3">
+            <div class="phase-header">
+                <div class="phase-number">3</div>
+                <h2>Implementation</h2>
+            </div>
+            <p class="phase-description">
+                Time to build. Break features into precise specs, scope your edits, debug systematically, and monitor code health as you go. This phase is a repeatable loop — run it for each feature or module.
+            </p>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 9</span>
+                    <h3><code>/spec</code> — Turn Features into Executable Specs</h3>
+                </div>
+                <p>
+                    Transforms vague intent into a precise, executable specification in five phases. Files a GitHub issue, optionally spawns a Claude Code agent in a fresh worktree for parallel development. Each spec becomes a trackable, shippable unit of work.
+                </p>
+                <div class="output">Output: GitHub issue with detailed spec, optional worktree agent</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 10</span>
+                    <h3><code>/freeze</code> — Scope Your Edits</h3>
+                </div>
+                <p>
+                    Restrict file edits to a specific directory for the session. Blocks writes outside the allowed path. Prevents accidentally modifying unrelated modules while focused on one feature. Use <code>/unfreeze</code> when you're ready to widen scope again.
+                </p>
+                <div class="output">Output: Edit guardrail active for the session</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 11</span>
+                    <h3><code>/investigate</code> — Systematic Debugging</h3>
+                </div>
+                <p>
+                    When you hit bugs, don't guess. This skill enforces four phases: investigate → analyze → hypothesize → implement. The iron law: <strong>no fixes without root cause</strong>. Use whenever you encounter errors, 500s, stack traces, or "it was working yesterday" scenarios.
+                </p>
+                <div class="output">Output: Root cause identified, targeted fix applied</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 12</span>
+                    <h3><code>/health</code> — Monitor Code Quality</h3>
+                </div>
+                <p>
+                    Run periodically during development. Wraps your project's type checker, linter, test runner, dead code detector, and shell linter. Computes a weighted composite 0-10 score and tracks trends over time so you can catch quality drift early.
+                </p>
+                <div class="output">Output: Quality score with trend data</div>
+            </div>
+
+            <div class="tip-box">
+                <h4>💡 Context Management</h4>
+                <p>Use <code>/context-save</code> before ending a session and <code>/context-restore</code> when resuming. Captures git state, decisions made, and remaining work so you never lose momentum across sessions.</p>
+            </div>
+        </section>
+
+        <!-- PHASE 4 -->
+        <section class="phase phase-4" id="phase-4">
+            <div class="phase-header">
+                <div class="phase-number">4</div>
+                <h2>QA &amp; Polish</h2>
+            </div>
+            <p class="phase-description">
+                Before shipping, verify everything works correctly and looks right. These skills test functionality, visual consistency, and developer experience on the live application.
+            </p>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 13</span>
+                    <h3><code>/qa</code> — Functional QA &amp; Bug Fixing</h3>
+                </div>
+                <p>
+                    Systematically tests your web app, finds bugs, fixes them in source code (committing each fix atomically), and re-verifies. Three tiers: <strong>Quick</strong> (critical/high only), <strong>Standard</strong> (+ medium), <strong>Exhaustive</strong> (+ cosmetic). Produces before/after health scores and a ship-readiness summary. Use <code>/qa-only</code> for report-only mode without fixes.
+                </p>
+                <div class="output">Output: Bug fixes committed, ship-readiness report</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 14</span>
+                    <h3><code>/design-review</code> — Visual QA</h3>
+                </div>
+                <p>
+                    Designer's-eye QA on the live site. Finds visual inconsistencies, spacing issues, hierarchy problems, AI slop patterns, and slow interactions. Then iteratively fixes them in source code, committing each fix and re-verifying with before/after screenshots.
+                </p>
+                <div class="output">Output: Visual fixes committed with screenshot evidence</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 15</span>
+                    <h3><code>/devex-review</code> — Live DX Audit</h3>
+                </div>
+                <p>
+                    <em>For developer-facing platforms.</em> Actually navigates your docs, tries the getting-started flow, times TTHW (Time To Hello World), screenshots error messages, evaluates CLI help text. Compares against <code>/plan-devex-review</code> scores to find plan-vs-reality gaps.
+                </p>
+                <div class="output">Output: DX scorecard with evidence and boomerang comparison</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 15b</span>
+                    <h3><code>/benchmark</code> — Performance Baseline</h3>
+                </div>
+                <p>
+                    Establish baselines for page load times, Core Web Vitals, and resource sizes. Compare before/after on every PR. Tracks performance trends over time so regressions are caught immediately.
+                </p>
+                <div class="output">Output: Performance baseline with trend tracking</div>
+            </div>
+        </section>
+
+        <!-- PHASE 5 -->
+        <section class="phase phase-5" id="phase-5">
+            <div class="phase-header">
+                <div class="phase-number">5</div>
+                <h2>Ship &amp; Monitor</h2>
+            </div>
+            <p class="phase-description">
+                Code is ready, QA passed. Now review the diff, ship it safely, monitor production, and update documentation to match what actually shipped.
+            </p>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 16</span>
+                    <h3><code>/review</code> — Pre-Landing PR Review</h3>
+                </div>
+                <p>
+                    Analyzes your diff against the base branch for SQL safety issues, LLM trust boundary violations, conditional side effects, and other structural problems. Catches the things linters miss. Run this before every merge.
+                </p>
+                <div class="output">Output: Structured review with issue severity and fix suggestions</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 17</span>
+                    <h3><code>/cso</code> — Security Audit</h3>
+                </div>
+                <p>
+                    Chief Security Officer mode. Covers secrets archaeology, dependency supply chain, CI/CD pipeline security, LLM/AI security, OWASP Top 10, and STRIDE threat modeling. Two modes: <strong>Daily</strong> (zero-noise, 8/10 confidence gate) and <strong>Comprehensive</strong> (monthly deep scan). Essential before shipping auth, payments, or sensitive data handling.
+                </p>
+                <div class="output">Output: Security report with findings and remediation steps</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 18</span>
+                    <h3><code>/ship</code> — Create the PR</h3>
+                </div>
+                <p>
+                    The ship workflow: detects and merges base branch, runs tests, reviews diff, bumps VERSION, updates CHANGELOG, commits, pushes, and creates a PR. One command from "code is ready" to "PR is open."
+                </p>
+                <div class="output">Output: PR created with version bump and changelog</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 19</span>
+                    <h3><code>/land-and-deploy</code> — Merge &amp; Verify</h3>
+                </div>
+                <p>
+                    Takes over after <code>/ship</code> creates the PR. Merges, waits for CI, waits for deploy, then verifies production health via canary checks. The final step from PR to live.
+                </p>
+                <div class="output">Output: Code live in production, health verified</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 20</span>
+                    <h3><code>/canary</code> — Post-Deploy Monitoring</h3>
+                </div>
+                <p>
+                    Watches the live app for console errors, performance regressions, and page failures using periodic screenshots. Compares against pre-deploy baselines and alerts on anomalies. Keep this running for the first hour after deploy.
+                </p>
+                <div class="output">Output: Continuous monitoring with anomaly alerts</div>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">STEP 21</span>
+                    <h3><code>/document-release</code> — Sync Documentation</h3>
+                </div>
+                <p>
+                    Reads all project docs, cross-references the diff, builds a Diataxis coverage map, updates README/ARCHITECTURE/CONTRIBUTING/CLAUDE.md to match what shipped. Detects architecture diagram drift, polishes CHANGELOG voice, and surfaces documentation debt.
+                </p>
+                <div class="output">Output: All documentation synced to reflect shipped code</div>
+            </div>
+        </section>
+
+        <!-- PHASE 6 -->
+        <section class="phase phase-6" id="phase-6">
+            <div class="phase-header">
+                <div class="phase-number">6</div>
+                <h2>Ongoing &amp; Maintenance</h2>
+            </div>
+            <p class="phase-description">
+                Skills you'll use throughout the project lifecycle — not tied to a specific phase but valuable at any point.
+            </p>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">RECURRING</span>
+                    <h3><code>/retro</code> — Weekly Retrospective</h3>
+                </div>
+                <p>
+                    Analyzes commit history, work patterns, and code quality metrics with persistent history and trend tracking. Team-aware: breaks down per-person contributions with praise and growth areas. Run at the end of each sprint or work week.
+                </p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">RECURRING</span>
+                    <h3><code>/learn</code> — Manage Project Learnings</h3>
+                </div>
+                <p>
+                    Review, search, prune, and export what gstack has learned across sessions. Useful when you wonder "didn't we fix this before?" or want to understand accumulated project patterns.
+                </p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">AS NEEDED</span>
+                    <h3><code>/document-generate</code> — Write Missing Docs</h3>
+                </div>
+                <p>
+                    Generate documentation from scratch for a feature or module. Uses the Diataxis framework (tutorial / how-to / reference / explanation) to produce complete, structured documentation.
+                </p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">AS NEEDED</span>
+                    <h3><code>/diagram</code> — Generate Architecture Diagrams</h3>
+                </div>
+                <p>
+                    Turn English descriptions into diagram triplets: Mermaid source, editable .excalidraw file, and rendered SVG + PNG. Fully offline. Great for documenting architecture decisions or explaining flows to teammates.
+                </p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">SAFETY</span>
+                    <h3><code>/guard</code> — Full Safety Mode</h3>
+                </div>
+                <p>
+                    Combines <code>/careful</code> (warns before destructive commands) with <code>/freeze</code> (blocks edits outside a directory). Use when touching production, debugging live systems, or working in shared environments.
+                </p>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-card-header">
+                    <span class="step-num">UTILITY</span>
+                    <h3><code>/landing-report</code> — Queue Dashboard</h3>
+                </div>
+                <p>
+                    Shows which VERSION slots are claimed by open PRs, which workspaces have WIP work likely to ship soon, and what slot <code>/ship</code> would pick next. Read-only snapshot for coordination.
+                </p>
+            </div>
+        </section>
+
+        <!-- Summary Flow -->
+        <div class="tip-box">
+            <h4>🔄 The Full Loop</h4>
+            <p>
+                <strong>Idea</strong> → <code>/office-hours</code> → <code>/plan-ceo-review</code> → <code>/plan-design-review</code> → <code>/plan-eng-review</code><br>
+                <strong>Design</strong> → <code>/design-consultation</code> → <code>/design-shotgun</code> → <code>/design-html</code><br>
+                <strong>Build</strong> → <code>/spec</code> → <code>/freeze</code> → implement → <code>/investigate</code> (when stuck) → <code>/health</code><br>
+                <strong>QA</strong> → <code>/qa</code> → <code>/design-review</code> → <code>/benchmark</code><br>
+                <strong>Ship</strong> → <code>/review</code> → <code>/cso</code> → <code>/ship</code> → <code>/land-and-deploy</code> → <code>/canary</code> → <code>/document-release</code>
+            </p>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>GStack Workflow Guide • Generated with Kiro • Last updated August 2026</p>
+    </div>
+
+</body>
+</html>
