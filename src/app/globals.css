@@ -1,31 +1,35 @@
 @import "tailwindcss";
 
 /*
-  Design tokens in :root, used via arbitrary values like bg-[var(--color-primary)].
-  Not in @theme (that collides with Tailwind's max-w/rounded scales).
-  Single light theme — monochrome background with an orange halftone texture.
+  G sa Marikina — Resy-inspired design system
+  Warm orange background, bold Sora/Beatrice-like type, red + orange accents.
+  Bigger, more generous sizing throughout.
 */
 :root {
-  --color-primary: #F97316;
-  --color-primary-hover: #EA580C;
-  --color-primary-text: #C2410C;
-  --color-background: #FFFFFF;
-  --color-surface: #FFFFFF;
-  --color-surface-2: #F5F5F5;
-  --color-text-primary: #171717;
-  --color-text-secondary: #737373;
+  --color-text-primary: #6B3A2A;
+  --color-text-secondary: #1A0A00;
+  --color-text-inverse: #FFFFFF;
+  --color-surface-muted: #FFF8F3;
+  --color-surface-subtle: #FFEEDD;
+  --color-surface-card: #FFFFFF;
+  --color-accent: #E8590C;
+  --color-accent-hover: #C4320A;
+  --color-accent-red: #EB1700;
+  --color-accent-light: #FFE8D6;
+  --color-border: #F0D0B8;
+  --color-border-strong: #D4956A;
+  --color-error: #DC2626;
   --color-success: #16A34A;
-  --color-error: #EF4444;
-  --color-border: #E9E9E9;
-  --color-map-pin: #F97316;
 
+  --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-full: 9999px;
+  --radius-md: 10px;
+  --radius-lg: 20px;
+  --radius-pill: 50px;
 
-  --shadow-card: 0 2px 8px rgba(10, 10, 10, 0.06);
-  --shadow-hover: 0 10px 30px rgba(10, 10, 10, 0.10);
+  --motion-instant: 150ms;
+  --motion-fast: 250ms;
+  --motion-normal: 300ms;
 }
 
 html {
@@ -34,93 +38,34 @@ html {
 
 body {
   font-family: var(--font-body), system-ui, sans-serif;
-  color: var(--color-text-primary);
-  background-color: var(--color-background);
-}
-
-/*
-  Halftone dot texture (bryl-minimal), tinted with the brand orange.
-  A fixed field of tiny orange dots behind all content, faded with a soft
-  radial mask so it reads as seasoning, not wallpaper. Sits at z-index -1 so
-  opaque surfaces (hero photo, cards) cover it and it shows through whitespace.
-*/
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(249, 115, 22, 0.16) 1.1px,
-    transparent 1.6px
-  );
-  background-size: 11px 11px;
-  -webkit-mask-image: radial-gradient(
-    130% 90% at 50% 28%,
-    black 0%,
-    black 46%,
-    transparent 86%
-  );
-  mask-image: radial-gradient(
-    130% 90% at 50% 28%,
-    black 0%,
-    black 46%,
-    transparent 86%
-  );
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface-muted);
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), system-ui, sans-serif;
+  font-family: var(--font-heading), var(--font-body), system-ui, sans-serif;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }
 
-/* Highlighter-marker effect for emphasizing a word in a heading */
-.mark {
-  background-image: linear-gradient(
-    transparent 62%,
-    color-mix(in srgb, var(--color-primary) 32%, transparent) 62%
-  );
-  padding: 0 0.1em;
-}
-
-/* Accent bar before section headings */
-.heading-accent {
-  position: relative;
-  padding-left: 0.9rem;
-}
-.heading-accent::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.15em;
-  bottom: 0.15em;
-  width: 4px;
-  border-radius: 9999px;
-  background: var(--color-primary);
-}
-
-/* Accessibility: visible keyboard focus indicator */
 *:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
-  border-radius: 2px;
 }
 
-/* Accessibility: respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }
 
-/* Hide scrollbar on horizontal scroll rows */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

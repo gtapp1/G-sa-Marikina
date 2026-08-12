@@ -13,6 +13,7 @@ interface ListingLocationProps {
   category: Category;
 }
 
+// Light map style (standard OpenStreetMap)
 const MAP_STYLE = {
   version: 8 as const,
   sources: {
@@ -35,11 +36,9 @@ export function ListingLocation({
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
 
   return (
-    <div className="mt-8">
-      <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[var(--color-text-primary)] mb-3">
-        Location
-      </h2>
-      <div className="rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)]">
+    <div className="mt-10">
+      <h2 className="text-xl text-[var(--text)] mb-4">Location</h2>
+      <div className="rounded-[var(--radius-md)] overflow-hidden border border-[var(--border)]">
         <div className="h-48 w-full">
           <Map
             initialViewState={{ latitude, longitude, zoom: 15 }}
@@ -49,23 +48,23 @@ export function ListingLocation({
             attributionControl={false}
           >
             <Marker latitude={latitude} longitude={longitude} anchor="bottom">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-primary)] text-white shadow-[0_2px_8px_rgba(61,44,30,0.3)]">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--accent)] text-white shadow-lg">
                 <CategoryIcon category={category} size={16} weight="fill" />
               </div>
             </Marker>
           </Map>
         </div>
-        <div className="flex items-center justify-between p-3 bg-[var(--color-surface)]">
-          <span className="text-sm text-[var(--color-text-secondary)]">
+        <div className="flex items-center justify-between p-3 bg-[var(--bg-elevated)]">
+          <span className="text-sm text-[var(--text-muted)]">
             {barangay}, Marikina City
           </span>
           <a
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-primary-text)] hover:underline"
+            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--accent)] hover:underline"
           >
-            Get directions <ArrowRight size={14} weight="bold" />
+            Directions <ArrowRight size={12} />
           </a>
         </div>
       </div>

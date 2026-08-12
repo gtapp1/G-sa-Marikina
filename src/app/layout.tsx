@@ -1,34 +1,36 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Sora } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+/*
+  Sora — geometric, tightly-spaced bold sans. Closest free match to Beatrice
+  (Sharp Type). Same low-contrast, geometric construction, tight metrics.
+*/
+const sora = Sora({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const inter = Inter({
+const soraBody = Sora({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: "G sa Marikina — Local Food Directory",
   description:
-    "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats. Photos, menus, and directions.",
-  openGraph: {
-    title: "G sa Marikina — Local Food Directory",
-    description:
-      "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
-    siteName: "G sa Marikina",
-    locale: "en_PH",
-    type: "website",
+    "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
   },
 };
 
@@ -38,14 +40,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html
-        lang="en"
-        className={`${plusJakartaSans.variable} ${inter.variable}`}
-      >
-        <body className="antialiased pt-20 pb-24 md:pb-0 md:pt-24">
+    <ClerkProvider appearance={{ variables: { colorPrimary: "#E8590C" } }}>
+      <html lang="en" className={`${sora.variable} ${soraBody.variable}`}>
+        <body>
           <NavBar />
-          {children}
+          <div className="pt-16 md:pt-20">
+            {children}
+          </div>
           <Footer />
         </body>
       </html>

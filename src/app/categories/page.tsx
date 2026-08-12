@@ -16,28 +16,28 @@ export default function CategoriesPage() {
   });
 
   return (
-    <main className="min-h-screen px-6 pt-8 pb-16 max-w-[1200px] mx-auto">
-      <h1 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)]">
+    <main className="px-5 md:px-10 pt-12 pb-20 max-w-[1400px] mx-auto">
+      <h1 className="text-[36px] md:text-[48px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
         Categories
       </h1>
-      <p className="mt-2 text-[var(--color-text-secondary)]">
-        Browse Marikina food spots by type.
+      <p className="mt-2 text-[15px] tracking-tight text-[var(--color-text-primary)]">
+        Browse by type.
       </p>
 
-      <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+      <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[var(--color-border)]">
         {categories.map((cat) => (
           <Link
             key={cat.id}
             href={`/category/${cat.id}`}
-            className="group flex flex-col items-center justify-center gap-3 p-6 rounded-[var(--radius-md)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-primary)] hover:shadow-[0_4px_12px_rgba(61,44,30,0.12)] transition-all"
+            className="group flex flex-col items-center gap-4 p-8 md:p-10 bg-white hover:bg-[var(--color-accent-light)] transition-colors duration-[var(--motion-fast)]"
           >
-            <span className="text-[var(--color-primary)] group-hover:scale-110 transition-transform">
-              <CategoryIcon category={cat.id} size={32} weight="duotone" />
+            <span className="text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
+              <CategoryIcon category={cat.id} size={36} weight="duotone" />
             </span>
-            <span className="font-[family-name:var(--font-heading)] text-sm font-bold text-[var(--color-text-primary)] text-center">
+            <span className="text-[15px] font-bold tracking-tight text-[var(--color-text-secondary)] text-center group-hover:text-[var(--color-accent)] transition-colors">
               {cat.label}
             </span>
-            <span className="text-xs text-[var(--color-text-secondary)]">
+            <span className="text-[13px] tracking-tight text-[var(--color-text-primary)]">
               {cat.count} {cat.count === 1 ? "spot" : "spots"}
             </span>
           </Link>

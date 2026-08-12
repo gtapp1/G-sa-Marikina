@@ -18,7 +18,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params;
   const parsed = CategoryEnum.safeParse(id);
   if (!parsed.success) return { title: "Not Found" };
-
   const category = CATEGORY_LABELS[parsed.data];
   return {
     title: `${category.label} in Marikina — G sa Marikina`,
@@ -29,46 +28,51 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function CategoryPage({ params }: PageProps) {
   const { id } = await params;
   const parsed = CategoryEnum.safeParse(id);
-
-  if (!parsed.success) {
-    notFound();
-  }
+  if (!parsed.success) notFound();
 
   const category = CATEGORY_LABELS[parsed.data];
   const filtered = listings.filter((l) => l.category === parsed.data);
 
   return (
-    <main className="min-h-screen px-6 pt-6 pb-16 max-w-[1200px] mx-auto">
+    <main className="px-4 md:px-6 pt-8 pb-16 max-w-[1200px] mx-auto">
       <Link
         href="/categories"
-        className="inline-flex items-center gap-1 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-colors"
+        className="inline-flex items-center gap-1 text-[12px] font-semibold tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
       >
         ← All categories
       </Link>
 
-      <h1 className="mt-4 flex items-center gap-2 font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)]">
-        <span className="text-[var(--color-primary)]">
-          <CategoryIcon category={parsed.data} size={28} weight="duotone" />
+      <div className="mt-5 flex items-center gap-3">
+        <span className="text-[var(--color-accent)]">
+          <CategoryIcon category={parsed.data} size={26} weight="fill" />
         </span>
-        {category.label}
-      </h1>
+        <h1 className="text-[26px] md:text-[32px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
+          {category.label}
+        </h1>
+        <span className="text-[12px] font-semibold tracking-tight text-[var(--color-text-primary)] ml-1">
+          {filtered.length} {filtered.length === 1 ? "spot" : "spots"}
+        </span>
+      </div>
 
       {filtered.length > 0 ? (
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
           {filtered.map((listing) => (
             <ListingCard key={listing.slug} listing={listing} />
           ))}
         </div>
       ) : (
-        <div className="mt-12 flex flex-col items-center text-center">
-          <span className="text-[var(--color-primary)]/40 mb-4">
-            <CategoryIcon category={parsed.data} size={56} weight="light" />
+        <div className="mt-16 text-center">
+          <span className="text-[var(--color-text-primary)] opacity-30 block mb-4">
+            <CategoryIcon category={parsed.data} size={52} weight="light" />
           </span>
-          <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[var(--color-text-primary)]">
+          <h2 className="text-[16px] font-bold text-[var(--color-text-secondary)] tracking-tight">
             No {category.label.toLowerCase()} spots listed yet
           </h2>
-          <p className="mt-2 text-[var(--color-text-secondary)] max-w-sm mx-auto">
-            Check back soon, or browse another category.
+          <p className="mt-2 text-[13px] tracking-tight text-[var(--color-text-primary)]">
+            Check back soon, or{" "}
+            <Link href="/categories" className="font-semibold text-[var(--color-accent)] hover:underline">
+              browse another category
+            </Link>.
           </p>
         </div>
       )}

@@ -8,13 +8,12 @@ export const metadata: Metadata = {
 
 export default function NewBusinessPage() {
   return (
-    <main className="min-h-screen px-6 pt-8 pb-16 max-w-[680px] mx-auto">
-      <h1 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)]">
+    <main className="px-4 md:px-6 pt-8 pb-16 max-w-[640px] mx-auto">
+      <h1 className="text-[26px] md:text-[32px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
         List your spot
       </h1>
-      <p className="mt-2 text-[var(--color-text-secondary)]">
-        Add your Marikina food business. Submissions are reviewed before they go
-        live.
+      <p className="mt-1 text-[13px] tracking-tight text-[var(--color-text-primary)]">
+        Add your Marikina food business. Submissions are reviewed before going live.
       </p>
       <SubmitForm />
     </main>

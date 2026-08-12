@@ -1,139 +1,108 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import type { ComponentType } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import {
-  House,
-  MagnifyingGlass,
-  MapTrifold,
-  SquaresFour,
-  Info,
-  MapPin,
-} from "@phosphor-icons/react";
-
-
-type NavIcon = ComponentType<{ size?: number; weight?: "regular" | "fill" }>;
-
-const NAV_ITEMS: { href: string; label: string; icon: NavIcon }[] = [
-  { href: "/", label: "Home", icon: House },
-  { href: "/search", label: "Search", icon: MagnifyingGlass },
-  { href: "/map", label: "Map", icon: MapTrifold },
-  { href: "/categories", label: "Browse", icon: SquaresFour },
-  { href: "/about", label: "About", icon: Info },
-];
+import { MagnifyingGlass } from "@phosphor-icons/react";
 
 export function NavBar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [query, setQuery] = useState("");
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.push("/search");
+    }
+  };
 
   return (
-    <>
-      {/* Desktop: floating capsule nav */}
-      <header className="hidden md:block fixed inset-x-0 top-4 z-50 px-6">
-        <nav className="mx-auto flex max-w-[1040px] items-center justify-between gap-6 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 py-2 pl-5 pr-2.5 shadow-[var(--shadow-hover)] backdrop-blur-md">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
-              <MapPin size={16} weight="fill" />
-            </span>
-            <span className="font-[family-name:var(--font-heading)] text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
-              G sa Marikina
-            </span>
-          </Link>
-
-          <div className="flex items-center gap-1">
-            {NAV_ITEMS.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors ${
-                    active
-                      ? "bg-[var(--color-primary)] text-white"
-                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text-primary)]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <SignedOut>
-              <Link
-                href="/sign-in"
-                className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)]"
-              >
-                Sign in
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <Link
-                href="/for-businesses/new"
-                className="rounded-full px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
-              >
-                List your spot
-              </Link>
-              <UserButton
-                appearance={{ variables: { colorPrimary: "#F97316" } }}
-              />
-            </SignedIn>
-          </div>
-        </nav>
-      </header>
-
-      {/* Mobile: floating capsule top bar (wordmark + theme + auth) */}
-      <header className="md:hidden fixed inset-x-3 top-3 z-40 flex items-center justify-between gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 py-2 pl-4 pr-2 shadow-[var(--shadow-hover)] backdrop-blur-md">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
-            <MapPin size={14} weight="fill" />
-          </span>
-          <span className="font-[family-name:var(--font-heading)] text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
-            G sa Marikina
+    <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-[var(--color-border)]">
+      <nav className="mx-auto flex max-w-[1400px] items-center h-16 md:h-20 px-5 md:px-10 gap-4 md:gap-7">
+        {/* Logo */}
+        <Link href="/" className="flex-shrink-0">
+          <span className="inline-block bg-[var(--color-accent-red)] text-white text-[15px] font-extrabold px-3.5 py-2 leading-none tracking-tight">
+            G!
           </span>
         </Link>
-        <div className="flex items-center gap-1.5">
+
+        {/* City */}
+        <span className="hidden md:inline text-[15px] font-bold text-[var(--color-accent)] tracking-tight">
+          Marikina City ›
+        </span>
+
+        {/* Search */}
+        <form onSubmit={handleSearch} className="flex items-center flex-1 max-w-[420px]">
+          <div className="flex items-center gap-3 w-full border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-2.5 hover:border-[var(--color-border-strong)] transition-colors duration-[var(--motion-fast)]">
+            <MagnifyingGlass size={17} weight="bold" className="shrink-0 text-[var(--color-text-primary)]" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search restaurants, dishes, etc."
+              className="w-full bg-transparent outline-none text-[14px] tracking-tight text-[var(--color-text-secondary)] placeholder:text-[var(--color-text-primary)]"
+            />
+          </div>
+        </form>
+
+        {/* Right links */}
+        <div className="hidden md:flex items-center gap-7 ml-auto text-[14px] font-semibold tracking-tight">
+          <Link
+            href="/map"
+            className={`transition-colors duration-[var(--motion-fast)] ${
+              pathname.startsWith("/map") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
+            }`}
+          >
+            Map
+          </Link>
+          <Link
+            href="/categories"
+            className={`transition-colors duration-[var(--motion-fast)] ${
+              pathname.startsWith("/categories") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
+            }`}
+          >
+            Browse
+          </Link>
+          <Link
+            href="/collections"
+            className={`transition-colors duration-[var(--motion-fast)] ${
+              pathname.startsWith("/collections") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
+            }`}
+          >
+            Guides
+          </Link>
           <SignedOut>
             <Link
               href="/sign-in"
-              className="rounded-full bg-[var(--color-primary)] px-3.5 py-1.5 text-xs font-semibold text-white"
+              className="border border-[var(--color-accent-red)] px-4 py-2 text-[14px] font-bold tracking-tight text-[var(--color-accent-red)] hover:bg-[var(--color-accent-red)] hover:text-white transition-all duration-[var(--motion-fast)]"
             >
-              Sign in
+              Log in
             </Link>
           </SignedOut>
           <SignedIn>
-            <UserButton appearance={{ variables: { colorPrimary: "#F97316" } }} />
+            <Link href="/for-businesses/new" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
+              List a spot
+            </Link>
+            <UserButton />
           </SignedIn>
         </div>
-      </header>
 
-      {/* Mobile: floating dock */}
-      <nav className="md:hidden fixed inset-x-3 bottom-3 z-50 flex items-stretch gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 p-1.5 shadow-[0_6px_24px_rgba(61,44,30,0.16)] backdrop-blur-md">
-        {NAV_ITEMS.map((item) => {
-          const active = isActive(item.href);
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={active ? "page" : undefined}
-              className={`flex min-h-[48px] flex-1 flex-col items-center justify-center gap-0.5 rounded-full text-[11px] font-semibold transition-colors ${
-                active
-                  ? "bg-[var(--color-primary)] text-white"
-                  : "text-[var(--color-text-secondary)]"
-              }`}
-            >
-              <Icon size={20} weight={active ? "fill" : "regular"} />
-              {item.label}
+        {/* Mobile login */}
+        <div className="md:hidden ml-auto">
+          <SignedOut>
+            <Link href="/sign-in" className="text-[13px] font-bold tracking-tight text-[var(--color-accent-red)]">
+              Log in
             </Link>
-          );
-        })}
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
       </nav>
-    </>
+    </header>
   );
 }

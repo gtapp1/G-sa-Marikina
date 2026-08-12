@@ -1,24 +1,25 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { listings } from "@/data/listings";
-import {
-  CATEGORY_LABELS,
-  CategoryEnum,
-  Category,
-} from "@/types/listing";
+import { MARIKINA_BARANGAYS } from "@/data/barangays";
+import { CATEGORY_LABELS, CategoryEnum, Category } from "@/types/listing";
 import { ListingCard } from "./listing-card";
 
-const BARANGAYS = Array.from(
-  new Set(listings.map((l) => l.barangay))
-).sort();
-
 export function SearchFilters() {
-  const [query, setQuery] = useState("");
+  const searchParams = useSearchParams();
+  const urlQuery = searchParams.get("q") || "";
+
+  const [query, setQuery] = useState(urlQuery);
   const [category, setCategory] = useState<Category | "all">("all");
   const [barangay, setBarangay] = useState<string | "all">("all");
   const [minRating, setMinRating] = useState(0);
+
+  useEffect(() => {
+    setQuery(urlQuery);
+  }, [urlQuery]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -32,9 +33,7 @@ export function SearchFilters() {
       const matchesCategory = category === "all" || l.category === category;
       const matchesBarangay = barangay === "all" || l.barangay === barangay;
       const matchesRating = l.rating >= minRating;
-      return (
-        matchesQuery && matchesCategory && matchesBarangay && matchesRating
-      );
+      return matchesQuery && matchesCategory && matchesBarangay && matchesRating;
     });
   }, [query, category, barangay, minRating]);
 
@@ -52,8 +51,8 @@ export function SearchFilters() {
     <div>
       {/* Search input */}
       <div className="relative">
-        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)]">
-          <MagnifyingGlass size={18} />
+        <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--color-text-primary)]">
+          <MagnifyingGlass size={16} weight="bold" />
         </span>
         <input
           type="search"
@@ -61,88 +60,77 @@ export function SearchFilters() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, dish, or barangay"
           aria-label="Search food spots"
-          className="w-full rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] py-3 pl-10 pr-4 text-base text-[var(--color-text-primary)] placeholder:text-[var(--color-text-secondary)] focus:border-[var(--color-primary)] focus:outline-none"
+          className="w-full border border-[var(--color-border)] bg-white py-3 pl-10 pr-4 text-[13px] tracking-tight text-[var(--color-text-secondary)] placeholder:text-[var(--color-text-primary)] focus:border-[var(--color-accent)] focus:outline-none transition-colors"
         />
       </div>
 
       {/* Filters */}
-      <div className="mt-4 flex flex-wrap gap-3">
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[var(--color-text-secondary)]">
-          Category
-          <select
-            value={category}
-            onChange={(e) =>
-              setCategory(e.target.value as Category | "all")
-            }
-            className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-normal text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none"
-          >
-            <option value="all">All categories</option>
-            {CategoryEnum.options.map((c) => (
-              <option key={c} value={c}>
-                {CATEGORY_LABELS[c].label}
-              </option>
-            ))}
-          </select>
-        </label>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value as Category | "all")}
+          aria-label="Category"
+          className="border border-[var(--color-border)] bg-white px-3 py-2 text-[12px] tracking-tight font-medium text-[var(--color-text-secondary)] focus:border-[var(--color-accent)] focus:outline-none"
+        >
+          <option value="all">All categories</option>
+          {CategoryEnum.options.map((c) => (
+            <option key={c} value={c}>{CATEGORY_LABELS[c].label}</option>
+          ))}
+        </select>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[var(--color-text-secondary)]">
-          Barangay
-          <select
-            value={barangay}
-            onChange={(e) => setBarangay(e.target.value)}
-            className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-normal text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none"
-          >
-            <option value="all">All areas</option>
-            {BARANGAYS.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
-        </label>
+        <select
+          value={barangay}
+          onChange={(e) => setBarangay(e.target.value)}
+          aria-label="Barangay"
+          className="border border-[var(--color-border)] bg-white px-3 py-2 text-[12px] tracking-tight font-medium text-[var(--color-text-secondary)] focus:border-[var(--color-accent)] focus:outline-none"
+        >
+          <option value="all">All areas</option>
+          {MARIKINA_BARANGAYS.map((b) => (
+            <option key={b} value={b}>{b}</option>
+          ))}
+        </select>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[var(--color-text-secondary)]">
-          Min rating
-          <select
-            value={minRating}
-            onChange={(e) => setMinRating(Number(e.target.value))}
-            className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-normal text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none"
-          >
-            <option value={0}>Any rating</option>
-            <option value={3}>3+ stars</option>
-            <option value={4}>4+ stars</option>
-            <option value={5}>5 stars</option>
-          </select>
-        </label>
+        <select
+          value={minRating}
+          onChange={(e) => setMinRating(Number(e.target.value))}
+          aria-label="Minimum rating"
+          className="border border-[var(--color-border)] bg-white px-3 py-2 text-[12px] tracking-tight font-medium text-[var(--color-text-secondary)] focus:border-[var(--color-accent)] focus:outline-none"
+        >
+          <option value={0}>Any rating</option>
+          <option value={3}>3+ stars</option>
+          <option value={4}>4+ stars</option>
+          <option value={5}>5 stars only</option>
+        </select>
 
         {hasActiveFilters && (
           <button
             onClick={clearAll}
-            className="mt-auto inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-3 py-2 text-sm font-semibold text-[var(--color-primary-text)] hover:underline"
+            className="inline-flex items-center gap-1 px-3 py-2 text-[12px] font-bold tracking-tight text-[var(--color-accent)] hover:underline"
           >
-            <X size={14} weight="bold" /> Clear
+            <X size={13} weight="bold" /> Clear
           </button>
         )}
       </div>
 
-      {/* Result count */}
-      <p className="mt-6 text-sm text-[var(--color-text-secondary)]">
+      {/* Count */}
+      <p className="mt-5 text-[11px] tracking-tight text-[var(--color-text-primary)]">
         {results.length} {results.length === 1 ? "spot" : "spots"} found
+        {query && <span className="ml-1">for &ldquo;{query}&rdquo;</span>}
       </p>
 
       {/* Results */}
       {results.length > 0 ? (
-        <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {results.map((listing) => (
             <ListingCard key={listing.slug} listing={listing} />
           ))}
         </div>
       ) : (
-        <div className="mt-10 text-center">
-          <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[var(--color-text-primary)]">
-            No spots match your search
-          </h2>
-          <p className="mt-2 text-[var(--color-text-secondary)]">
+        <div className="mt-12 text-center">
+          <p className="text-[15px] font-bold text-[var(--color-text-secondary)] tracking-tight">
+            No spots found
+          </p>
+          <p className="mt-1 text-[13px] tracking-tight text-[var(--color-text-primary)]">
             Try a different keyword or clear the filters.
           </p>
         </div>

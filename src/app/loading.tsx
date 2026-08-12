@@ -1,25 +1,16 @@
-import { ListingCardSkeleton } from "@/components/listing-card-skeleton";
-
 export default function Loading() {
   return (
-    <main>
-      {/* Hero placeholder */}
-      <section className="flex min-h-[66vh] md:min-h-[76vh] items-center justify-center bg-[var(--color-border)]">
-        <div className="w-full max-w-2xl px-6 text-center">
-          <div className="mx-auto h-12 w-4/5 animate-pulse rounded bg-[var(--color-surface)]/60" />
-          <div className="mx-auto mt-6 h-5 w-2/3 animate-pulse rounded bg-[var(--color-surface)]/60" />
-        </div>
-      </section>
-
-      {/* Feed placeholder */}
-      <section className="mx-auto max-w-[1200px] px-6 pt-14">
-        <div className="h-7 w-40 animate-pulse rounded bg-[var(--color-border)]" />
-        <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }, (_, i) => (
-            <ListingCardSkeleton key={i} />
-          ))}
-        </div>
-      </section>
+    <main className="mx-auto max-w-[1200px] px-4 md:px-6 pt-6">
+      <div className="animate-pulse rounded-[var(--radius-md)] bg-[var(--color-surface-subtle)] aspect-[3/2] md:aspect-[2/1]" />
+      <div className="mt-10 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+        {Array.from({ length: 5 }, (_, i) => (
+          <div key={i} className="animate-pulse">
+            <div className="aspect-[4/3] rounded-[var(--radius-md)] bg-[var(--color-surface-subtle)]" />
+            <div className="mt-2.5 h-3.5 w-3/4 rounded bg-[var(--color-surface-subtle)]" />
+            <div className="mt-1.5 h-3 w-1/2 rounded bg-[var(--color-surface-subtle)]" />
+          </div>
+        ))}
+      </div>
     </main>
   );
 }
