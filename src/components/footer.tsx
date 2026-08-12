@@ -26,7 +26,7 @@ export function Footer() {
               style={{ fontSize: "80px", padding: "16px 28px" }}>
               G!
             </span>
-            <span className="text-[28px] md:text-[36px] font-bold tracking-tight text-[var(--color-accent)] group-hover:text-[var(--color-accent-hover)] transition-colors">
+            <span className="text-[28px] md:text-[36px] font-bold tracking-tight text-[var(--color-accent-red)] group-hover:opacity-80 transition-opacity">
               sa Marikina
             </span>
           </Link>
