@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Serif_Display, Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
@@ -39,7 +38,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
+    <ClerkProvider
+      appearance={{
+        variables: {
+          colorPrimary: "#F97316",
+          colorBackground: "#292524",
+          colorText: "#FAFAF9",
+          colorInputBackground: "#1C1917",
+          colorInputText: "#FAFAF9",
+        },
+      }}
+    >
       <html lang="en" className={`${dmSerif.variable} ${inter.variable}`}>
         <body>
           <NavBar />
