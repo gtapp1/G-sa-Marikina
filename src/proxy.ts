@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 /*
   Public routes: the whole catalog is browsable without an account.
   Protected: writing a review, submitting/claiming a business, dashboard.
+  Migrated from middleware.ts to proxy.ts (Next.js 16 convention).
 */
 const isProtectedRoute = createRouteMatcher([
   "/for-businesses/new(.*)",
