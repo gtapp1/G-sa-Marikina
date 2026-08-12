@@ -17,6 +17,9 @@ export default function HomePage() {
     <main>
       {/* Hero — large photo + sidebar (Resy layout) */}
       <section className="mx-auto max-w-[1200px] px-4 md:px-6 pt-5 md:pt-8">
+        {/* Orange accent line above hero */}
+        <div className="h-1 w-16 bg-[var(--color-accent)] rounded-full mb-5" />
+
         <div className="flex flex-col md:flex-row gap-5 md:gap-8">
           {/* Photo with overlay */}
           <div className="relative flex-1 rounded-[var(--radius-md)] overflow-hidden bg-[var(--color-surface-subtle)] aspect-[4/3] md:aspect-[3/2]">
@@ -71,11 +74,11 @@ export default function HomePage() {
       <section className="mt-8 md:mt-12">
         <div className="mx-auto max-w-[1200px] px-4 md:px-6 flex items-baseline justify-between mb-4">
           <h2 className="text-[22px] md:text-[26px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
-            All Spots
+            <span className="text-[var(--color-accent-red)]">🔥</span> All Spots
           </h2>
           <Link
             href="/search"
-            className="text-[12px] font-bold text-[var(--color-text-secondary)] tracking-tight hover:text-[var(--color-accent)] transition-colors flex items-center gap-1"
+            className="text-[12px] font-bold text-[var(--color-accent)] tracking-tight hover:text-[var(--color-accent-hover)] transition-colors flex items-center gap-1"
           >
             See All <ArrowRight size={11} weight="bold" />
           </Link>
@@ -98,15 +101,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Red banner CTA — full-width, bottom of page, Resy exact layout */}
-      <section className="mt-12 md:mt-16 bg-[var(--color-accent-red)] px-4 md:px-6 py-10 md:py-14">
+      {/* Red banner CTA — full-width, Resy exact style */}
+      <section className="mt-12 md:mt-16 bg-[#EB1700] px-4 md:px-6 py-12 md:py-16">
         <div className="mx-auto max-w-[1200px]">
-          <h2 className="text-white text-[20px] md:text-[24px] font-bold leading-[1.2] tracking-[-0.03em]">
+          <h2 className="text-white text-[28px] md:text-[40px] font-bold leading-[1.1] tracking-[-0.03em] max-w-[500px]">
             Your next favorite food spot is a few taps away.
           </h2>
-          <p className="mt-2 text-white/70 text-[12px] md:text-[13px] tracking-tight leading-relaxed max-w-md">
-            Discover local spots in Marikina — home bakers, milk tea shops, karinderyas, and street eats.
-          </p>
         </div>
       </section>
     </main>

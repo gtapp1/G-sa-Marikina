@@ -6,17 +6,17 @@
   Tight letter-spacing throughout — Resy's "crowded" kerning style.
 */
 :root {
-  /* Colors — red + orange combo */
+  /* Colors — red + orange prominent throughout */
   --color-text-primary: #737373;
   --color-text-secondary: #1A1A1A;
   --color-text-inverse: #FFFFFF;
   --color-surface-base: #000000;
   --color-surface-muted: #FFFFFF;
   --color-surface-subtle: #F7F7F7;
-  --color-accent: #E8590C;       /* Deep burnt orange — primary accent */
+  --color-accent: #E8590C;       /* Burnt orange — links, hover, stars */
   --color-accent-hover: #C4320A;
-  --color-accent-red: #DC2626;   /* Red — secondary accent for badges, emphasis */
-  --color-accent-light: #FFF7ED;
+  --color-accent-red: #EB1700;   /* Resy red — logo, banners, bold CTAs */
+  --color-accent-light: #FFF4EE; /* Light orange tint for surfaces */
   --color-border: #EBEBEB;
   --color-error: #DC2626;
   --color-success: #16A34A;
