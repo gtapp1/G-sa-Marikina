@@ -13,21 +13,18 @@ interface ListingLocationProps {
   category: Category;
 }
 
-// Dark map style using CartoDB dark matter tiles
+// Light map style (standard OpenStreetMap)
 const MAP_STYLE = {
   version: 8 as const,
   sources: {
-    carto: {
+    osm: {
       type: "raster" as const,
-      tiles: [
-        "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-        "https://b.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-      ],
+      tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
       tileSize: 256,
-      attribution: "© OpenStreetMap contributors, © CARTO",
+      attribution: "© OpenStreetMap contributors",
     },
   },
-  layers: [{ id: "carto", type: "raster" as const, source: "carto" }],
+  layers: [{ id: "osm", type: "raster" as const, source: "osm" }],
 };
 
 export function ListingLocation({

@@ -15,7 +15,7 @@ export function ListingCard({ listing, distanceKm }: ListingCardProps) {
   return (
     <Link href={`/${listing.slug}`} className="group block">
       {/* Photo */}
-      <div className="relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden bg-[var(--color-surface-subtle)]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-surface-subtle)]">
         {listing.photos[0] ? (
           <img
             src={listing.photos[0]}

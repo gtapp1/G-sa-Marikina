@@ -15,44 +15,49 @@ export default function HomePage() {
 
   return (
     <main>
-      {/* Hero — large photo + sidebar (Resy layout) */}
+      {/* Hero — Resy-style complex photo layout + sidebar */}
       <section className="mx-auto max-w-[1200px] px-4 md:px-6 pt-5 md:pt-8">
-        <div className="flex flex-col md:flex-row gap-5 md:gap-8">
-          {/* Photo with overlay */}
-          <div className="relative flex-1 rounded-[var(--radius-md)] overflow-hidden bg-[var(--color-surface-subtle)] aspect-[4/3] md:aspect-[3/2]">
-            {featured.photos[0] ? (
-              <img src={featured.photos[0]} alt={featured.name} className="w-full h-full object-cover" />
-            ) : (
-              <PhotoPlaceholder category={featured.category} />
-            )}
-            <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5 bg-gradient-to-t from-black/75 via-black/40 to-transparent">
-              <p className="text-[var(--color-accent)] text-[10px] font-bold uppercase tracking-[0.1em] mb-1">
+        <div className="flex flex-col md:flex-row gap-0 md:gap-8">
+          {/* Photo area — two overlapping images, no rounded corners */}
+          <div className="relative flex-1">
+            {/* Main large photo */}
+            <div className="relative aspect-[4/3] md:aspect-[3/2] overflow-hidden bg-[var(--color-surface-subtle)]">
+              {featured.photos[0] ? (
+                <img src={featured.photos[0]} alt={featured.name} className="w-full h-full object-cover" />
+              ) : (
+                <PhotoPlaceholder category={featured.category} />
+              )}
+            </div>
+
+            {/* Editorial overlay text — bottom left, outside the image on top of white bg */}
+            <div className="mt-4 md:mt-0 md:absolute md:bottom-0 md:left-0 md:right-[40%] md:p-5 md:bg-white">
+              <p className="text-[var(--color-accent-red)] text-[11px] font-bold uppercase tracking-[0.06em]">
                 Featured
               </p>
-              <h2 className="text-white text-lg md:text-[22px] font-bold leading-[1.15] tracking-[-0.03em]">
-                {featured.name}
+              <h2 className="mt-1 text-[var(--color-text-secondary)] text-[20px] md:text-[24px] font-bold leading-[1.15] tracking-[-0.03em]">
+                {featured.name}: {featured.description.slice(0, 80)}…
               </h2>
-              <p className="text-white/70 text-[12px] mt-1 tracking-tight line-clamp-2 leading-relaxed">
+              <p className="mt-1.5 text-[var(--color-text-primary)] text-[12px] tracking-tight leading-relaxed line-clamp-2">
                 {featured.foundersReview}
               </p>
             </div>
           </div>
 
           {/* Right sidebar — Resy discover section */}
-          <aside className="hidden md:block w-[240px] flex-shrink-0">
-            <h3 className="text-[15px] font-bold text-[var(--color-text-secondary)] leading-snug tracking-[-0.02em]">
+          <aside className="hidden md:block w-[240px] flex-shrink-0 pt-2">
+            <h3 className="text-[14px] font-bold text-[var(--color-text-secondary)] leading-snug tracking-[-0.02em]">
               Discover restaurants to love in Marikina.
             </h3>
-            <p className="mt-2 text-[12px] text-[var(--color-text-primary)] leading-relaxed tracking-tight">
-              Local spots, honest reviews, and direct contact — all in one directory.
+            <p className="mt-2 text-[11px] text-[var(--color-text-primary)] leading-relaxed tracking-tight">
+              Be the first to know with insider guides, deep dives on local staples, and info on the latest food spots.
             </p>
-            <nav className="mt-4 space-y-1.5">
+            <nav className="mt-4 space-y-1">
               {[
-                { href: "/collections", label: "Guides" },
+                { href: "/collections", label: "The Hit List" },
                 { href: "/categories", label: "Browse by Category" },
                 { href: "/near-me", label: "Near Me" },
                 { href: "/map", label: "Explore Map" },
-                { href: "/about", label: "About" },
+                { href: "/about", label: "Read more ›" },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -63,6 +68,10 @@ export default function HomePage() {
                 </Link>
               ))}
             </nav>
+
+            <p className="mt-6 text-[12px] font-bold text-[var(--color-text-secondary)] tracking-tight">
+              About G! ›
+            </p>
           </aside>
         </div>
       </section>

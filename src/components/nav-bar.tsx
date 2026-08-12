@@ -1,22 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { MagnifyingGlass } from "@phosphor-icons/react";
 
 export function NavBar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [query, setQuery] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/search?q=${encodeURIComponent(query.trim())}`);
+    } else {
+      router.push("/search");
+    }
+  };
 
   return (
     <>
       {/* Desktop/tablet nav */}
       <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-[var(--color-border)]">
         <nav className="mx-auto flex max-w-[1200px] items-center h-14 md:h-[60px] px-4 md:px-6 gap-3 md:gap-5">
-          {/* Logo — red badge like Resy */}
+          {/* Logo — red badge, "G!" */}
           <Link href="/" className="flex-shrink-0">
-            <span className="inline-block bg-[var(--color-accent-red)] text-white text-[10px] font-extrabold px-2 py-1.5 rounded-[var(--radius-xs)] tracking-[0.08em] uppercase leading-none">
-              G sa Marikina
+            <span className="inline-block bg-[var(--color-accent-red)] text-white text-[13px] font-extrabold px-2.5 py-1.5 leading-none tracking-tight">
+              G!
             </span>
           </Link>
 
@@ -25,14 +37,19 @@ export function NavBar() {
             Marikina City ›
           </span>
 
-          {/* Search bar */}
-          <Link
-            href="/search"
-            className="flex items-center gap-2 flex-1 max-w-[300px] rounded-[var(--radius-sm)] border border-[var(--color-border)] px-3 py-[7px] text-[13px] tracking-tight text-[var(--color-text-primary)] hover:border-[#BFBFBF] transition-[border-color] duration-[var(--motion-fast)]"
-          >
-            <MagnifyingGlass size={14} weight="bold" />
-            <span>Search spots, dishes…</span>
-          </Link>
+          {/* Search bar — functional */}
+          <form onSubmit={handleSearch} className="flex items-center flex-1 max-w-[340px]">
+            <div className="flex items-center gap-2 w-full border border-[var(--color-border)] px-3 py-[7px] text-[13px] tracking-tight text-[var(--color-text-primary)] hover:border-[#BFBFBF] transition-[border-color] duration-[var(--motion-fast)]">
+              <MagnifyingGlass size={14} weight="bold" className="flex-shrink-0 text-[var(--color-text-primary)]" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search restaurants, dishes, etc."
+                className="w-full bg-transparent outline-none text-[13px] tracking-tight text-[var(--color-text-secondary)] placeholder:text-[var(--color-text-primary)]"
+              />
+            </div>
+          </form>
 
           {/* Right side links */}
           <div className="hidden md:flex items-center gap-5 ml-auto text-[13px] font-semibold tracking-tight">
@@ -55,7 +72,7 @@ export function NavBar() {
             <SignedOut>
               <Link
                 href="/sign-in"
-                className="rounded-[var(--radius-sm)] border border-[var(--color-accent-red)] px-3 py-1.5 text-[12px] font-bold tracking-tight text-[var(--color-accent-red)] hover:bg-[var(--color-accent-red)] hover:text-white transition-all duration-[var(--motion-fast)]"
+                className="border border-[var(--color-accent-red)] px-3 py-1.5 text-[12px] font-bold tracking-tight text-[var(--color-accent-red)] hover:bg-[var(--color-accent-red)] hover:text-white transition-all duration-[var(--motion-fast)]"
               >
                 Log in
               </Link>
