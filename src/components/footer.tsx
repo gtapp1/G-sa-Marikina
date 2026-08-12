@@ -19,11 +19,15 @@ export function Footer() {
     <footer className="border-t border-[var(--color-border)] bg-white">
       <div className="mx-auto max-w-[1400px] px-5 md:px-10 py-14 md:py-16">
         <div className="flex flex-wrap gap-x-20 gap-y-10">
-          {/* Brand */}
-          <div className="max-w-[280px]">
-            <Link href="/">
-              <span className="inline-block bg-[var(--color-accent-red)] text-white text-[13px] font-extrabold px-3 py-1.5 leading-none tracking-tight">
-                G sa Marikina
+
+          {/* Brand — G! badge matching navbar */}
+          <div className="max-w-[300px]">
+            <Link href="/" className="inline-flex items-center gap-3 group">
+              <span className="inline-block bg-[var(--color-accent-red)] text-white text-[18px] font-extrabold px-3.5 py-2.5 leading-none tracking-tight group-hover:opacity-90 transition-opacity">
+                G!
+              </span>
+              <span className="text-[16px] font-bold tracking-tight text-[var(--color-text-secondary)] group-hover:text-[var(--color-accent)] transition-colors">
+                sa Marikina
               </span>
             </Link>
             <p className="mt-4 text-[14px] tracking-tight text-[var(--color-text-primary)] leading-relaxed">
@@ -34,8 +38,8 @@ export function Footer() {
 
           {/* Discover */}
           <div>
-            <h4 className="text-[13px] font-bold text-[var(--color-text-secondary)] tracking-tight mb-4 uppercase">
-              Discover & Book
+            <h4 className="text-[12px] font-bold text-[var(--color-text-secondary)] tracking-[0.05em] uppercase mb-4">
+              Discover
             </h4>
             <ul className="space-y-2.5">
               {DISCOVER.map((l) => (
@@ -53,7 +57,7 @@ export function Footer() {
 
           {/* Info */}
           <div>
-            <h4 className="text-[13px] font-bold text-[var(--color-text-secondary)] tracking-tight mb-4 uppercase">
+            <h4 className="text-[12px] font-bold text-[var(--color-text-secondary)] tracking-[0.05em] uppercase mb-4">
               Info
             </h4>
             <ul className="space-y-2.5">
@@ -71,8 +75,13 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-6 border-t border-[var(--color-border)] text-[12px] tracking-tight text-[var(--color-text-primary)]">
-          &copy; {new Date().getFullYear()} G sa Marikina
+        <div className="mt-12 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <span className="text-[12px] tracking-tight text-[var(--color-text-primary)]">
+            &copy; {new Date().getFullYear()} G sa Marikina
+          </span>
+          <span className="text-[12px] tracking-tight text-[var(--color-text-primary)]">
+            Made for the Marikina food community.
+          </span>
         </div>
       </div>
     </footer>

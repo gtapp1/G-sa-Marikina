@@ -27,6 +27,11 @@ export const metadata: Metadata = {
   title: "G sa Marikina — Local Food Directory",
   description:
     "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
