@@ -29,7 +29,7 @@ export default function HomePage() {
               )}
             </div>
 
-            {/* Editorial overlay text — bottom left, outside the image on top of white bg */}
+          {/* Editorial overlay text — sits on white bg below photo */}
             <div className="mt-4 md:mt-0 md:absolute md:bottom-0 md:left-0 md:right-[40%] md:p-5 md:bg-white">
               <p className="text-[var(--color-accent-red)] text-[11px] font-bold uppercase tracking-[0.06em]">
                 Featured

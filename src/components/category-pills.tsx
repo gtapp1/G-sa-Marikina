@@ -14,7 +14,7 @@ export function CategoryPills() {
         <Link
           key={key}
           href={`/category/${key}`}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 text-[12px] font-bold tracking-tight rounded-[var(--radius-pill)] bg-[var(--color-accent-light)] text-[var(--color-accent)] hover:bg-[var(--color-accent)] hover:text-white transition-all duration-[var(--motion-fast)] whitespace-nowrap"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 text-[12px] font-bold tracking-tight rounded-[var(--radius-pill)] bg-white text-[var(--color-accent)] border border-[var(--color-border)] hover:bg-[var(--color-accent)] hover:text-white hover:border-[var(--color-accent)] transition-all duration-[var(--motion-fast)] whitespace-nowrap"
         >
           <CategoryIcon category={key} size={14} />
           {label}

@@ -7,28 +7,28 @@
 */
 :root {
   /* Colors — red + orange prominent throughout */
-  --color-text-primary: #737373;
-  --color-text-secondary: #1A1A1A;
+  --color-text-primary: #6B3A2A;
+  --color-text-secondary: #1A0A00;
   --color-text-inverse: #FFFFFF;
   --color-surface-base: #000000;
-  --color-surface-muted: #FFFFFF;
-  --color-surface-subtle: #F7F7F7;
-  --color-accent: #E8590C;       /* Burnt orange — links, hover, stars */
+  --color-surface-muted: #FFF8F3;      /* Warm orange-tinted background */
+  --color-surface-subtle: #FFEEDD;     /* Slightly deeper warm surface */
+  --color-surface-card: #FFFFFF;       /* Cards stay white for contrast */
+  --color-accent: #E8590C;
   --color-accent-hover: #C4320A;
-  --color-accent-red: #EB1700;   /* Resy red — logo, banners, bold CTAs */
-  --color-accent-light: #FFF4EE; /* Light orange tint for surfaces */
-  --color-border: #EBEBEB;
+  --color-accent-red: #EB1700;
+  --color-accent-light: #FFE8D6;
+  --color-border: #F0D0B8;             /* Warm border matching the bg */
+  --color-border-strong: #D4956A;
   --color-error: #DC2626;
   --color-success: #16A34A;
 
-  /* Radius */
   --radius-xs: 4px;
   --radius-sm: 5px;
   --radius-md: 8px;
   --radius-lg: 20px;
   --radius-pill: 50px;
 
-  /* Motion */
   --motion-instant: 150ms;
   --motion-fast: 250ms;
   --motion-normal: 300ms;
