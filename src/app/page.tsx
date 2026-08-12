@@ -17,9 +17,6 @@ export default function HomePage() {
     <main>
       {/* Hero — large photo + sidebar (Resy layout) */}
       <section className="mx-auto max-w-[1200px] px-4 md:px-6 pt-5 md:pt-8">
-        {/* Orange accent line above hero */}
-        <div className="h-1 w-16 bg-[var(--color-accent)] rounded-full mb-5" />
-
         <div className="flex flex-col md:flex-row gap-5 md:gap-8">
           {/* Photo with overlay */}
           <div className="relative flex-1 rounded-[var(--radius-md)] overflow-hidden bg-[var(--color-surface-subtle)] aspect-[4/3] md:aspect-[3/2]">
@@ -74,7 +71,7 @@ export default function HomePage() {
       <section className="mt-8 md:mt-12">
         <div className="mx-auto max-w-[1200px] px-4 md:px-6 flex items-baseline justify-between mb-4">
           <h2 className="text-[22px] md:text-[26px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
-            <span className="text-[var(--color-accent-red)]">🔥</span> All Spots
+            All Spots
           </h2>
           <Link
             href="/search"
