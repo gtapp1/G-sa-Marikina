@@ -21,85 +21,88 @@ export function NavBar() {
   };
 
   return (
-    <>
-      {/* Desktop/tablet nav */}
-      <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-[var(--color-border)]">
-        <nav className="mx-auto flex max-w-[1200px] items-center h-14 md:h-[60px] px-4 md:px-6 gap-3 md:gap-5">
-          {/* Logo — red badge, "G!" */}
-          <Link href="/" className="flex-shrink-0">
-            <span className="inline-block bg-[var(--color-accent-red)] text-white text-[13px] font-extrabold px-2.5 py-1.5 leading-none tracking-tight">
-              G!
-            </span>
-          </Link>
-
-          {/* City — orange */}
-          <span className="hidden md:inline text-[13px] font-semibold text-[var(--color-accent)] tracking-tight">
-            Marikina City ›
+    <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-[var(--color-border)]">
+      <nav className="mx-auto flex max-w-[1400px] items-center h-16 md:h-20 px-5 md:px-10 gap-4 md:gap-7">
+        {/* Logo */}
+        <Link href="/" className="flex-shrink-0">
+          <span className="inline-block bg-[var(--color-accent-red)] text-white text-[15px] font-extrabold px-3.5 py-2 leading-none tracking-tight">
+            G!
           </span>
+        </Link>
 
-          {/* Search bar — functional */}
-          <form onSubmit={handleSearch} className="flex items-center flex-1 max-w-[340px]">
-            <div className="flex items-center gap-2 w-full border border-[var(--color-border)] px-3 py-[7px] text-[13px] tracking-tight text-[var(--color-text-primary)] hover:border-[#BFBFBF] transition-[border-color] duration-[var(--motion-fast)]">
-              <MagnifyingGlass size={14} weight="bold" className="flex-shrink-0 text-[var(--color-text-primary)]" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search restaurants, dishes, etc."
-                className="w-full bg-transparent outline-none text-[13px] tracking-tight text-[var(--color-text-secondary)] placeholder:text-[var(--color-text-primary)]"
-              />
-            </div>
-          </form>
+        {/* City */}
+        <span className="hidden md:inline text-[15px] font-bold text-[var(--color-accent)] tracking-tight">
+          Marikina City ›
+        </span>
 
-          {/* Right side links */}
-          <div className="hidden md:flex items-center gap-5 ml-auto text-[13px] font-semibold tracking-tight">
-            <Link
-              href="/map"
-              className={`transition-colors duration-[var(--motion-fast)] ${
-                pathname.startsWith("/map") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
-              }`}
-            >
-              Map
-            </Link>
-            <Link
-              href="/collections"
-              className={`transition-colors duration-[var(--motion-fast)] ${
-                pathname.startsWith("/collections") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
-              }`}
-            >
-              Guides
-            </Link>
-            <SignedOut>
-              <Link
-                href="/sign-in"
-                className="border border-[var(--color-accent-red)] px-3 py-1.5 text-[12px] font-bold tracking-tight text-[var(--color-accent-red)] hover:bg-[var(--color-accent-red)] hover:text-white transition-all duration-[var(--motion-fast)]"
-              >
-                Log in
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <Link href="/for-businesses/new" className="text-[var(--color-text-primary)] hover:text-[var(--color-text-secondary)] transition-colors">
-                List a spot
-              </Link>
-              <UserButton />
-            </SignedIn>
+        {/* Search */}
+        <form onSubmit={handleSearch} className="flex items-center flex-1 max-w-[420px]">
+          <div className="flex items-center gap-3 w-full border border-[var(--color-border)] bg-[var(--color-surface-muted)] px-4 py-2.5 hover:border-[var(--color-border-strong)] transition-colors duration-[var(--motion-fast)]">
+            <MagnifyingGlass size={17} weight="bold" className="shrink-0 text-[var(--color-text-primary)]" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search restaurants, dishes, etc."
+              className="w-full bg-transparent outline-none text-[14px] tracking-tight text-[var(--color-text-secondary)] placeholder:text-[var(--color-text-primary)]"
+            />
           </div>
+        </form>
 
-          {/* Mobile login */}
-          <div className="md:hidden ml-auto">
-            <SignedOut>
-              <Link href="/sign-in" className="text-[12px] font-bold tracking-tight text-[var(--color-accent-red)]">
-                Log in
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </div>
-        </nav>
-      </header>
+        {/* Right links */}
+        <div className="hidden md:flex items-center gap-7 ml-auto text-[14px] font-semibold tracking-tight">
+          <Link
+            href="/map"
+            className={`transition-colors duration-[var(--motion-fast)] ${
+              pathname.startsWith("/map") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
+            }`}
+          >
+            Map
+          </Link>
+          <Link
+            href="/categories"
+            className={`transition-colors duration-[var(--motion-fast)] ${
+              pathname.startsWith("/categories") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
+            }`}
+          >
+            Browse
+          </Link>
+          <Link
+            href="/collections"
+            className={`transition-colors duration-[var(--motion-fast)] ${
+              pathname.startsWith("/collections") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]"
+            }`}
+          >
+            Guides
+          </Link>
+          <SignedOut>
+            <Link
+              href="/sign-in"
+              className="border border-[var(--color-accent-red)] px-4 py-2 text-[14px] font-bold tracking-tight text-[var(--color-accent-red)] hover:bg-[var(--color-accent-red)] hover:text-white transition-all duration-[var(--motion-fast)]"
+            >
+              Log in
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <Link href="/for-businesses/new" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
+              List a spot
+            </Link>
+            <UserButton />
+          </SignedIn>
+        </div>
 
-      {/* Mobile bottom nav — removed, footer handles navigation on mobile */}
-    </>
+        {/* Mobile login */}
+        <div className="md:hidden ml-auto">
+          <SignedOut>
+            <Link href="/sign-in" className="text-[13px] font-bold tracking-tight text-[var(--color-accent-red)]">
+              Log in
+            </Link>
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
+      </nav>
+    </header>
   );
 }

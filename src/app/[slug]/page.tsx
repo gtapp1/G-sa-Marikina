@@ -40,21 +40,21 @@ export default async function ListingPage({ params }: PageProps) {
   return (
     <main className="pb-24">
       {/* Back */}
-      <div className="px-6 pt-6 max-w-[800px] mx-auto">
+      <div className="px-5 md:px-10 pt-8 max-w-[1000px] mx-auto">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+          className="inline-flex items-center gap-1.5 text-[14px] font-semibold tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
         >
-          <ArrowLeft size={14} /> Back
+          <ArrowLeft size={15} /> Back
         </Link>
       </div>
 
       {/* Hero photo */}
-      <div className="mt-4 aspect-[16/9] md:aspect-[2.2/1] bg-[var(--bg-elevated)] overflow-hidden md:rounded-[var(--radius-lg)] md:max-w-[1000px] md:mx-auto">
+      <div className="mt-5 aspect-video md:aspect-[2.4/1] bg-[var(--color-surface-subtle)] overflow-hidden md:max-w-[1200px] md:mx-auto">
         {listing.photos[0] ? (
           <img
             src={listing.photos[0]}
-            alt={`${listing.name}`}
+            alt={listing.name}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -63,45 +63,47 @@ export default async function ListingPage({ params }: PageProps) {
       </div>
 
       {/* Content */}
-      <div className="px-6 mt-8 max-w-[680px] mx-auto">
-        {/* Header */}
-        <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
-          <CategoryIcon category={listing.category} size={13} />
+      <div className="px-5 md:px-10 mt-10 max-w-[860px] mx-auto">
+        {/* Category + barangay */}
+        <div className="flex items-center gap-2 text-[13px] tracking-tight text-[var(--color-text-primary)]">
+          <CategoryIcon category={listing.category} size={14} />
           <span>{category.label}</span>
-          <span className="text-[var(--text-dim)]">·</span>
-          <MapPin size={12} />
+          <span className="opacity-40">·</span>
+          <MapPin size={13} />
           <span>{listing.barangay}</span>
         </div>
 
-        <h1 className="mt-3 text-3xl md:text-4xl text-[var(--text)] leading-tight">
+        {/* Name */}
+        <h1 className="mt-3 text-[32px] md:text-[44px] font-bold text-[var(--color-text-secondary)] leading-tight tracking-[-0.03em]">
           {listing.name}
         </h1>
 
+        {/* Rating */}
         <div className="flex items-center gap-3 mt-3">
-          <StarRating rating={listing.rating} size={16} />
-          <span className="text-sm text-[var(--text-muted)]">
+          <StarRating rating={listing.rating} size={18} />
+          <span className="text-[14px] tracking-tight text-[var(--color-text-primary)]">
             {listing.reviewCount} reviews
           </span>
         </div>
 
         {/* Editorial review */}
-        <blockquote className="mt-8 pl-4 border-l-2 border-[var(--accent)] text-base md:text-lg leading-relaxed text-[var(--text-muted)] italic">
+        <blockquote className="mt-8 pl-5 border-l-[3px] border-[var(--color-accent)] text-[16px] md:text-[18px] leading-relaxed text-[var(--color-text-primary)] italic">
           &ldquo;{listing.foundersReview}&rdquo;
         </blockquote>
 
         {/* Description */}
-        <p className="mt-8 text-sm leading-relaxed text-[var(--text-muted)]">
+        <p className="mt-8 text-[15px] leading-relaxed tracking-tight text-[var(--color-text-primary)]">
           {listing.description}
         </p>
 
         {/* Contact block */}
-        <div className="mt-8 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--bg-elevated)] overflow-hidden">
+        <div className="mt-10 border border-[var(--color-border)] bg-white overflow-hidden divide-y divide-[var(--color-border)]">
           {listing.contactPhone && (
             <a
               href={`tel:${listing.contactPhone}`}
-              className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text)] hover:bg-[var(--bg-hover)] transition-colors border-b border-[var(--border)]"
+              className="flex items-center gap-4 px-5 py-4 text-[14px] tracking-tight text-[var(--color-text-secondary)] hover:bg-[var(--color-accent-light)] transition-colors"
             >
-              <Phone size={16} className="text-[var(--accent)]" />
+              <Phone size={18} className="text-[var(--color-accent)] shrink-0" />
               {listing.contactPhone}
             </a>
           )}
@@ -110,14 +112,14 @@ export default async function ListingPage({ params }: PageProps) {
               href={listing.contactFacebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text)] hover:bg-[var(--bg-hover)] transition-colors border-b border-[var(--border)]"
+              className="flex items-center gap-4 px-5 py-4 text-[14px] tracking-tight text-[var(--color-text-secondary)] hover:bg-[var(--color-accent-light)] transition-colors"
             >
-              <FacebookLogo size={16} className="text-[var(--accent)]" />
-              Facebook
+              <FacebookLogo size={18} className="text-[var(--color-accent)] shrink-0" />
+              Facebook page
             </a>
           )}
-          <div className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-muted)]">
-            <MapPin size={16} className="text-[var(--accent)]" />
+          <div className="flex items-center gap-4 px-5 py-4 text-[14px] tracking-tight text-[var(--color-text-primary)]">
+            <MapPin size={18} className="text-[var(--color-accent)] shrink-0" />
             {listing.barangay}, Marikina City
           </div>
         </div>
@@ -126,14 +128,23 @@ export default async function ListingPage({ params }: PageProps) {
         <PhotoGallery photos={listing.photos} name={listing.name} />
 
         {/* Menu */}
-        <div className="mt-10">
-          <h2 className="text-xl text-[var(--text)] mb-4">Menu</h2>
-          <div className="rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--bg-elevated)] overflow-hidden divide-y divide-[var(--border)]">
+        <div className="mt-12">
+          <h2 className="text-[22px] md:text-[26px] font-bold text-[var(--color-text-secondary)] tracking-[-0.02em] mb-5">
+            Menu
+          </h2>
+          <div className="border border-[var(--color-border)] bg-white overflow-hidden divide-y divide-[var(--color-border)]">
             {listing.products.map((product, i) => (
-              <div key={i} className="flex items-center justify-between px-4 py-3 hover:bg-[var(--bg-hover)] transition-colors">
-                <span className="text-sm text-[var(--text)]">{product.name}</span>
+              <div
+                key={i}
+                className="flex items-center justify-between px-5 py-4 hover:bg-[var(--color-accent-light)] transition-colors"
+              >
+                <span className="text-[15px] tracking-tight text-[var(--color-text-secondary)]">
+                  {product.name}
+                </span>
                 {product.price && (
-                  <span className="text-sm font-semibold text-[var(--accent)]">{product.price}</span>
+                  <span className="text-[15px] font-bold tracking-tight text-[var(--color-accent)]">
+                    {product.price}
+                  </span>
                 )}
               </div>
             ))}
@@ -151,13 +162,30 @@ export default async function ListingPage({ params }: PageProps) {
           category={listing.category}
         />
 
-        {/* Share */}
-        <div className="mt-10">
+        {/* CTAs */}
+        <div className="mt-12 flex flex-col sm:flex-row gap-3">
+          {listing.contactPhone && (
+            <a
+              href={`tel:${listing.contactPhone}`}
+              className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-accent-red)] text-white text-[15px] font-bold tracking-tight px-6 py-4 hover:opacity-90 transition-opacity"
+            >
+              <Phone size={18} weight="bold" /> Call now
+            </a>
+          )}
+          {listing.contactFacebook && (
+            <a
+              href={listing.contactFacebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-accent)] text-white text-[15px] font-bold tracking-tight px-6 py-4 hover:opacity-90 transition-opacity"
+            >
+              <FacebookLogo size={18} weight="bold" /> Facebook
+            </a>
+          )}
           <ShareButton title={listing.name} slug={listing.slug} />
         </div>
       </div>
 
-      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -166,9 +194,22 @@ export default async function ListingPage({ params }: PageProps) {
             "@type": "LocalBusiness",
             name: listing.name,
             description: listing.description,
-            address: { "@type": "PostalAddress", addressLocality: "Marikina City", addressRegion: "Metro Manila", addressCountry: "PH" },
-            geo: { "@type": "GeoCoordinates", latitude: listing.latitude, longitude: listing.longitude },
-            aggregateRating: { "@type": "AggregateRating", ratingValue: listing.rating, reviewCount: listing.reviewCount },
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Marikina City",
+              addressRegion: "Metro Manila",
+              addressCountry: "PH",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: listing.latitude,
+              longitude: listing.longitude,
+            },
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: listing.rating,
+              reviewCount: listing.reviewCount,
+            },
           }),
         }}
       />

@@ -7,12 +7,11 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <main className="px-4 md:px-6 pt-10 pb-16 max-w-[640px] mx-auto">
-      <h1 className="text-[26px] md:text-[32px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
+    <main className="px-5 md:px-10 pt-12 pb-20 max-w-[800px] mx-auto">
+      <h1 className="text-[36px] md:text-[48px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
         About
       </h1>
-
-      <div className="mt-8 space-y-5 text-[14px] leading-[1.75] tracking-tight text-[var(--color-text-primary)]">
+      <div className="mt-10 space-y-6 text-[16px] leading-[1.8] tracking-tight text-[var(--color-text-primary)]">
         <p>
           G sa Marikina is a food directory for one city: Marikina. Each spot
           gets a page with photos, a menu, a location, and a way to order.
@@ -27,8 +26,7 @@ export default function AboutPage() {
           the map to see what is near you.
         </p>
       </div>
-
-      <p className="mt-10 text-[11px] tracking-tight text-[var(--color-text-primary)] opacity-60">
+      <p className="mt-12 text-[13px] tracking-tight text-[var(--color-text-primary)] opacity-60">
         Built for the Marikina food community.
       </p>
     </main>

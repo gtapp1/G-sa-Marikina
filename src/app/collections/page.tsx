@@ -15,37 +15,37 @@ export default function CollectionsPage() {
   const collections = getCollections();
 
   return (
-    <main className="px-4 md:px-6 pt-8 pb-16 max-w-[800px] mx-auto">
-      <p className="text-[var(--color-accent-red)] text-[11px] font-bold uppercase tracking-[0.06em]">
+    <main className="px-5 md:px-10 pt-12 pb-20 max-w-[960px] mx-auto">
+      <p className="text-[var(--color-accent-red)] text-[13px] font-bold uppercase tracking-[0.07em]">
         Curated
       </p>
-      <h1 className="mt-1 text-[26px] md:text-[32px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
+      <h1 className="mt-2 text-[36px] md:text-[48px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
         Guides
       </h1>
-      <p className="mt-2 text-[13px] tracking-tight text-[var(--color-text-primary)] leading-relaxed">
+      <p className="mt-3 text-[15px] tracking-tight text-[var(--color-text-primary)] leading-relaxed">
         Handpicked guides to eating well in Marikina City.
       </p>
 
-      <div className="mt-12 space-y-16">
+      <div className="mt-14 space-y-20">
         {collections.map((collection) => (
           <section key={collection.id}>
-            <h2 className="text-[20px] md:text-[24px] font-bold text-[var(--color-text-secondary)] tracking-[-0.02em]">
+            <h2 className="text-[24px] md:text-[30px] font-bold text-[var(--color-text-secondary)] tracking-[-0.02em]">
               {collection.title}
             </h2>
-            <p className="mt-1 text-[13px] tracking-tight text-[var(--color-text-primary)]">
+            <p className="mt-2 text-[14px] tracking-tight text-[var(--color-text-primary)]">
               {collection.blurb}
             </p>
 
-            <div className="mt-6 space-y-8">
+            <div className="mt-8 space-y-10">
               {collection.listings.map((listing, idx) => {
                 const cat = CATEGORY_LABELS[listing.category];
                 return (
-                  <article key={listing.slug} className="group flex gap-4">
-                    <span className="shrink-0 text-[18px] font-bold text-[var(--color-text-primary)] opacity-30 w-6 text-right leading-none pt-1">
+                  <article key={listing.slug} className="group flex gap-6">
+                    <span className="shrink-0 text-[22px] font-bold text-[var(--color-text-primary)] opacity-25 w-8 text-right leading-none pt-1">
                       {idx + 1}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <div className="aspect-video overflow-hidden bg-[var(--color-surface-subtle)] mb-3">
+                      <div className="aspect-video overflow-hidden bg-[var(--color-surface-subtle)] mb-4">
                         {listing.photos[0] ? (
                           <img
                             src={listing.photos[0]}
@@ -58,24 +58,24 @@ export default function CollectionsPage() {
                       </div>
                       <Link
                         href={`/${listing.slug}`}
-                        className="text-[15px] font-bold tracking-tight text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+                        className="text-[18px] font-bold tracking-tight text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
                       >
                         {listing.name}
                       </Link>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[11px] tracking-tight text-[var(--color-text-primary)]">{cat.label}</span>
-                        <span className="text-[11px] text-[var(--color-text-primary)] opacity-40">·</span>
-                        <span className="text-[11px] tracking-tight text-[var(--color-text-primary)]">{listing.barangay}</span>
-                        <StarRating rating={listing.rating} size={11} />
+                      <div className="flex items-center gap-2 mt-1.5">
+                        <span className="text-[13px] tracking-tight text-[var(--color-text-primary)]">{cat.label}</span>
+                        <span className="text-[13px] text-[var(--color-text-primary)] opacity-40">·</span>
+                        <span className="text-[13px] tracking-tight text-[var(--color-text-primary)]">{listing.barangay}</span>
+                        <StarRating rating={listing.rating} size={13} />
                       </div>
-                      <p className="mt-2 text-[13px] tracking-tight text-[var(--color-text-primary)] leading-relaxed">
+                      <p className="mt-3 text-[14px] tracking-tight text-[var(--color-text-primary)] leading-relaxed">
                         {listing.foundersReview}
                       </p>
                       <Link
                         href={`/${listing.slug}`}
-                        className="inline-flex items-center gap-1 mt-2 text-[11px] font-bold tracking-tight text-[var(--color-accent)]"
+                        className="inline-flex items-center gap-1.5 mt-3 text-[13px] font-bold tracking-tight text-[var(--color-accent)]"
                       >
-                        View <ArrowRight size={11} />
+                        View <ArrowRight size={13} />
                       </Link>
                     </div>
                   </article>

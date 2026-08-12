@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 
 export default function SearchPage() {
   return (
-    <main className="px-4 md:px-6 pt-8 pb-16 max-w-[1200px] mx-auto">
-      <h1 className="text-[26px] md:text-[32px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
+    <main className="px-5 md:px-10 pt-10 pb-20 max-w-[1400px] mx-auto">
+      <h1 className="text-[32px] md:text-[42px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
         Search
       </h1>
-      <p className="mt-1 text-[13px] tracking-tight text-[var(--color-text-primary)] mb-7">
+      <p className="mt-2 text-[15px] tracking-tight text-[var(--color-text-primary)] mb-8">
         Find a spot by name, dish, or area.
       </p>
       <Suspense fallback={

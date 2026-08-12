@@ -2,30 +2,28 @@
 
 /*
   G sa Marikina — Resy-inspired design system
-  White bg, tight bold sans (Sora ~ Beatrice), red + orange accent combo.
-  Tight letter-spacing throughout — Resy's "crowded" kerning style.
+  Warm orange background, bold Sora/Beatrice-like type, red + orange accents.
+  Bigger, more generous sizing throughout.
 */
 :root {
-  /* Colors — red + orange prominent throughout */
   --color-text-primary: #6B3A2A;
   --color-text-secondary: #1A0A00;
   --color-text-inverse: #FFFFFF;
-  --color-surface-base: #000000;
-  --color-surface-muted: #FFF8F3;      /* Warm orange-tinted background */
-  --color-surface-subtle: #FFEEDD;     /* Slightly deeper warm surface */
-  --color-surface-card: #FFFFFF;       /* Cards stay white for contrast */
+  --color-surface-muted: #FFF8F3;
+  --color-surface-subtle: #FFEEDD;
+  --color-surface-card: #FFFFFF;
   --color-accent: #E8590C;
   --color-accent-hover: #C4320A;
   --color-accent-red: #EB1700;
   --color-accent-light: #FFE8D6;
-  --color-border: #F0D0B8;             /* Warm border matching the bg */
+  --color-border: #F0D0B8;
   --color-border-strong: #D4956A;
   --color-error: #DC2626;
   --color-success: #16A34A;
 
   --radius-xs: 4px;
-  --radius-sm: 5px;
-  --radius-md: 8px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
   --radius-lg: 20px;
   --radius-pill: 50px;
 
@@ -42,14 +40,13 @@ body {
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.6;
   letter-spacing: -0.01em;
   color: var(--color-text-secondary);
   background-color: var(--color-surface-muted);
   -webkit-font-smoothing: antialiased;
 }
 
-/* All headings — bold, tight tracking (Beatrice style) */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), var(--font-body), system-ui, sans-serif;
   font-weight: 700;
@@ -57,21 +54,11 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.03em;
 }
 
-/* Utility: extra tight tracking for display text */
-.tracking-tight {
-  letter-spacing: -0.03em;
-}
-.tracking-tighter {
-  letter-spacing: -0.04em;
-}
-
-/* Focus */
 *:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -79,7 +66,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Scrollbar hide */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

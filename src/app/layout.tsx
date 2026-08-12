@@ -39,7 +39,7 @@ export default function RootLayout({
       <html lang="en" className={`${sora.variable} ${soraBody.variable}`}>
         <body>
           <NavBar />
-          <div className="pt-14 md:pt-[60px]">
+          <div className="pt-16 md:pt-20">
             {children}
           </div>
           <Footer />
