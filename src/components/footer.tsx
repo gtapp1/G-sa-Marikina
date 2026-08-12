@@ -78,10 +78,21 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-14 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <div className="mt-14 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <span className="text-[13px] tracking-tight text-[var(--color-text-primary)]">
             &copy; {new Date().getFullYear()} G sa Marikina
           </span>
+          <div className="flex items-center gap-5">
+            <Link href="/terms" className="text-[13px] tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
+              Terms
+            </Link>
+            <Link href="/privacy" className="text-[13px] tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
+              Privacy
+            </Link>
+            <Link href="/guidelines" className="text-[13px] tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
+              Guidelines
+            </Link>
+          </div>
           <span className="text-[13px] tracking-tight text-[var(--color-text-primary)]">
             Made for the Marikina food community.
           </span>
