@@ -3,16 +3,10 @@
 import { useMemo, useState } from "react";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { listings } from "@/data/listings";
-import {
-  CATEGORY_LABELS,
-  CategoryEnum,
-  Category,
-} from "@/types/listing";
+import { CATEGORY_LABELS, CategoryEnum, Category } from "@/types/listing";
 import { ListingCard } from "./listing-card";
 
-const BARANGAYS = Array.from(
-  new Set(listings.map((l) => l.barangay))
-).sort();
+const BARANGAYS = Array.from(new Set(listings.map((l) => l.barangay))).sort();
 
 export function SearchFilters() {
   const [query, setQuery] = useState("");
@@ -32,9 +26,7 @@ export function SearchFilters() {
       const matchesCategory = category === "all" || l.category === category;
       const matchesBarangay = barangay === "all" || l.barangay === barangay;
       const matchesRating = l.rating >= minRating;
-      return (
-        matchesQuery && matchesCategory && matchesBarangay && matchesRating
-      );
+      return matchesQuery && matchesCategory && matchesBarangay && matchesRating;
     });
   }, [query, category, barangay, minRating]);
 
@@ -52,7 +44,7 @@ export function SearchFilters() {
     <div>
       {/* Search input */}
       <div className="relative">
-        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-secondary)]">
+        <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[var(--text-dim)]">
           <MagnifyingGlass size={18} />
         </span>
         <input
@@ -61,88 +53,73 @@ export function SearchFilters() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by name, dish, or barangay"
           aria-label="Search food spots"
-          className="w-full rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] py-3 pl-10 pr-4 text-base text-[var(--color-text-primary)] placeholder:text-[var(--color-text-secondary)] focus:border-[var(--color-primary)] focus:outline-none"
+          className="w-full rounded-[var(--radius-md)] border border-[var(--border-strong)] bg-[var(--bg-elevated)] py-3 pl-10 pr-4 text-sm text-[var(--text)] placeholder:text-[var(--text-dim)] focus:border-[var(--accent)] focus:outline-none transition-colors"
         />
       </div>
 
       {/* Filters */}
       <div className="mt-4 flex flex-wrap gap-3">
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[var(--color-text-secondary)]">
-          Category
-          <select
-            value={category}
-            onChange={(e) =>
-              setCategory(e.target.value as Category | "all")
-            }
-            className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-normal text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none"
-          >
-            <option value="all">All categories</option>
-            {CategoryEnum.options.map((c) => (
-              <option key={c} value={c}>
-                {CATEGORY_LABELS[c].label}
-              </option>
-            ))}
-          </select>
-        </label>
+        <select
+          value={category}
+          onChange={(e) => setCategory(e.target.value as Category | "all")}
+          aria-label="Category"
+          className="rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3 py-2 text-sm text-[var(--text)] focus:border-[var(--accent)] focus:outline-none"
+        >
+          <option value="all">All categories</option>
+          {CategoryEnum.options.map((c) => (
+            <option key={c} value={c}>{CATEGORY_LABELS[c].label}</option>
+          ))}
+        </select>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[var(--color-text-secondary)]">
-          Barangay
-          <select
-            value={barangay}
-            onChange={(e) => setBarangay(e.target.value)}
-            className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-normal text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none"
-          >
-            <option value="all">All areas</option>
-            {BARANGAYS.map((b) => (
-              <option key={b} value={b}>
-                {b}
-              </option>
-            ))}
-          </select>
-        </label>
+        <select
+          value={barangay}
+          onChange={(e) => setBarangay(e.target.value)}
+          aria-label="Barangay"
+          className="rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3 py-2 text-sm text-[var(--text)] focus:border-[var(--accent)] focus:outline-none"
+        >
+          <option value="all">All areas</option>
+          {BARANGAYS.map((b) => (
+            <option key={b} value={b}>{b}</option>
+          ))}
+        </select>
 
-        <label className="flex flex-col gap-1 text-xs font-semibold text-[var(--color-text-secondary)]">
-          Min rating
-          <select
-            value={minRating}
-            onChange={(e) => setMinRating(Number(e.target.value))}
-            className="rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-normal text-[var(--color-text-primary)] focus:border-[var(--color-primary)] focus:outline-none"
-          >
-            <option value={0}>Any rating</option>
-            <option value={3}>3+ stars</option>
-            <option value={4}>4+ stars</option>
-            <option value={5}>5 stars</option>
-          </select>
-        </label>
+        <select
+          value={minRating}
+          onChange={(e) => setMinRating(Number(e.target.value))}
+          aria-label="Minimum rating"
+          className="rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--bg-elevated)] px-3 py-2 text-sm text-[var(--text)] focus:border-[var(--accent)] focus:outline-none"
+        >
+          <option value={0}>Any rating</option>
+          <option value={3}>3+ stars</option>
+          <option value={4}>4+ stars</option>
+          <option value={5}>5 stars</option>
+        </select>
 
         {hasActiveFilters && (
           <button
             onClick={clearAll}
-            className="mt-auto inline-flex items-center gap-1 rounded-[var(--radius-sm)] px-3 py-2 text-sm font-semibold text-[var(--color-primary-text)] hover:underline"
+            className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-[var(--accent)] hover:underline"
           >
-            <X size={14} weight="bold" /> Clear
+            <X size={14} /> Clear
           </button>
         )}
       </div>
 
-      {/* Result count */}
-      <p className="mt-6 text-sm text-[var(--color-text-secondary)]">
-        {results.length} {results.length === 1 ? "spot" : "spots"} found
+      {/* Results */}
+      <p className="mt-6 text-xs text-[var(--text-dim)]">
+        {results.length} {results.length === 1 ? "spot" : "spots"}
       </p>
 
-      {/* Results */}
       {results.length > 0 ? (
-        <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-4 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((listing) => (
             <ListingCard key={listing.slug} listing={listing} />
           ))}
         </div>
       ) : (
-        <div className="mt-10 text-center">
-          <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[var(--color-text-primary)]">
-            No spots match your search
-          </h2>
-          <p className="mt-2 text-[var(--color-text-secondary)]">
+        <div className="mt-12 text-center">
+          <p className="text-base text-[var(--text)]">No spots found</p>
+          <p className="mt-2 text-sm text-[var(--text-muted)]">
             Try a different keyword or clear the filters.
           </p>
         </div>

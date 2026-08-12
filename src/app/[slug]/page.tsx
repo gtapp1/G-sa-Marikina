@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
-import { Phone, FacebookLogo, ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+import { Phone, FacebookLogo, ArrowLeft, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { listings } from "@/data/listings";
 import { CATEGORY_LABELS } from "@/types/listing";
 import { StarRating } from "@/components/star-rating";
@@ -24,46 +24,37 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const listing = listings.find((l) => l.slug === slug);
   if (!listing) return { title: "Not Found" };
-
   return {
     title: `${listing.name} — G sa Marikina`,
     description: listing.description,
-    openGraph: {
-      title: `${listing.name} — G sa Marikina`,
-      description: listing.description,
-      type: "website",
-    },
   };
 }
 
 export default async function ListingPage({ params }: PageProps) {
   const { slug } = await params;
   const listing = listings.find((l) => l.slug === slug);
-
-  if (!listing) {
-    notFound();
-  }
+  if (!listing) notFound();
 
   const category = CATEGORY_LABELS[listing.category];
 
   return (
-    <main className="min-h-screen pb-24">
-      {/* Back link */}
-      <div className="px-6 pt-6">
+    <main className="pb-24">
+      {/* Back */}
+      <div className="px-6 pt-6 max-w-[800px] mx-auto">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary-text)] transition-colors"
+          className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
         >
-          <ArrowLeft size={16} /> Back to all spots
+          <ArrowLeft size={14} /> Back
         </Link>
       </div>
 
       {/* Hero photo */}
-      <div className="mt-4 aspect-[16/9] md:aspect-[21/9] bg-[var(--color-border)] relative overflow-hidden md:rounded-[var(--radius-md)] md:max-w-[1200px] md:mx-auto">
+      <div className="mt-4 aspect-[16/9] md:aspect-[2.2/1] bg-[var(--bg-elevated)] overflow-hidden md:rounded-[var(--radius-lg)] md:max-w-[1000px] md:mx-auto">
         {listing.photos[0] ? (
           <img
             src={listing.photos[0]}
-            alt={`${listing.name} - hero photo`}
+            alt={`${listing.name}`}
             className="w-full h-full object-cover"
           />
         ) : (
@@ -72,92 +63,46 @@ export default async function ListingPage({ params }: PageProps) {
       </div>
 
       {/* Content */}
-      <div className="px-6 mt-8 max-w-[760px] mx-auto">
+      <div className="px-6 mt-8 max-w-[680px] mx-auto">
         {/* Header */}
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h1 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-extrabold text-[var(--color-text-primary)]">
-              {listing.name}
-            </h1>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 text-xs rounded-full border border-[var(--color-border)] text-[var(--color-text-secondary)]">
-                <CategoryIcon category={listing.category} size={14} />
-                {category.label}
-              </span>
-              <span className="text-sm text-[var(--color-text-secondary)]">
-                {listing.barangay}
-              </span>
-            </div>
-          </div>
-          <div className="flex flex-col items-end gap-1">
-            <StarRating rating={listing.rating} size={20} />
-            <span className="text-xs text-[var(--color-text-secondary)]">
-              {listing.reviewCount} reviews
-            </span>
-          </div>
+        <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
+          <CategoryIcon category={listing.category} size={13} />
+          <span>{category.label}</span>
+          <span className="text-[var(--text-dim)]">·</span>
+          <MapPin size={12} />
+          <span>{listing.barangay}</span>
         </div>
 
+        <h1 className="mt-3 text-3xl md:text-4xl text-[var(--text)] leading-tight">
+          {listing.name}
+        </h1>
+
+        <div className="flex items-center gap-3 mt-3">
+          <StarRating rating={listing.rating} size={16} />
+          <span className="text-sm text-[var(--text-muted)]">
+            {listing.reviewCount} reviews
+          </span>
+        </div>
+
+        {/* Editorial review */}
+        <blockquote className="mt-8 pl-4 border-l-2 border-[var(--accent)] text-base md:text-lg leading-relaxed text-[var(--text-muted)] italic">
+          &ldquo;{listing.foundersReview}&rdquo;
+        </blockquote>
+
         {/* Description */}
-        <p className="mt-6 text-base text-[var(--color-text-primary)] leading-relaxed">
+        <p className="mt-8 text-sm leading-relaxed text-[var(--text-muted)]">
           {listing.description}
         </p>
 
-        {/* Photo Gallery */}
-        <PhotoGallery photos={listing.photos} name={listing.name} />
-
-        {/* Products / Menu */}
-        <div className="mt-8">
-          <h2 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[var(--color-text-primary)] mb-3">
-            Menu
-          </h2>
-          <ul className="space-y-2">
-            {listing.products.map((product, i) => (
-              <li
-                key={i}
-                className="flex items-center justify-between py-2 border-b border-[var(--color-border)] last:border-0"
-              >
-                <span className="text-sm text-[var(--color-text-primary)]">
-                  {product.name}
-                </span>
-                {product.price && (
-                  <span className="text-sm font-semibold text-[var(--color-primary-text)]">
-                    {product.price}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Founder's Review */}
-        <div className="mt-8 p-4 bg-[var(--color-surface)] rounded-[var(--radius-md)] border border-[var(--color-border)]">
-          <p className="text-xs font-semibold text-[var(--color-primary-text)] uppercase tracking-wide mb-2">
-            Our take
-          </p>
-          <p className="text-sm text-[var(--color-text-primary)] leading-relaxed italic">
-            &ldquo;{listing.foundersReview}&rdquo;
-          </p>
-        </div>
-
-        {/* Reviews */}
-        <Reviews slug={listing.slug} />
-
-        {/* Location map */}
-        <ListingLocation
-          latitude={listing.latitude}
-          longitude={listing.longitude}
-          barangay={listing.barangay}
-          category={listing.category}
-        />
-
-        {/* Contact buttons */}
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+        {/* Contact block */}
+        <div className="mt-8 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--bg-elevated)] overflow-hidden">
           {listing.contactPhone && (
             <a
               href={`tel:${listing.contactPhone}`}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-[var(--radius-sm)] hover:bg-[var(--color-primary-hover)] transition-colors text-sm"
+              className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text)] hover:bg-[var(--bg-hover)] transition-colors border-b border-[var(--border)]"
             >
-              <Phone size={18} weight="bold" /> Call
+              <Phone size={16} className="text-[var(--accent)]" />
+              {listing.contactPhone}
             </a>
           )}
           {listing.contactFacebook && (
@@ -165,16 +110,54 @@ export default async function ListingPage({ params }: PageProps) {
               href={listing.contactFacebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-[var(--color-primary)] text-white font-semibold rounded-[var(--radius-sm)] hover:bg-[var(--color-primary-hover)] transition-colors text-sm"
+              className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text)] hover:bg-[var(--bg-hover)] transition-colors border-b border-[var(--border)]"
             >
-              <FacebookLogo size={18} weight="bold" /> Facebook
+              <FacebookLogo size={16} className="text-[var(--accent)]" />
+              Facebook
             </a>
           )}
+          <div className="flex items-center gap-3 px-4 py-3 text-sm text-[var(--text-muted)]">
+            <MapPin size={16} className="text-[var(--accent)]" />
+            {listing.barangay}, Marikina City
+          </div>
+        </div>
+
+        {/* Photo Gallery */}
+        <PhotoGallery photos={listing.photos} name={listing.name} />
+
+        {/* Menu */}
+        <div className="mt-10">
+          <h2 className="text-xl text-[var(--text)] mb-4">Menu</h2>
+          <div className="rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--bg-elevated)] overflow-hidden divide-y divide-[var(--border)]">
+            {listing.products.map((product, i) => (
+              <div key={i} className="flex items-center justify-between px-4 py-3 hover:bg-[var(--bg-hover)] transition-colors">
+                <span className="text-sm text-[var(--text)]">{product.name}</span>
+                {product.price && (
+                  <span className="text-sm font-semibold text-[var(--accent)]">{product.price}</span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Reviews */}
+        <Reviews slug={listing.slug} />
+
+        {/* Location */}
+        <ListingLocation
+          latitude={listing.latitude}
+          longitude={listing.longitude}
+          barangay={listing.barangay}
+          category={listing.category}
+        />
+
+        {/* Share */}
+        <div className="mt-10">
           <ShareButton title={listing.name} slug={listing.slug} />
         </div>
       </div>
 
-      {/* JSON-LD Structured Data */}
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -183,22 +166,9 @@ export default async function ListingPage({ params }: PageProps) {
             "@type": "LocalBusiness",
             name: listing.name,
             description: listing.description,
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Marikina City",
-              addressRegion: "Metro Manila",
-              addressCountry: "PH",
-            },
-            geo: {
-              "@type": "GeoCoordinates",
-              latitude: listing.latitude,
-              longitude: listing.longitude,
-            },
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: listing.rating,
-              reviewCount: listing.reviewCount,
-            },
+            address: { "@type": "PostalAddress", addressLocality: "Marikina City", addressRegion: "Metro Manila", addressCountry: "PH" },
+            geo: { "@type": "GeoCoordinates", latitude: listing.latitude, longitude: listing.longitude },
+            aggregateRating: { "@type": "AggregateRating", ratingValue: listing.rating, reviewCount: listing.reviewCount },
           }),
         }}
       />
