@@ -98,35 +98,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Red banner CTA — Resy style */}
-      <section className="mt-12 md:mt-20 bg-[var(--color-accent-red)] py-14 md:py-20 px-6">
-        <div className="mx-auto max-w-[1200px] flex flex-col md:flex-row items-center justify-between gap-8">
-          <div>
-            <h2 className="text-white text-[26px] md:text-[34px] font-bold leading-[1.15] tracking-[-0.03em] max-w-md">
-              Your next favorite food spot is a few taps away.
-            </h2>
-            <p className="mt-3 text-white/80 text-[13px] tracking-tight max-w-sm leading-relaxed">
-              Discover local spots in Marikina — home bakers, milk tea shops, karinderyas, and street eats.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link
-                href="/search"
-                className="inline-flex items-center gap-2 bg-white text-[var(--color-accent-red)] text-[12px] font-bold tracking-tight px-5 py-2.5 rounded-[var(--radius-sm)] hover:bg-white/90 transition-colors duration-[var(--motion-fast)]"
-              >
-                Explore now
-              </Link>
-              <Link
-                href="/map"
-                className="inline-flex items-center gap-2 border border-white/40 text-white text-[12px] font-bold tracking-tight px-5 py-2.5 rounded-[var(--radius-sm)] hover:bg-white/10 transition-colors duration-[var(--motion-fast)]"
-              >
-                Open map
-              </Link>
-            </div>
-          </div>
+      {/* Red banner CTA — full-width, bottom of page, Resy exact layout */}
+      <section className="mt-12 md:mt-16 bg-[var(--color-accent-red)] px-4 md:px-6 py-10 md:py-14">
+        <div className="mx-auto max-w-[1200px]">
+          <h2 className="text-white text-[20px] md:text-[24px] font-bold leading-[1.2] tracking-[-0.03em]">
+            Your next favorite food spot is a few taps away.
+          </h2>
+          <p className="mt-2 text-white/70 text-[12px] md:text-[13px] tracking-tight leading-relaxed max-w-md">
+            Discover local spots in Marikina — home bakers, milk tea shops, karinderyas, and street eats.
+          </p>
         </div>
       </section>
-
-      <div className="h-10" />
     </main>
   );
 }
