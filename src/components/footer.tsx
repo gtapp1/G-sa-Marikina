@@ -21,12 +21,12 @@ export function Footer() {
 
         {/* Massive G! logo — hero of the footer */}
         <div className="mb-14">
-          <Link href="/" className="inline-flex items-end gap-5 group">
+          <Link href="/" className="inline-flex items-center gap-5 group">
             <span className="inline-block bg-[var(--color-accent-red)] text-white font-extrabold leading-none tracking-tight group-hover:opacity-90 transition-opacity"
               style={{ fontSize: "80px", padding: "16px 28px" }}>
               G!
             </span>
-            <span className="text-[28px] md:text-[36px] font-bold tracking-tight text-[var(--color-text-secondary)] pb-3 group-hover:text-[var(--color-accent)] transition-colors">
+            <span className="text-[28px] md:text-[36px] font-bold tracking-tight text-[var(--color-accent)] group-hover:text-[var(--color-accent-hover)] transition-colors">
               sa Marikina
             </span>
           </Link>
