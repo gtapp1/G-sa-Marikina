@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { MagnifyingGlass, X } from "@phosphor-icons/react";
 import { listings } from "@/data/listings";
 import { CATEGORY_LABELS, CategoryEnum, Category } from "@/types/listing";
@@ -9,10 +10,18 @@ import { ListingCard } from "./listing-card";
 const BARANGAYS = Array.from(new Set(listings.map((l) => l.barangay))).sort();
 
 export function SearchFilters() {
-  const [query, setQuery] = useState("");
+  const searchParams = useSearchParams();
+  const urlQuery = searchParams.get("q") || "";
+
+  const [query, setQuery] = useState(urlQuery);
   const [category, setCategory] = useState<Category | "all">("all");
   const [barangay, setBarangay] = useState<string | "all">("all");
   const [minRating, setMinRating] = useState(0);
+
+  // Sync from URL param when it changes
+  useEffect(() => {
+    setQuery(urlQuery);
+  }, [urlQuery]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
