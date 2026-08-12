@@ -99,30 +99,7 @@ export function NavBar() {
         </nav>
       </header>
 
-      {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed inset-x-0 bottom-0 z-50 bg-white border-t border-[var(--color-border)]">
-        <div className="flex items-center justify-around h-14">
-          {[
-            { href: "/", label: "Home" },
-            { href: "/search", label: "Search" },
-            { href: "/map", label: "Map" },
-            { href: "/categories", label: "Browse" },
-          ].map((item) => {
-            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-[10px] font-bold uppercase tracking-[0.05em] transition-colors duration-[var(--motion-fast)] ${
-                  active ? "text-[var(--color-accent-red)]" : "text-[var(--color-text-primary)]"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      {/* Mobile bottom nav — removed, footer handles navigation on mobile */}
     </>
   );
 }

@@ -16,7 +16,7 @@ const INFO = [
 
 export function Footer() {
   return (
-    <footer className="hidden md:block border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)]">
+    <footer className="border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)]">
       <div className="mx-auto max-w-[1200px] px-6 py-10">
         <div className="flex flex-wrap gap-x-16 gap-y-8">
           {/* Brand */}
