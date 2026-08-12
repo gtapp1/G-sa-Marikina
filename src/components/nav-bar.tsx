@@ -2,137 +2,108 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { ComponentType } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import {
-  House,
-  MagnifyingGlass,
-  MapTrifold,
-  User,
-} from "@phosphor-icons/react";
-
-type NavIcon = ComponentType<{ size?: number; weight?: "regular" | "fill" }>;
-
-const DESKTOP_LINKS = [
-  { href: "/map", label: "Map" },
-  { href: "/categories", label: "Browse" },
-  { href: "/collections", label: "Guides" },
-  { href: "/about", label: "About" },
-];
-
-const MOBILE_TABS: { href: string; label: string; icon: NavIcon }[] = [
-  { href: "/", label: "Discover", icon: House },
-  { href: "/search", label: "Search", icon: MagnifyingGlass },
-  { href: "/map", label: "Map", icon: MapTrifold },
-];
+import { MagnifyingGlass } from "@phosphor-icons/react";
 
 export function NavBar() {
   const pathname = usePathname();
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
-
   return (
     <>
-      {/* Desktop nav */}
-      <header className="hidden md:block fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur-lg">
-        <nav className="mx-auto flex max-w-[1200px] items-center justify-between h-16 px-6">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-[var(--accent)] font-bold text-lg">G</span>
-            <span className="font-[family-name:var(--font-body)] text-sm font-semibold text-[var(--text)] tracking-tight">
-              sa Marikina
+      {/* Desktop/tablet nav — Resy-style single bar */}
+      <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-[var(--color-border)]">
+        <nav className="mx-auto flex max-w-[1200px] items-center h-14 md:h-[60px] px-4 md:px-6 gap-3 md:gap-5">
+          {/* Logo badge */}
+          <Link href="/" className="flex-shrink-0">
+            <span className="inline-block bg-[var(--color-surface-strong)] text-white text-[11px] font-bold px-2.5 py-1.5 rounded-[var(--radius-xs)] tracking-wider uppercase">
+              G sa Marikina
             </span>
           </Link>
 
-          {/* Center links */}
-          <div className="flex items-center gap-8">
-            {DESKTOP_LINKS.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`text-sm font-medium transition-colors duration-150 ${
-                    active
-                      ? "text-[var(--accent)]"
-                      : "text-[var(--text-muted)] hover:text-[var(--text)]"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </div>
+          {/* City */}
+          <span className="hidden md:inline text-sm font-medium text-[var(--color-surface-strong)]">
+            Marikina City ›
+          </span>
+
+          {/* Search bar */}
+          <Link
+            href="/search"
+            className="flex items-center gap-2 flex-1 max-w-[320px] rounded-[var(--radius-sm)] border border-[var(--color-border)] px-3 py-[7px] text-[13px] text-[var(--color-text-primary)] hover:border-[#BFBFBF] transition-[border-color] duration-[var(--motion-fast)]"
+          >
+            <MagnifyingGlass size={14} weight="bold" />
+            <span>Search spots, dishes…</span>
+          </Link>
 
           {/* Right side */}
-          <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-5 ml-auto text-sm font-medium">
             <Link
-              href="/search"
-              className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
-              aria-label="Search"
+              href="/map"
+              className={`transition-colors duration-[var(--motion-fast)] ${
+                pathname.startsWith("/map") ? "text-[var(--color-surface-strong)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-surface-strong)]"
+              }`}
             >
-              <MagnifyingGlass size={20} />
+              Map
+            </Link>
+            <Link
+              href="/collections"
+              className={`transition-colors duration-[var(--motion-fast)] ${
+                pathname.startsWith("/collections") ? "text-[var(--color-surface-strong)]" : "text-[var(--color-text-secondary)] hover:text-[var(--color-surface-strong)]"
+              }`}
+            >
+              Guides
             </Link>
             <SignedOut>
               <Link
                 href="/sign-in"
-                className="rounded-[var(--radius-sm)] bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-hover)]"
+                className="rounded-[var(--radius-sm)] border border-[var(--color-surface-strong)] px-3.5 py-1.5 text-[13px] font-bold text-[var(--color-surface-strong)] hover:bg-[var(--color-surface-strong)] hover:text-white transition-all duration-[var(--motion-fast)]"
               >
-                Sign in
+                Log in
               </Link>
             </SignedOut>
             <SignedIn>
-              <Link
-                href="/for-businesses/new"
-                className="text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
-              >
+              <Link href="/for-businesses/new" className="text-[var(--color-text-primary)] hover:text-[var(--color-text-secondary)] transition-colors">
                 List a spot
               </Link>
+              <UserButton />
+            </SignedIn>
+          </div>
+
+          {/* Mobile: just login */}
+          <div className="md:hidden ml-auto">
+            <SignedOut>
+              <Link href="/sign-in" className="text-[13px] font-bold text-[var(--color-surface-strong)]">
+                Log in
+              </Link>
+            </SignedOut>
+            <SignedIn>
               <UserButton />
             </SignedIn>
           </div>
         </nav>
       </header>
 
-      {/* Mobile bottom tabs */}
-      <nav className="md:hidden fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-lg">
-        <div className="flex items-center justify-around h-16">
-          {MOBILE_TABS.map((item) => {
-            const active = isActive(item.href);
-            const Icon = item.icon;
+      {/* Mobile bottom nav */}
+      <nav className="md:hidden fixed inset-x-0 bottom-0 z-50 bg-white border-t border-[var(--color-border)]">
+        <div className="flex items-center justify-around h-14">
+          {[
+            { href: "/", label: "Home" },
+            { href: "/search", label: "Search" },
+            { href: "/map", label: "Map" },
+            { href: "/categories", label: "Browse" },
+          ].map((item) => {
+            const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                aria-current={active ? "page" : undefined}
-                className={`flex flex-col items-center gap-1 px-4 py-2 text-[11px] font-medium transition-colors ${
-                  active
-                    ? "text-[var(--accent)]"
-                    : "text-[var(--text-muted)]"
+                className={`text-[11px] font-bold uppercase tracking-wide transition-colors duration-[var(--motion-fast)] ${
+                  active ? "text-[var(--color-surface-strong)]" : "text-[var(--color-text-primary)]"
                 }`}
               >
-                <Icon size={22} weight={active ? "fill" : "regular"} />
                 {item.label}
               </Link>
             );
           })}
-          <SignedIn>
-            <UserButton
-              appearance={{
-                elements: { avatarBox: "w-6 h-6" },
-              }}
-            />
-          </SignedIn>
-          <SignedOut>
-            <Link
-              href="/sign-in"
-              className={`flex flex-col items-center gap-1 px-4 py-2 text-[11px] font-medium text-[var(--text-muted)]`}
-            >
-              <User size={22} />
-              Account
-            </Link>
-          </SignedOut>
         </div>
       </nav>
     </>
