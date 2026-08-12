@@ -2,33 +2,24 @@
 
 /*
   G sa Marikina — Resy-inspired design system
-  Clean white, bold sans-serif, orange accent, tight spacing.
-  Adapted from Resy's Beatrice/GT America system.
+  White bg, tight bold sans (Sora ~ Beatrice), red + orange accent combo.
+  Tight letter-spacing throughout — Resy's "crowded" kerning style.
 */
 :root {
-  /* Colors — mapped from Resy tokens */
+  /* Colors — red + orange combo */
   --color-text-primary: #737373;
-  --color-text-secondary: #2A2A2A;
+  --color-text-secondary: #1A1A1A;
   --color-text-inverse: #FFFFFF;
   --color-surface-base: #000000;
   --color-surface-muted: #FFFFFF;
   --color-surface-subtle: #F7F7F7;
-  --color-surface-strong: #F97316; /* Resy uses #eb1700, we keep our orange */
+  --color-accent: #E8590C;       /* Deep burnt orange — primary accent */
+  --color-accent-hover: #C4320A;
+  --color-accent-red: #DC2626;   /* Red — secondary accent for badges, emphasis */
+  --color-accent-light: #FFF7ED;
   --color-border: #EBEBEB;
-  --color-error: #EF4444;
+  --color-error: #DC2626;
   --color-success: #16A34A;
-
-  /* Spacing — tight, intentional */
-  --space-1: 2px;
-  --space-2: 4px;
-  --space-3: 6px;
-  --space-4: 8px;
-  --space-5: 12px;
-  --space-6: 16px;
-  --space-7: 24px;
-  --space-8: 32px;
-  --space-9: 48px;
-  --space-10: 64px;
 
   /* Radius */
   --radius-xs: 4px;
@@ -37,24 +28,10 @@
   --radius-lg: 20px;
   --radius-pill: 50px;
 
-  /* Shadows */
-  --shadow-subtle: rgba(0, 0, 0, 0.08) 0px 1px 0px 0px inset;
-  --shadow-card: 0 1px 3px rgba(0,0,0,0.06);
-
   /* Motion */
   --motion-instant: 150ms;
   --motion-fast: 250ms;
   --motion-normal: 300ms;
-
-  /* Typography */
-  --font-size-xs: 10px;
-  --font-size-sm: 12px;
-  --font-size-md: 14px;
-  --font-size-lg: 16px;
-  --font-size-xl: 18px;
-  --font-size-2xl: 21px;
-  --font-size-3xl: 24px;
-  --font-size-4xl: 28px;
 }
 
 html {
@@ -63,25 +40,35 @@ html {
 
 body {
   font-family: var(--font-body), system-ui, sans-serif;
-  font-size: var(--font-size-lg);
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.5;
+  letter-spacing: -0.01em;
   color: var(--color-text-secondary);
   background-color: var(--color-surface-muted);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Headings — bold sans like Resy's Beatrice */
+/* All headings — bold, tight tracking (Beatrice style) */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading), var(--font-body), system-ui, sans-serif;
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   color: var(--color-text-secondary);
+}
+
+/* Utility: extra tight tracking for display text */
+.tracking-tight {
+  letter-spacing: -0.03em;
+}
+.tracking-tighter {
+  letter-spacing: -0.04em;
 }
 
 /* Focus */
 *:focus-visible {
-  outline: 2px solid var(--color-surface-strong);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 

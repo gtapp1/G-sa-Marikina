@@ -16,30 +16,30 @@ const INFO = [
 
 export function Footer() {
   return (
-    <footer className="hidden md:block border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)]">
+    <footer className="hidden md:block border-t border-[var(--color-border)] bg-[var(--color-surface-subtle)] mt-16">
       <div className="mx-auto max-w-[1200px] px-6 py-10">
         <div className="flex flex-wrap gap-x-16 gap-y-8">
           {/* Brand */}
-          <div className="max-w-[240px]">
+          <div className="max-w-[220px]">
             <Link href="/">
-              <span className="inline-block bg-[var(--color-surface-strong)] text-white text-[10px] font-bold px-2 py-1 rounded-[var(--radius-xs)] tracking-wider uppercase">
+              <span className="inline-block bg-[var(--color-accent-red)] text-white text-[9px] font-extrabold px-2 py-1 rounded-[var(--radius-xs)] tracking-[0.08em] uppercase leading-none">
                 G sa Marikina
               </span>
             </Link>
-            <p className="mt-3 text-[var(--font-size-sm)] text-[var(--color-text-primary)] leading-relaxed">
+            <p className="mt-3 text-[11px] tracking-tight text-[var(--color-text-primary)] leading-relaxed">
               A local food directory for Marikina City — helping small food businesses get found.
             </p>
           </div>
 
-          {/* Discover */}
+          {/* Discover & Book */}
           <div>
-            <h4 className="text-[var(--font-size-sm)] font-bold text-[var(--color-text-secondary)] uppercase tracking-wide mb-3">
-              Discover
+            <h4 className="text-[11px] font-bold text-[var(--color-text-secondary)] tracking-tight mb-3">
+              Discover & Book
             </h4>
             <ul className="space-y-1.5">
               {DISCOVER.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-[var(--font-size-sm)] text-[var(--color-text-primary)] hover:text-[var(--color-text-secondary)] transition-colors">
+                  <Link href={l.href} className="text-[12px] tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-text-secondary)] transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -49,13 +49,13 @@ export function Footer() {
 
           {/* Info */}
           <div>
-            <h4 className="text-[var(--font-size-sm)] font-bold text-[var(--color-text-secondary)] uppercase tracking-wide mb-3">
+            <h4 className="text-[11px] font-bold text-[var(--color-text-secondary)] tracking-tight mb-3">
               Info
             </h4>
             <ul className="space-y-1.5">
               {INFO.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-[var(--font-size-sm)] text-[var(--color-text-primary)] hover:text-[var(--color-text-secondary)] transition-colors">
+                  <Link href={l.href} className="text-[12px] tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-text-secondary)] transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -64,7 +64,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pt-5 border-t border-[var(--color-border)] text-[var(--font-size-xs)] text-[var(--color-text-primary)]">
+        <div className="mt-8 pt-5 border-t border-[var(--color-border)] text-[10px] tracking-tight text-[var(--color-text-primary)]">
           &copy; {new Date().getFullYear()} G sa Marikina
         </div>
       </div>

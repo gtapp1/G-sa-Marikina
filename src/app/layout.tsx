@@ -1,23 +1,26 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Sora } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 
-/* DM Sans — geometric bold sans, similar weight/feel to Beatrice */
-const dmSans = DM_Sans({
+/*
+  Sora — geometric, tightly-spaced bold sans. Closest free match to Beatrice
+  (Sharp Type). Same low-contrast, geometric construction, tight metrics.
+*/
+const sora = Sora({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const dmSansBody = DM_Sans({
+const soraBody = Sora({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
-  weight: ["400", "500", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -32,8 +35,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ variables: { colorPrimary: "#F97316" } }}>
-      <html lang="en" className={`${dmSans.variable} ${dmSansBody.variable}`}>
+    <ClerkProvider appearance={{ variables: { colorPrimary: "#E8590C" } }}>
+      <html lang="en" className={`${sora.variable} ${soraBody.variable}`}>
         <body>
           <NavBar />
           <div className="pt-14 md:pt-[60px] pb-14 md:pb-0">
