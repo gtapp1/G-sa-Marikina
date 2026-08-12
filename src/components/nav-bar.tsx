@@ -8,20 +8,22 @@ import {
   House,
   MagnifyingGlass,
   MapTrifold,
-  SquaresFour,
-  Info,
-  MapPin,
+  User,
 } from "@phosphor-icons/react";
-
 
 type NavIcon = ComponentType<{ size?: number; weight?: "regular" | "fill" }>;
 
-const NAV_ITEMS: { href: string; label: string; icon: NavIcon }[] = [
-  { href: "/", label: "Home", icon: House },
+const DESKTOP_LINKS = [
+  { href: "/map", label: "Map" },
+  { href: "/categories", label: "Browse" },
+  { href: "/collections", label: "Guides" },
+  { href: "/about", label: "About" },
+];
+
+const MOBILE_TABS: { href: string; label: string; icon: NavIcon }[] = [
+  { href: "/", label: "Discover", icon: House },
   { href: "/search", label: "Search", icon: MagnifyingGlass },
   { href: "/map", label: "Map", icon: MapTrifold },
-  { href: "/categories", label: "Browse", icon: SquaresFour },
-  { href: "/about", label: "About", icon: Info },
 ];
 
 export function NavBar() {
@@ -32,29 +34,29 @@ export function NavBar() {
 
   return (
     <>
-      {/* Desktop: floating capsule nav */}
-      <header className="hidden md:block fixed inset-x-0 top-4 z-50 px-6">
-        <nav className="mx-auto flex max-w-[1040px] items-center justify-between gap-6 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 py-2 pl-5 pr-2.5 shadow-[var(--shadow-hover)] backdrop-blur-md">
+      {/* Desktop nav */}
+      <header className="hidden md:block fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur-lg">
+        <nav className="mx-auto flex max-w-[1200px] items-center justify-between h-16 px-6">
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
-              <MapPin size={16} weight="fill" />
-            </span>
-            <span className="font-[family-name:var(--font-heading)] text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
-              G sa Marikina
+            <span className="text-[var(--accent)] font-bold text-lg">G</span>
+            <span className="font-[family-name:var(--font-body)] text-sm font-semibold text-[var(--text)] tracking-tight">
+              sa Marikina
             </span>
           </Link>
 
-          <div className="flex items-center gap-1">
-            {NAV_ITEMS.map((item) => {
+          {/* Center links */}
+          <div className="flex items-center gap-8">
+            {DESKTOP_LINKS.map((item) => {
               const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors ${
+                  className={`text-sm font-medium transition-colors duration-150 ${
                     active
-                      ? "bg-[var(--color-primary)] text-white"
-                      : "text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text-primary)]"
+                      ? "text-[var(--accent)]"
+                      : "text-[var(--text-muted)] hover:text-[var(--text)]"
                   }`}
                 >
                   {item.label}
@@ -63,11 +65,19 @@ export function NavBar() {
             })}
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Right side */}
+          <div className="flex items-center gap-4">
+            <Link
+              href="/search"
+              className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
+              aria-label="Search"
+            >
+              <MagnifyingGlass size={20} />
+            </Link>
             <SignedOut>
               <Link
                 href="/sign-in"
-                className="rounded-full bg-[var(--color-primary)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--color-primary-hover)]"
+                className="rounded-[var(--radius-sm)] bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[var(--accent-hover)]"
               >
                 Sign in
               </Link>
@@ -75,64 +85,55 @@ export function NavBar() {
             <SignedIn>
               <Link
                 href="/for-businesses/new"
-                className="rounded-full px-3 py-2 text-sm font-semibold text-[var(--color-text-secondary)] transition-colors hover:text-[var(--color-text-primary)]"
+                className="text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
               >
-                List your spot
+                List a spot
               </Link>
-              <UserButton
-                appearance={{ variables: { colorPrimary: "#F97316" } }}
-              />
+              <UserButton />
             </SignedIn>
           </div>
         </nav>
       </header>
 
-      {/* Mobile: floating capsule top bar (wordmark + theme + auth) */}
-      <header className="md:hidden fixed inset-x-3 top-3 z-40 flex items-center justify-between gap-3 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 py-2 pl-4 pr-2 shadow-[var(--shadow-hover)] backdrop-blur-md">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-primary)] text-white">
-            <MapPin size={14} weight="fill" />
-          </span>
-          <span className="font-[family-name:var(--font-heading)] text-base font-extrabold tracking-tight text-[var(--color-text-primary)]">
-            G sa Marikina
-          </span>
-        </Link>
-        <div className="flex items-center gap-1.5">
+      {/* Mobile bottom tabs */}
+      <nav className="md:hidden fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-lg">
+        <div className="flex items-center justify-around h-16">
+          {MOBILE_TABS.map((item) => {
+            const active = isActive(item.href);
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`flex flex-col items-center gap-1 px-4 py-2 text-[11px] font-medium transition-colors ${
+                  active
+                    ? "text-[var(--accent)]"
+                    : "text-[var(--text-muted)]"
+                }`}
+              >
+                <Icon size={22} weight={active ? "fill" : "regular"} />
+                {item.label}
+              </Link>
+            );
+          })}
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: { avatarBox: "w-6 h-6" },
+              }}
+            />
+          </SignedIn>
           <SignedOut>
             <Link
               href="/sign-in"
-              className="rounded-full bg-[var(--color-primary)] px-3.5 py-1.5 text-xs font-semibold text-white"
+              className={`flex flex-col items-center gap-1 px-4 py-2 text-[11px] font-medium text-[var(--text-muted)]`}
             >
-              Sign in
+              <User size={22} />
+              Account
             </Link>
           </SignedOut>
-          <SignedIn>
-            <UserButton appearance={{ variables: { colorPrimary: "#F97316" } }} />
-          </SignedIn>
         </div>
-      </header>
-
-      {/* Mobile: floating dock */}
-      <nav className="md:hidden fixed inset-x-3 bottom-3 z-50 flex items-stretch gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]/60 p-1.5 shadow-[0_6px_24px_rgba(61,44,30,0.16)] backdrop-blur-md">
-        {NAV_ITEMS.map((item) => {
-          const active = isActive(item.href);
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={active ? "page" : undefined}
-              className={`flex min-h-[48px] flex-1 flex-col items-center justify-center gap-0.5 rounded-full text-[11px] font-semibold transition-colors ${
-                active
-                  ? "bg-[var(--color-primary)] text-white"
-                  : "text-[var(--color-text-secondary)]"
-              }`}
-            >
-              <Icon size={20} weight={active ? "fill" : "regular"} />
-              {item.label}
-            </Link>
-          );
-        })}
       </nav>
     </>
   );

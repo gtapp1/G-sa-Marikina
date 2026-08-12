@@ -1,118 +1,67 @@
 @import "tailwindcss";
 
 /*
-  Design tokens in :root, used via arbitrary values like bg-[var(--color-primary)].
-  Not in @theme (that collides with Tailwind's max-w/rounded scales).
-  Single light theme — monochrome background with an orange halftone texture.
+  G sa Marikina — Dark editorial theme (Resy-inspired)
+  Dark warm background, orange accent, serif display headings.
 */
 :root {
-  --color-primary: #F97316;
-  --color-primary-hover: #EA580C;
-  --color-primary-text: #C2410C;
-  --color-background: #FFFFFF;
-  --color-surface: #FFFFFF;
-  --color-surface-2: #F5F5F5;
-  --color-text-primary: #171717;
-  --color-text-secondary: #737373;
-  --color-success: #16A34A;
-  --color-error: #EF4444;
-  --color-border: #E9E9E9;
-  --color-map-pin: #F97316;
+  --bg: #1C1917;
+  --bg-elevated: #292524;
+  --bg-hover: #3D3835;
+  --text: #FAFAF9;
+  --text-muted: #A8A29E;
+  --text-dim: #78716C;
+  --accent: #F97316;
+  --accent-hover: #FB923C;
+  --accent-muted: rgba(249, 115, 22, 0.15);
+  --accent-glow: rgba(249, 115, 22, 0.08);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --error: #EF4444;
+  --success: #4ADE80;
 
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-full: 9999px;
-
-  --shadow-card: 0 2px 8px rgba(10, 10, 10, 0.06);
-  --shadow-hover: 0 10px 30px rgba(10, 10, 10, 0.10);
 }
 
 html {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 body {
   font-family: var(--font-body), system-ui, sans-serif;
-  color: var(--color-text-primary);
-  background-color: var(--color-background);
+  color: var(--text);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/*
-  Halftone dot texture (bryl-minimal), tinted with the brand orange.
-  A fixed field of tiny orange dots behind all content, faded with a soft
-  radial mask so it reads as seasoning, not wallpaper. Sits at z-index -1 so
-  opaque surfaces (hero photo, cards) cover it and it shows through whitespace.
-*/
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(
-    circle,
-    rgba(249, 115, 22, 0.16) 1.1px,
-    transparent 1.6px
-  );
-  background-size: 11px 11px;
-  -webkit-mask-image: radial-gradient(
-    130% 90% at 50% 28%,
-    black 0%,
-    black 46%,
-    transparent 86%
-  );
-  mask-image: radial-gradient(
-    130% 90% at 50% 28%,
-    black 0%,
-    black 46%,
-    transparent 86%
-  );
+/* Headings use serif display font */
+h1, h2, h3 {
+  font-family: var(--font-heading), serif;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), system-ui, sans-serif;
-  font-weight: 700;
-  line-height: 1.2;
+h4, h5, h6 {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
-/* Highlighter-marker effect for emphasizing a word in a heading */
-.mark {
-  background-image: linear-gradient(
-    transparent 62%,
-    color-mix(in srgb, var(--color-primary) 32%, transparent) 62%
-  );
-  padding: 0 0.1em;
-}
-
-/* Accent bar before section headings */
-.heading-accent {
-  position: relative;
-  padding-left: 0.9rem;
-}
-.heading-accent::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.15em;
-  bottom: 0.15em;
-  width: 4px;
-  border-radius: 9999px;
-  background: var(--color-primary);
-}
-
-/* Accessibility: visible keyboard focus indicator */
+/* Focus ring */
 *:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-sm);
 }
 
-/* Accessibility: respect reduced motion */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -120,7 +69,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Hide scrollbar on horizontal scroll rows */
+/* Scrollbar hide for horizontal scroll */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -128,3 +77,28 @@ h1, h2, h3, h4, h5, h6 {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInSlow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-in {
+  animation: fadeIn 0.5s ease-out both;
+}
+
+.animate-in-slow {
+  animation: fadeInSlow 0.6s ease-out both;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }

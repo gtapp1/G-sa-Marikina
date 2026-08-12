@@ -9,14 +9,14 @@ export function CategoryPills() {
   ][];
 
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide max-w-[1200px] mx-auto">
+    <div className="flex gap-2.5 overflow-x-auto pb-1 scrollbar-hide">
       {categories.map(([key, { label }]) => (
         <Link
           key={key}
           href={`/category/${key}`}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary-text)] transition-colors whitespace-nowrap"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-all duration-150 whitespace-nowrap"
         >
-          <CategoryIcon category={key} size={16} />
+          <CategoryIcon category={key} size={15} />
           {label}
         </Link>
       ))}

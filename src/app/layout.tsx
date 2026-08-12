@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { DM_Serif_Display, Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const dmSerif = DM_Serif_Display({
   subsets: ["latin"],
   variable: "--font-heading",
   display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: "400",
 });
 
 const inter = Inter({
@@ -38,14 +39,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html
-        lang="en"
-        className={`${plusJakartaSans.variable} ${inter.variable}`}
-      >
-        <body className="antialiased pt-20 pb-24 md:pb-0 md:pt-24">
+    <ClerkProvider appearance={{ baseTheme: dark }}>
+      <html lang="en" className={`${dmSerif.variable} ${inter.variable}`}>
+        <body>
           <NavBar />
-          {children}
+          <div className="min-h-screen pt-16 md:pt-20 pb-20 md:pb-0">
+            {children}
+          </div>
           <Footer />
         </body>
       </html>
