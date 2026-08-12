@@ -16,26 +16,28 @@ export default function CategoriesPage() {
   });
 
   return (
-    <main className="px-6 pt-10 pb-16 max-w-[1200px] mx-auto">
-      <h1 className="text-3xl md:text-4xl text-[var(--text)]">Categories</h1>
-      <p className="mt-2 text-sm text-[var(--text-muted)]">
+    <main className="px-4 md:px-6 pt-8 pb-16 max-w-[1200px] mx-auto">
+      <h1 className="text-[26px] md:text-[32px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
+        Categories
+      </h1>
+      <p className="mt-1 text-[13px] tracking-tight text-[var(--color-text-primary)]">
         Browse by type.
       </p>
 
-      <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[var(--color-border)]">
         {categories.map((cat) => (
           <Link
             key={cat.id}
             href={`/category/${cat.id}`}
-            className="group flex flex-col items-center gap-3 p-6 rounded-[var(--radius-md)] bg-[var(--bg-elevated)] border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-200"
+            className="group flex flex-col items-center gap-3 p-6 bg-white hover:bg-[var(--color-accent-light)] transition-colors duration-[var(--motion-fast)]"
           >
-            <span className="text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors">
+            <span className="text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors">
               <CategoryIcon category={cat.id} size={28} weight="duotone" />
             </span>
-            <span className="text-sm font-medium text-[var(--text)] text-center">
+            <span className="text-[13px] font-bold tracking-tight text-[var(--color-text-secondary)] text-center group-hover:text-[var(--color-accent)] transition-colors">
               {cat.label}
             </span>
-            <span className="text-xs text-[var(--text-dim)]">
+            <span className="text-[11px] tracking-tight text-[var(--color-text-primary)]">
               {cat.count} {cat.count === 1 ? "spot" : "spots"}
             </span>
           </Link>

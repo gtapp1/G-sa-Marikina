@@ -8,9 +8,11 @@ export const metadata: Metadata = {
 
 export default function NearMePage() {
   return (
-    <main className="px-6 pt-10 pb-16 max-w-[1200px] mx-auto">
-      <h1 className="text-3xl md:text-4xl text-[var(--text)]">Near me</h1>
-      <p className="mt-2 text-sm text-[var(--text-muted)] mb-8">
+    <main className="px-4 md:px-6 pt-8 pb-16 max-w-[1200px] mx-auto">
+      <h1 className="text-[26px] md:text-[32px] font-bold text-[var(--color-text-secondary)] tracking-[-0.03em]">
+        Near me
+      </h1>
+      <p className="mt-1 text-[13px] tracking-tight text-[var(--color-text-primary)] mb-8">
         Share your location to see the closest spots first.
       </p>
       <NearMe />
