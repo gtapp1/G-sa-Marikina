@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MARIKINA_BARANGAYS } from "@/data/barangays";
 
 export function NavBar() {
   const pathname = usePathname();
@@ -25,15 +26,38 @@ export function NavBar() {
       <nav className="mx-auto flex max-w-[1400px] items-center h-16 md:h-20 px-5 md:px-10 gap-4 md:gap-7">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
-          <span className="inline-block bg-[var(--color-accent-red)] text-white text-[15px] font-extrabold px-3.5 py-2 leading-none tracking-tight">
+          <span className="inline-block bg-[var(--color-accent-red)] text-white text-[22px] font-extrabold px-4 py-2.5 leading-none tracking-tight">
             G!
           </span>
         </Link>
 
-        {/* City */}
-        <span className="hidden md:inline text-[15px] font-bold text-[var(--color-accent)] tracking-tight">
-          Marikina City ›
-        </span>
+        {/* City dropdown */}
+        <div className="hidden md:block relative group">
+          <button className="flex items-center gap-1.5 text-[15px] font-extrabold text-[var(--color-text-secondary)] tracking-tight hover:text-[var(--color-accent)] transition-colors duration-[var(--motion-fast)]">
+            Marikina City
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="mt-0.5 transition-transform duration-[var(--motion-fast)] group-hover:rotate-180">
+              <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+
+          {/* Dropdown panel */}
+          <div className="absolute top-full left-0 mt-2 w-52 bg-white border border-[var(--color-border)] shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-[var(--motion-fast)] z-50 max-h-[360px] overflow-y-auto">
+            <div className="px-4 py-2.5 border-b border-[var(--color-border)] sticky top-0 bg-white">
+              <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[var(--color-text-primary)]">
+                Barangays
+              </p>
+            </div>
+            {MARIKINA_BARANGAYS.map((brgy) => (
+              <Link
+                key={brgy}
+                href={`/search?barangay=${encodeURIComponent(brgy)}`}
+                className="flex items-center gap-2 px-4 py-2 text-[13px] tracking-tight text-[var(--color-text-secondary)] hover:bg-[var(--color-accent-light)] hover:text-[var(--color-accent)] transition-colors"
+              >
+                {brgy}
+              </Link>
+            ))}
+          </div>
+        </div>
 
         {/* Search */}
         <form onSubmit={handleSearch} className="flex items-center flex-1 max-w-[420px]">

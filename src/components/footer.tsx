@@ -31,8 +31,7 @@ export function Footer() {
             </span>
           </Link>
           <p className="mt-6 text-[15px] tracking-tight text-[var(--color-text-primary)] leading-relaxed max-w-sm">
-            A local food directory for Marikina City — helping small food
-            businesses get found.
+            A local food directory for Marikina City. Helping small food businesses get found.
           </p>
         </div>
 

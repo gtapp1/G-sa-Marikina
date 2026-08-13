@@ -50,7 +50,7 @@ export default async function ListingPage({ params }: PageProps) {
       </div>
 
       {/* Hero photo */}
-      <div className="mt-5 aspect-video md:aspect-[2.4/1] bg-[var(--color-surface-subtle)] overflow-hidden md:max-w-[1200px] md:mx-auto">
+      <div className="mt-5 aspect-video md:aspect-[2.4/1] bg-[var(--color-surface-subtle)] overflow-hidden rounded-[var(--radius-xs)] md:max-w-[1200px] md:mx-auto">
         {listing.photos[0] ? (
           <img
             src={listing.photos[0]}

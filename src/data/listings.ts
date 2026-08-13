@@ -13,7 +13,7 @@ export const listings: Listing[] = [
     contactPhone: null,
     contactFacebook: "https://facebook.com/sweetbitescookies",
     photos: [
-      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/cookie1.jpg",
+      "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=800&q=80",
     ],
     products: [
       { name: "Chocolate Chip Cookies (12pcs)", price: "₱150" },
@@ -39,7 +39,7 @@ export const listings: Listing[] = [
     contactPhone: "09171234567",
     contactFacebook: null,
     photos: [
-      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/grill1.jpg",
+      "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80",
     ],
     products: [
       { name: "Isaw (per stick)", price: "₱10" },
@@ -65,7 +65,7 @@ export const listings: Listing[] = [
     contactPhone: "09281234567",
     contactFacebook: "https://facebook.com/teakayo",
     photos: [
-      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/milktea1.jpg",
+      "https://images.unsplash.com/photo-1558857563-b371033873b8?w=800&q=80",
     ],
     products: [
       { name: "Classic Milk Tea (M)", price: "₱59" },
@@ -92,7 +92,7 @@ export const listings: Listing[] = [
     contactPhone: null,
     contactFacebook: null,
     photos: [
-      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/filipino1.jpg",
+      "https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80",
     ],
     products: [
       { name: "Rice + 1 Ulam", price: "₱60" },
@@ -118,7 +118,7 @@ export const listings: Listing[] = [
     contactPhone: "09351234567",
     contactFacebook: "https://facebook.com/cafemarikingrounds",
     photos: [
-      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/coffee1.jpg",
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80",
     ],
     products: [
       { name: "Pourover (Benguet Single Origin)", price: "₱140" },
@@ -145,7 +145,7 @@ export const listings: Listing[] = [
     contactPhone: null,
     contactFacebook: null,
     photos: [
-      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/dessert1.jpg",
+      "https://images.unsplash.com/photo-1574085733277-851d9d856a3a?w=800&q=80",
     ],
     products: [
       { name: "Puto Bumbong (order)", price: "₱60" },
@@ -170,7 +170,7 @@ export const listings: Listing[] = [
     contactPhone: "09451234567",
     contactFacebook: "https://facebook.com/rilesbakehouse",
     photos: [
-      "https://res.cloudinary.com/demo/image/upload/v1/samples/food/bread1.jpg",
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80",
     ],
     products: [
       { name: "Classic Sourdough Loaf", price: "₱220" },

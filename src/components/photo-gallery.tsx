@@ -21,7 +21,7 @@ export function PhotoGallery({ photos, name }: PhotoGalleryProps) {
         {galleryPhotos.map((photo, i) => (
           <div
             key={i}
-            className="flex-shrink-0 w-40 aspect-[4/3] bg-[var(--color-border)] rounded-[var(--radius-md)] overflow-hidden"
+            className="flex-shrink-0 w-40 aspect-[4/3] bg-[var(--color-border)] rounded-[var(--radius-xs)] overflow-hidden"
           >
             <img
               src={photo}

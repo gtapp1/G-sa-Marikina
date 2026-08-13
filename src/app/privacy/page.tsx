@@ -25,20 +25,20 @@ export default function PrivacyPage() {
           <p>When you use G sa Marikina, we may collect:</p>
           <ul className="list-disc pl-5 space-y-1 mt-2">
             <li>
-              <strong>Account information</strong> — your email address and
+              <strong>Account information:</strong> your email address and
               display name, provided when you sign up through Clerk.
             </li>
             <li>
-              <strong>Content you submit</strong> — reviews you write, business
+              <strong>Content you submit:</strong> reviews you write, business
               listings you submit, and photos you upload.
             </li>
             <li>
-              <strong>Usage data</strong> — pages visited and time spent,
+              <strong>Usage data:</strong> pages visited and time spent,
               collected by Vercel Analytics. This is anonymized and does not
               identify individuals.
             </li>
             <li>
-              <strong>Location data</strong> — if you use the "Near me"
+              <strong>Location data:</strong> if you use the "Near me"
               feature, your browser requests your GPS coordinates. This is
               processed in your browser only and never stored on our servers.
             </li>
@@ -70,7 +70,7 @@ export default function PrivacyPage() {
           <p>G sa Marikina uses the following services:</p>
           <ul className="list-disc pl-5 space-y-1 mt-2">
             <li>
-              <strong>Clerk</strong> — authentication. Clerk stores your email
+              <strong>Clerk:</strong> authentication. Clerk stores your email
               and login credentials on their servers. See{" "}
               <a
                 href="https://clerk.com/privacy"
@@ -83,7 +83,7 @@ export default function PrivacyPage() {
               .
             </li>
             <li>
-              <strong>Supabase</strong> — database. Your account data, reviews,
+              <strong>Supabase:</strong> database. Your account data, reviews,
               and listing submissions are stored in a Supabase Postgres
               database. See{" "}
               <a
@@ -97,14 +97,14 @@ export default function PrivacyPage() {
               .
             </li>
             <li>
-              <strong>Cloudinary</strong> — image storage. Photos you upload
+              <strong>Cloudinary:</strong> image storage. Photos you upload
               are stored on Cloudinary's CDN.
             </li>
             <li>
-              <strong>Vercel</strong> — hosting and anonymized analytics.
+              <strong>Vercel:</strong> hosting and anonymized analytics.
             </li>
             <li>
-              <strong>OpenStreetMap</strong> — map tiles. The map page fetches
+              <strong>OpenStreetMap:</strong> map tiles. The map page fetches
               tiles from OpenStreetMap servers. Your IP address may be logged
               by them as part of standard web requests.
             </li>

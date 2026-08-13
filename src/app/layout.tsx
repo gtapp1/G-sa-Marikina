@@ -24,7 +24,7 @@ const soraBody = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "G sa Marikina — Local Food Directory",
+  title: "G sa Marikina | Local Food Directory",
   description:
     "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
   icons: {
