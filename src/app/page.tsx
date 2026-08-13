@@ -58,7 +58,7 @@ export default function HomePage() {
               Discover food to love in Marikina.
             </h3>
             <p className="mt-3 text-[13px] text-[var(--color-text-primary)] leading-relaxed tracking-tight">
-              Insider guides, local staples, and the newest spots — all in one place.
+              Insider guides, local staples, and the newest spots. All in one place.
             </p>
             <nav className="mt-5 space-y-2">
               {[

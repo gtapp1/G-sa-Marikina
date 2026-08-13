@@ -58,27 +58,27 @@ export default function GuidelinesPage() {
           </h2>
           <ul className="list-disc pl-5 space-y-2">
             <li>
-              <strong>Fake reviews</strong> — reviews written by the business
+              <strong>Fake reviews:</strong> reviews written by the business
               owner, their friends or family (without disclosure), or paid
               reviewers.
             </li>
             <li>
-              <strong>Retaliatory reviews</strong> — written in response to
+              <strong>Retaliatory reviews:</strong> written in response to
               a negative interaction unrelated to the food (e.g., a dispute
               over a refund).
             </li>
             <li>
-              <strong>Promotional content</strong> — reviews that read like
+              <strong>Promotional content:</strong> reviews that read like
               advertisements, or that were exchanged for free food or
               discounts without disclosure.
             </li>
             <li>
-              <strong>Off-topic content</strong> — reviews that complain about
+              <strong>Off-topic content:</strong> reviews that complain about
               things outside the business's control (weather, traffic, delivery
               app issues not caused by the business).
             </li>
             <li>
-              <strong>Harassment or personal attacks</strong> — content that
+              <strong>Harassment or personal attacks:</strong> content that
               targets the owner, staff, or other reviewers personally.
             </li>
           </ul>
@@ -127,7 +127,7 @@ export default function GuidelinesPage() {
           <p>
             Content that violates these guidelines will be removed. Repeated
             violations may result in your account being suspended. The goal is
-            a directory that Marikina food lovers can trust — enforcement is
+            a directory that Marikina food lovers can trust. Enforcement is
             in service of that, not against anyone personally.
           </p>
         </section>

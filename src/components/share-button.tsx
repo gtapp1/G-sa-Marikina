@@ -21,7 +21,7 @@ export function ShareButton({ title, slug }: ShareButtonProps) {
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: `${title} — G sa Marikina`,
+          title: `${title} | G sa Marikina`,
           url,
         });
         return;
