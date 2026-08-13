@@ -56,7 +56,7 @@ function SidebarItem({
       <span className="shrink-0 text-[11px] font-bold text-[var(--color-text-primary)] w-5 pt-0.5">
         {index + 1}
       </span>
-      <div className="shrink-0 w-14 h-14 overflow-hidden bg-[var(--color-surface-subtle)]">
+      <div className="shrink-0 w-14 h-14 overflow-hidden rounded-[var(--radius-xs)] bg-[var(--color-surface-subtle)]">
         {listing.photos[0] ? (
           <img
             src={listing.photos[0]}
@@ -122,7 +122,7 @@ export function FoodMap({ listings, showSidebar = false }: FoodMapProps) {
               transform:
                 hoveredSlug === listing.slug ? "scale(1.25)" : "scale(1)",
             }}
-            className="flex items-center justify-center w-8 h-8 rounded-full text-white shadow-md transition-all duration-150 hover:scale-110"
+            className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-xs)] bg-[var(--color-accent)] text-white shadow-md transition-all duration-150 hover:scale-110"
           >
             <CategoryIcon category={listing.category} size={15} weight="fill" />
           </button>
@@ -139,8 +139,8 @@ export function FoodMap({ listings, showSidebar = false }: FoodMapProps) {
           closeButton={false}
           maxWidth="200px"
         >
-          <div className="w-[180px] bg-white overflow-hidden border border-[var(--color-border)]">
-            <div className="aspect-[4/3] bg-[var(--color-surface-subtle)]">
+          <div className="w-[180px] bg-white overflow-hidden rounded-[var(--radius-xs)] border border-[var(--color-border)]">
+            <div className="aspect-[4/3] overflow-hidden bg-[var(--color-surface-subtle)]">
               {selected.photos[0] ? (
                 <img
                   src={selected.photos[0]}
@@ -151,7 +151,7 @@ export function FoodMap({ listings, showSidebar = false }: FoodMapProps) {
                 <PhotoPlaceholder category={selected.category} />
               )}
             </div>
-            <div className="p-2.5">
+            <div className="p-2.5" style={{ fontFamily: "var(--font-heading), system-ui, sans-serif" }}>
               <p className="text-[12px] font-bold tracking-tight text-[var(--color-text-secondary)] leading-tight">
                 {selected.name}
               </p>

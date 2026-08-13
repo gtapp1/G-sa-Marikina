@@ -20,7 +20,7 @@ export default function HomePage() {
         <div className="flex flex-col md:flex-row gap-0 md:gap-10">
           {/* Main photo */}
           <div className="relative flex-1">
-            <div className="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden bg-[var(--color-surface-subtle)]">
+            <div className="relative aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-[var(--radius-xs)] bg-[var(--color-surface-subtle)]">
               {featured.photos[0] ? (
                 <img
                   src={featured.photos[0]}
@@ -32,8 +32,8 @@ export default function HomePage() {
               )}
             </div>
 
-            {/* Editorial text — white box overlaid on bottom-left */}
-            <div className="mt-5 md:mt-0 md:absolute md:bottom-0 md:left-0 md:right-[35%] md:p-7 md:bg-white">
+            {/* Editorial text — matches page bg, no boxy white panel */}
+            <div className="mt-0 md:absolute md:bottom-0 md:left-0 md:right-[35%] p-5 md:p-7 bg-[var(--color-surface-muted)]">
               <p className="text-[var(--color-accent-red)] text-[12px] font-bold uppercase tracking-[0.07em]">
                 Featured
               </p>

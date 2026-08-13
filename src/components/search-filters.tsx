@@ -11,15 +11,20 @@ import { ListingCard } from "./listing-card";
 export function SearchFilters() {
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get("q") || "";
+  const urlBarangay = searchParams.get("barangay") || "all";
 
   const [query, setQuery] = useState(urlQuery);
   const [category, setCategory] = useState<Category | "all">("all");
-  const [barangay, setBarangay] = useState<string | "all">("all");
+  const [barangay, setBarangay] = useState<string | "all">(urlBarangay);
   const [minRating, setMinRating] = useState(0);
 
   useEffect(() => {
     setQuery(urlQuery);
   }, [urlQuery]);
+
+  useEffect(() => {
+    setBarangay(urlBarangay);
+  }, [urlBarangay]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();

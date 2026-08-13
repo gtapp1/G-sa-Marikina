@@ -37,8 +37,8 @@ export function ListingLocation({
 
   return (
     <div className="mt-10">
-      <h2 className="text-xl text-[var(--text)] mb-4">Location</h2>
-      <div className="rounded-[var(--radius-md)] overflow-hidden border border-[var(--border)]">
+      <h2 className="text-xl text-[var(--color-text-secondary)] mb-4">Location</h2>
+      <div className="rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)]">
         <div className="h-48 w-full">
           <Map
             initialViewState={{ latitude, longitude, zoom: 15 }}
@@ -48,21 +48,21 @@ export function ListingLocation({
             attributionControl={false}
           >
             <Marker latitude={latitude} longitude={longitude} anchor="bottom">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--accent)] text-white shadow-lg">
+              <div className="flex items-center justify-center w-8 h-8 rounded-[var(--radius-xs)] bg-[var(--color-accent)] text-white shadow-lg">
                 <CategoryIcon category={category} size={16} weight="fill" />
               </div>
             </Marker>
           </Map>
         </div>
-        <div className="flex items-center justify-between p-3 bg-[var(--bg-elevated)]">
-          <span className="text-sm text-[var(--text-muted)]">
+        <div className="flex items-center justify-between p-3 bg-[var(--color-surface-muted)]">
+          <span className="text-sm text-[var(--color-text-primary)]">
             {barangay}, Marikina City
           </span>
           <a
             href={directionsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--accent)] hover:underline"
+            className="inline-flex items-center gap-1 text-sm font-medium text-[var(--color-accent)] hover:underline"
           >
             Directions <ArrowRight size={12} />
           </a>

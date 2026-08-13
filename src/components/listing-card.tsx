@@ -13,7 +13,7 @@ export function ListingCard({ listing, distanceKm }: ListingCardProps) {
   const category = CATEGORY_LABELS[listing.category];
 
   return (
-    <Link href={`/${listing.slug}`} className="group block">
+    <Link href={`/${listing.slug}`} className="group block bg-white border border-[var(--color-border)] hover:border-[var(--color-border-strong)] transition-colors duration-[var(--motion-fast)] rounded-[var(--radius-xs)] overflow-hidden">
       {/* Photo */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--color-surface-subtle)]">
         {listing.photos[0] ? (
@@ -28,7 +28,7 @@ export function ListingCard({ listing, distanceKm }: ListingCardProps) {
       </div>
 
       {/* Info */}
-      <div className="mt-3">
+      <div className="p-3">
         <h3 className="text-[15px] font-bold text-[var(--color-text-secondary)] leading-tight tracking-[-0.02em] truncate group-hover:text-[var(--color-accent)] transition-colors">
           {listing.name}
         </h3>
