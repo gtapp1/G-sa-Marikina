@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
+import { ChatWidget } from "@/components/chat-widget";
 
 /*
   Sora — geometric, tightly-spaced bold sans. Closest free match to Beatrice
@@ -48,6 +49,7 @@ export default function RootLayout({
             {children}
           </div>
           <Footer />
+          <ChatWidget />
         </body>
       </html>
     </ClerkProvider>
