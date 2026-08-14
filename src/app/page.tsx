@@ -103,14 +103,14 @@ export default function HomePage() {
         {/* Mobile: horizontal scroll */}
         <div className="md:hidden px-5 flex gap-4 overflow-x-auto scrollbar-hide pb-4">
           {allSpots.map((listing) => (
-            <div key={listing.slug} className="shrink-0 w-[220px]">
+            <div key={listing.slug} className="shrink-0 w-[280px]">
               <ListingCard listing={listing} />
             </div>
           ))}
         </div>
 
         {/* Desktop: grid */}
-        <div className="hidden md:grid mx-auto max-w-[1400px] px-10 grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        <div className="hidden md:grid mx-auto max-w-[1400px] px-10 grid-cols-2 lg:grid-cols-3 gap-7">
           {allSpots.map((listing) => (
             <ListingCard key={listing.slug} listing={listing} />
           ))}

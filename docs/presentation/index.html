@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G sa Marikina — Hackathon Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap');
+
+    :root {
+      --orange: #F97316;
+      --orange-dark: #EA580C;
+      --cream: #FFFBF5;
+      --brown: #3D2C1E;
+      --warm-gray: #78716C;
+      --red: #EB1700;
+    }
+
+    .reveal {
+      font-family: 'Sora', sans-serif;
+      color: var(--brown);
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal .slides section {
+      padding: 40px 60px;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-family: 'Sora', sans-serif;
+      color: var(--brown);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-transform: none;
+    }
+
+    .reveal h1 { font-size: 2.8em; line-height: 1.1; }
+    .reveal h2 { font-size: 2em; line-height: 1.15; }
+    .reveal h3 { font-size: 1.4em; }
+
+    .reveal p, .reveal li {
+      font-size: 0.85em;
+      line-height: 1.6;
+      color: var(--warm-gray);
+    }
+
+    .reveal blockquote {
+      background: transparent;
+      border-left: 4px solid var(--orange);
+      padding: 12px 24px;
+      margin: 20px 0;
+      font-style: normal;
+      box-shadow: none;
+      width: 90%;
+    }
+
+    .reveal blockquote p {
+      color: var(--brown);
+      font-size: 1em;
+      font-weight: 600;
+    }
+
+    .reveal .accent { color: var(--orange); }
+    .reveal .red { color: var(--red); }
+
+    /* Slide backgrounds */
+    .slide-title { background: var(--cream) !important; text-align: center !important; }
+    .slide-pain { background: #FFF5F5 !important; }
+    .slide-insight { background: var(--cream) !important; text-align: center !important; }
+    .slide-demo { background: var(--brown) !important; text-align: center !important; }
+    .slide-demo h2, .slide-demo p { color: #FFFFFF !important; }
+    .slide-close { background: var(--cream) !important; }
+    .slide-cta { background: var(--orange) !important; text-align: center !important; }
+    .slide-cta h2, .slide-cta p, .slide-cta h3 { color: #FFFFFF !important; }
+
+    /* Two-column layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .two-col-narrow {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Cards */
+    .pain-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 2px 12px rgba(61,44,30,0.08);
+    }
+
+    .pain-card h3 {
+      font-size: 1em;
+      margin-bottom: 12px;
+    }
+
+    .pain-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .pain-card ul li {
+      padding: 6px 0;
+      font-size: 0.75em;
+      border-bottom: 1px solid #F5E6D3;
+    }
+
+    .pain-card ul li:last-child { border-bottom: none; }
+
+    /* Feature boxes */
+    .feature-box {
+      background: white;
+      border: 1px solid #F5E6D3;
+      border-radius: 12px;
+      padding: 28px;
+      margin: 16px 0;
+    }
+
+    .feature-box h3 {
+      font-size: 1.1em;
+      margin-bottom: 8px;
+    }
+
+    .feature-box p {
+      font-size: 0.8em;
+      margin: 0;
+    }
+
+    /* Tech table */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .tech-item {
+      background: white;
+      border: 1px solid #F5E6D3;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .tech-item .tech-label {
+      font-size: 0.65em;
+      color: var(--warm-gray);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tech-item .tech-name {
+      font-size: 0.85em;
+      font-weight: 700;
+      color: var(--brown);
+      margin-top: 4px;
+    }
+
+    /* Flow diagram */
+    .flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+
+    .flow-step {
+      background: white;
+      border: 2px solid var(--orange);
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 0.7em;
+      font-weight: 600;
+      color: var(--brown);
+    }
+
+    .flow-arrow {
+      font-size: 1.2em;
+      color: var(--orange);
+    }
+
+    /* Pill tag */
+    .pill {
+      display: inline-block;
+      background: var(--orange);
+      color: white;
+      font-size: 0.55em;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 12px;
+    }
+
+    /* Chat mockup */
+    .chat-mockup {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(61,44,30,0.12);
+      padding: 20px;
+      max-width: 360px;
+      margin: 20px auto;
+    }
+
+    .chat-header {
+      font-size: 0.7em;
+      font-weight: 700;
+      color: var(--orange);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #F5E6D3;
+    }
+
+    .chat-msg {
+      margin: 10px 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.7em;
+      line-height: 1.5;
+      max-width: 85%;
+    }
+
+    .chat-msg.user {
+      background: var(--orange);
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-msg.bot {
+      background: #F5F0EB;
+      color: var(--brown);
+      border-bottom-left-radius: 4px;
+    }
+
+    /* Stat callout */
+    .stat-callout {
+      font-size: 2.5em;
+      font-weight: 800;
+      color: var(--orange);
+      line-height: 1;
+      margin: 16px 0;
+    }
+
+    /* Subtle label */
+    .label {
+      font-size: 0.6em;
+      font-weight: 700;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    /* Fragment styling */
+    .reveal .fragment.fade-up {
+      transform: translateY(20px);
+    }
+
+    /* Presenter notes styling */
+    .reveal .speaker-notes {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.8em;
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: TITLE -->
+      <section class="slide-title">
+        <div style="margin-top: 80px;">
+          <p class="label">Hackathon Demo</p>
+          <h1 style="font-size: 3.2em;">G<span class="accent">!</span> sa Marikina</h1>
+          <p style="font-size: 1.1em; color: var(--warm-gray); margin-top: 16px;">
+            Every food spot in your city. One tap away.
+          </p>
+          <p style="font-size: 0.7em; color: var(--warm-gray); margin-top: 40px;">
+            A hyperlocal food discovery platform for Marikina City
+          </p>
+        </div>
+        <aside class="notes">
+          Open strong. Pause after the title. Let the tagline land.
+        </aside>
+      </section>
+
+      <!-- SLIDE 2: THE PAIN -->
+      <section class="slide-pain">
+        <p class="label">The Problem</p>
+        <h2>Small food businesses<br/>can't get found online.</h2>
+        <div class="two-col" style="margin-top: 32px;">
+          <div>
+            <blockquote>
+              <p>"Selling Ube Crinkles, DM to order!"</p>
+            </blockquote>
+            <p style="font-size: 0.75em; margin-top: 12px;">
+              — posted <strong>47 times</strong> across 12 Facebook groups this week.
+              <br/>Buried within hours. Every. Single. Time.
+            </p>
+          </div>
+          <div class="pain-card">
+            <h3>What businesses do today:</h3>
+            <ul>
+              <li>📱 Repost to Facebook groups daily</li>
+              <li>⏰ Posts buried within 2-3 hours</li>
+              <li>🔗 No permanent link to share</li>
+              <li>👻 Invisible to new customers</li>
+              <li>⭐ No way to collect reviews</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">
+          Make them feel it. This is real. Hundreds of food businesses in Marikina do this daily. No exaggeration.
+        </aside>
+      </section>
+
+      <!-- SLIDE 3: WHO SUFFERS -->
+      <section>
+        <p class="label">Two sides of the same problem</p>
+        <h2>Both sides are stuck.</h2>
+        <div class="two-col" style="margin-top: 32px;">
+          <div class="pain-card">
+            <h3>🏪 The Business Owner</h3>
+            <ul>
+              <li>Reposts to groups every single day</li>
+              <li>No website, no search presence</li>
+              <li>Can't build trust with reviews</li>
+              <li>Loses customers to competitors with more reach</li>
+              <li>Spends time on marketing, not cooking</li>
+            </ul>
+          </div>
+          <div class="pain-card">
+            <h3>🍽️ The Hungry Resident</h3>
+            <ul>
+              <li>Scrolls 200 Facebook posts for food</li>
+              <li>Can't filter by location or category</li>
+              <li>No reviews to verify quality</li>
+              <li>Misses great spots 2 streets away</li>
+              <li>Relies on word-of-mouth or luck</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">
+          "It's a two-sided problem. The business can't be found, and the customer can't find. Both are stuck in a broken loop."
+        </aside>
+      </section>
+
+      <!-- SLIDE 4: THE INSIGHT -->
+      <section class="slide-insight">
+        <div style="max-width: 700px; margin: 60px auto 0;">
+          <p class="label">The Insight</p>
+          <h2 style="text-align: center;">What if every food spot had <span class="accent">one URL</span>?</h2>
+          <p style="text-align: center; font-size: 1em; margin-top: 24px; color: var(--warm-gray);">
+            Photos. Menu. Map. Reviews. Contact.<br/>
+            All in one permanent, shareable page.
+          </p>
+          <p style="text-align: center; font-size: 0.85em; margin-top: 32px; color: var(--brown); font-weight: 600;">
+            Not another delivery app.<br/>
+            A <span class="accent">food directory</span> for one city.
+          </p>
+        </div>
+        <aside class="notes">
+          Pause here. Let the simplicity of the idea sink in. "One URL" is the entire pitch in two words.
+        </aside>
+      </section>
+
+      <!-- SLIDE 5: THE SOLUTION -->
+      <section>
+        <p class="label">The Solution</p>
+        <h2>G<span class="accent">!</span> sa Marikina</h2>
+        <p style="font-size: 0.9em; margin-bottom: 28px;">A local food directory built for one city.</p>
+        <div class="two-col">
+          <div>
+            <div class="feature-box">
+              <h3>🗺️ Browse & Discover</h3>
+              <p>Categories, barangay filter, map view, collections (Top Rated, Hidden Gems, Just Added)</p>
+            </div>
+            <div class="feature-box">
+              <h3>⭐ Trust Through Reviews</h3>
+              <p>Real residents leave real ratings. Build reputation over time, not just one post.</p>
+            </div>
+          </div>
+          <div>
+            <div class="feature-box">
+              <h3>📍 One URL Per Business</h3>
+              <p>Photos, menu + prices, map pin, phone & Facebook contact, share button</p>
+            </div>
+            <div class="feature-box">
+              <h3>🏪 Owner Submission</h3>
+              <p>Submit your spot in 2 minutes. Get listed. Get found. Stop reposting.</p>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          Show the homepage screenshot here if possible. "Every listing gets a permanent URL. One link that a business owner can share forever."
+        </aside>
+      </section>
+
+      <!-- SLIDE 6: MAP FEATURE -->
+      <section>
+        <p class="label">Standout Feature #1</p>
+        <h2>Barangay Polygon Map</h2>
+        <div class="two-col-narrow" style="margin-top: 24px;">
+          <div>
+            <p style="font-size: 0.9em; color: var(--brown); font-weight: 600;">
+              Click a barangay. See its real boundaries light up. Only food spots inside appear.
+            </p>
+            <div style="margin-top: 24px;">
+              <p style="font-size: 0.75em;"><strong>How it works:</strong></p>
+              <ul style="font-size: 0.75em; padding-left: 20px;">
+                <li>Real GeoJSON boundary polygons for all 16 Marikina barangays</li>
+                <li>Orange fill + outline animates on selection</li>
+                <li>Camera flies to fit the boundary</li>
+                <li>Pins outside disappear — clean, focused</li>
+                <li>Powered by MapLibre GL (free, no API key)</li>
+              </ul>
+            </div>
+            <div style="margin-top: 24px; padding: 16px; background: #FFF7ED; border-radius: 8px;">
+              <p style="font-size: 0.7em; color: var(--orange-dark); font-weight: 600; margin: 0;">
+                🎯 Demo moment: Click "Sta. Elena" → map zooms → Tea Kayo and Aling Beb's appear. Geographic intelligence in one click.
+              </p>
+            </div>
+          </div>
+          <div style="background: #F0F0F0; border-radius: 12px; height: 300px; display: flex; align-items: center; justify-content: center; color: var(--warm-gray); font-size: 0.7em;">
+            [Live Map Demo Here]
+          </div>
+        </div>
+        <aside class="notes">
+          THIS is your wow moment. Do the live demo here. Click a barangay, let the map animate. Judges will lean in.
+        </aside>
+      </section>
+
+      <!-- SLIDE 7: AI CONCIERGE -->
+      <section>
+        <p class="label">Standout Feature #2</p>
+        <h2>AI Food Concierge</h2>
+        <div class="two-col" style="margin-top: 24px;">
+          <div>
+            <p style="font-size: 0.85em; color: var(--brown); font-weight: 600;">
+              Ask in Taglish. Get real answers about real food spots.
+            </p>
+            <div style="margin-top: 20px;">
+              <p style="font-size: 0.75em;"><strong>What makes it different:</strong></p>
+              <ul style="font-size: 0.75em; padding-left: 20px;">
+                <li>Speaks Tagalog, English, or Taglish</li>
+                <li>Only references real listings on the platform</li>
+                <li>Includes prices, locations, and direct links</li>
+                <li>Never invents or hallucinates spots</li>
+                <li>Powered by Gemini 1.5 Flash</li>
+              </ul>
+            </div>
+            <p style="font-size: 0.7em; color: var(--warm-gray); margin-top: 20px;">
+              "This isn't ChatGPT with a food skin. G! only knows what's real."
+            </p>
+          </div>
+          <div class="chat-mockup">
+            <div class="chat-header">G! Food Concierge</div>
+            <div class="chat-msg user">Saan may masarap na milk tea?</div>
+            <div class="chat-msg bot">
+              Try <strong>Tea Kayo Milktea</strong> in Sta. Elena! Real tea leaves, not powder. Student-friendly prices — Brown Sugar Fresh Milk is ₱99. 
+              <br/><a href="#" style="color: var(--orange); font-weight: 600;">View listing →</a>
+            </div>
+            <div class="chat-msg user">Meron bang mura na food sa Industrial Valley?</div>
+            <div class="chat-msg bot">
+              <strong>Nanay Lita's Karinderya</strong> — rice + ulam starts at ₱60. Home-cooked sinigang, adobo, kare-kare. Get there before noon!
+              <br/><a href="#" style="color: var(--orange); font-weight: 600;">View listing →</a>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">
+          Demo the chatbot live here. Type a Taglish question. Let judges see the streaming response.
+        </aside>
+      </section>
+
+      <!-- SLIDE 8: TECH STACK -->
+      <section>
+        <p class="label">Under the Hood</p>
+        <h2>Built lean. Ships fast.</h2>
+        <p style="font-size: 0.8em; margin-bottom: 8px;">Solo developer. Under 2 weeks. All free-tier or open-source.</p>
+        <div class="tech-grid">
+          <div class="tech-item">
+            <div class="tech-label">Framework</div>
+            <div class="tech-name">Next.js 16</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">Language</div>
+            <div class="tech-name">TypeScript</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">Styling</div>
+            <div class="tech-name">Tailwind CSS v4</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">Maps</div>
+            <div class="tech-name">MapLibre GL</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">Database</div>
+            <div class="tech-name">Supabase</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">Auth</div>
+            <div class="tech-name">Clerk</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">ORM</div>
+            <div class="tech-name">Drizzle</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">AI</div>
+            <div class="tech-name">Gemini 1.5 Flash</div>
+          </div>
+          <div class="tech-item">
+            <div class="tech-label">Deploy</div>
+            <div class="tech-name">Vercel</div>
+          </div>
+        </div>
+        <p style="font-size: 0.75em; margin-top: 24px; color: var(--orange); font-weight: 600;">
+          💰 Total running cost at demo scale: $0
+        </p>
+        <aside class="notes">
+          Don't linger here. Judges care about the product, not the stack. 15 seconds max.
+        </aside>
+      </section>
+
+      <!-- SLIDE 9: THE FLYWHEEL -->
+      <section>
+        <p class="label">Sustainability</p>
+        <h2>It's a flywheel, not a hack.</h2>
+        <div class="flow" style="margin-top: 40px;">
+          <div class="flow-step">Business submits</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">Curator approves</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">Listed on platform</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">Residents discover</div>
+        </div>
+        <div class="flow" style="margin-top: 8px;">
+          <div class="flow-step">Leave reviews</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">Business grows</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">More businesses join</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">Platform gets richer</div>
+        </div>
+        <div class="two-col" style="margin-top: 40px;">
+          <div class="pain-card" style="text-align: center;">
+            <p style="font-size: 0.7em; color: var(--warm-gray); margin: 0;">Three roles, one loop</p>
+            <p style="font-size: 0.85em; font-weight: 700; color: var(--brown); margin: 12px 0 0;">
+              Consumer · Business Owner · Curator
+            </p>
+          </div>
+          <div class="pain-card" style="text-align: center;">
+            <p style="font-size: 0.7em; color: var(--warm-gray); margin: 0;">More listings = more discovery = more trust</p>
+            <p style="font-size: 0.85em; font-weight: 700; color: var(--brown); margin: 12px 0 0;">
+              Self-reinforcing growth
+            </p>
+          </div>
+        </div>
+        <aside class="notes">
+          "This isn't a one-time hack. It's a flywheel. The more businesses join, the more valuable it becomes for everyone."
+        </aside>
+      </section>
+
+      <!-- SLIDE 10: LIVE DEMO TRANSITION -->
+      <section class="slide-demo">
+        <div style="margin-top: 100px;">
+          <h2 style="font-size: 2.5em;">Let me show you.</h2>
+          <p style="font-size: 1em; margin-top: 24px; opacity: 0.8;">
+            Live demo →
+          </p>
+        </div>
+        <aside class="notes">
+          Pause. Switch to the live app. Demo flow: Homepage → Map → Select barangay → Chatbot → Listing page. Keep it under 90 seconds.
+        </aside>
+      </section>
+
+      <!-- SLIDE 11: IMPACT & VISION -->
+      <section>
+        <p class="label">Vision</p>
+        <h2>One city today.<br/><span class="accent">Any city tomorrow.</span></h2>
+        <div style="margin-top: 32px;">
+          <div style="display: flex; gap: 32px; align-items: baseline;">
+            <div>
+              <p class="stat-callout">7</p>
+              <p style="font-size: 0.7em;">listings today</p>
+            </div>
+            <div style="font-size: 1.5em; color: var(--orange);">→</div>
+            <div>
+              <p class="stat-callout">30+</p>
+              <p style="font-size: 0.7em;">real spots next month</p>
+            </div>
+            <div style="font-size: 1.5em; color: var(--orange);">→</div>
+            <div>
+              <p class="stat-callout">∞</p>
+              <p style="font-size: 0.7em;">any city can fork it</p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top: 40px; padding: 20px; background: #FFF7ED; border-radius: 12px;">
+          <p style="font-size: 0.85em; color: var(--brown); font-weight: 600; margin: 0;">
+            The architecture is city-agnostic. Swap the GeoJSON, seed new data, and launch:
+          </p>
+          <p style="font-size: 0.9em; color: var(--orange); font-weight: 700; margin: 8px 0 0;">
+            G! sa Antipolo · G! sa Pasig · G! sa Cainta
+          </p>
+        </div>
+        <aside class="notes">
+          "This started hyperlocal on purpose. Know your streets first. But the code works anywhere."
+        </aside>
+      </section>
+
+      <!-- SLIDE 12: EMOTIONAL CLOSE -->
+      <section class="slide-close">
+        <div style="max-width: 650px; margin-top: 60px;">
+          <h2 style="font-size: 1.6em; line-height: 1.4;">
+            Nanay Lita has been cooking sinigang in Industrial Valley for 15 years.
+          </h2>
+          <p style="font-size: 0.9em; color: var(--warm-gray); margin-top: 24px; line-height: 1.7;">
+            She has no website. No Instagram. No Grab listing.<br/>
+            She has a karinderya, a loyal neighborhood, and food that tastes like your lola made it.
+          </p>
+          <p style="font-size: 1.1em; color: var(--brown); font-weight: 700; margin-top: 32px;">
+            Now she has a <span class="accent">URL</span>.
+          </p>
+        </div>
+        <aside class="notes">
+          Slow down. Let this breathe. This is the feeling you leave them with — not tech specs, but a human story. "That's the problem we're solving. Visibility for the invisible."
+        </aside>
+      </section>
+
+      <!-- SLIDE 13: CLOSING -->
+      <section class="slide-cta">
+        <div style="margin-top: 80px;">
+          <h2 style="font-size: 2.8em;">G<span style="opacity: 0.9;">!</span> sa Marikina</h2>
+          <p style="font-size: 1em; margin-top: 16px; opacity: 0.9;">
+            Visibility for the invisible food economy.
+          </p>
+          <div style="margin-top: 48px; opacity: 0.85;">
+            <p style="font-size: 0.8em;">Next.js · Supabase · MapLibre · Gemini AI</p>
+            <p style="font-size: 0.9em; margin-top: 16px; font-weight: 700;">Questions?</p>
+          </div>
+        </div>
+        <aside class="notes">
+          Smile. Open for questions. You nailed it.
+        </aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      transitionSpeed: 'default',
+      controls: true,
+      progress: true,
+      center: false,
+      width: 1280,
+      height: 720,
+    });
+  </script>
+</body>
+</html>

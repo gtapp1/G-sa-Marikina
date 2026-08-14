@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" fill="none">
+  <!-- G! badge (matches nav bar) -->
+  <rect x="0" y="10" width="60" height="60" fill="#EB1700"/>
+  <text x="30" y="55" font-family="system-ui, sans-serif" font-size="38" font-weight="800" fill="white" text-anchor="middle" letter-spacing="-1">G!</text>
+
+  <!-- sa Marikina text -->
+  <text x="72" y="38" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#E8590C" letter-spacing="-0.5">sa</text>
+  <text x="72" y="58" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#1A0A00" letter-spacing="-1">Marikina</text>
+</svg>
