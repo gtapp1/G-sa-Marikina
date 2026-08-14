@@ -3,7 +3,9 @@ import { listings } from "@/data/listings";
 
 export const dynamic = "force-dynamic";
 
-const MODEL = "gemini-2.5-flash";
+// gemini-2.5-flash is no longer available to new API keys (Google deprecated
+// it for new users). Pinned to a current stable flash model instead.
+const MODEL = "gemini-3.6-flash";
 const MAX_MESSAGE_LENGTH = 500;
 
 // Serialize the catalog into compact context the model can ground answers in.

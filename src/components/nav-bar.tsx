@@ -111,6 +111,9 @@ export function NavBar() {
             <Link href="/for-businesses/new" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
               List a spot
             </Link>
+            <Link href="/admin" className="text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
+              Admin
+            </Link>
             <UserButton />
           </SignedIn>
         </div>

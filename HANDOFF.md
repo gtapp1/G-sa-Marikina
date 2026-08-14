@@ -1,9 +1,9 @@
-# G sa Marikina — Project Handoff
+# G sa Marikina | Project Handoff
 
-Last updated: 2026-08-12
+Last updated: 2026-08-15
 
-This document captures the full context of the project so anyone (or any future
-session) can pick up where we left off without re-deriving decisions.
+This document captures the full context of the project so any future session
+can pick up without re-deriving decisions.
 
 ---
 
@@ -12,254 +12,234 @@ session) can pick up where we left off without re-deriving decisions.
 **G sa Marikina** is a hyperlocal food discovery and review platform for
 Marikina City, Philippines. Small food businesses (home bakers, milk tea shops,
 karinderyas, street-food vendors) get a shareable page with photos, menu,
-location, and reviews. Consumers browse, search, map, and review local spots.
+location, and reviews. Consumers browse, search, explore the map, and review
+local spots. An admin dashboard lets the curator approve submissions and
+moderate reviews.
 
-**Why it exists:** small Marikina food sellers make good products but can't get
-discovered. Their marketing is scattered across Facebook groups, campus pages,
-and tarpaulin signs, with no single persistent home. This gives every spot one
-link.
-
-**Origin:** founder noticed the gap while scrolling their own feed. Validated
+**Origin:** the founder noticed the gap while scrolling their own feed. Validated
 with one real user (a friend who sells cookies across FB groups).
 
----
-
-## Planning artifacts (read these for the "why")
-
-- `docs/design-doc.md` — the approved product + technical design (problem,
-  demand evidence, phased approach, tech stack, data model, success criteria).
-  Produced via a YC-office-hours-style session.
-- `DESIGN.md` — the visual design system (source of truth for colors, type,
-  spacing, components, icons, anti-slop rules).
-- `docs/backend-setup.md` — step-by-step to wire up Clerk + Supabase and run.
-- This file (`HANDOFF.md`) — current state, gaps, and next steps.
-
-The project went through: `/office-hours` (validate idea) → `/plan-eng-review`
-(lock architecture) → `/plan-design-review` (lock UI/UX) → implementation across
-3 phases. UI/UX passes applied an anti-slop frontend skill.
+**Current status:** Demo-complete. Deployed on Vercel (currently paused). Repo
+is public on GitHub at `github.com/gtapp1/G-sa-Marikina`. Submitted to Devpost.
 
 ---
 
-## Tech stack (committed, do not re-litigate)
+## Planning artifacts
 
-| Layer | Choice | Notes |
-|-------|--------|-------|
-| Framework | Next.js 16 (App Router) | pinned `^16.3.0` |
-| Language | TypeScript 5 | pinned `^5` (do NOT let npm pull TS 7) |
-| Styling | Tailwind CSS v4 | tokens live in `:root` in `globals.css`, NOT in `@theme` (see gotcha below) |
-| UI components | shadcn/ui pattern (hand-rolled so far) | |
-| Icons | `@phosphor-icons/react` v2 | one family, no emoji in UI |
-| Maps | MapLibre GL JS v5 + `react-map-gl` v8 | OpenStreetMap tiles, no API key. Pinned maplibre `^5` (v6 breaks react-map-gl v8) |
-| Auth | Clerk v6 | pinned `^6` (v7 moved `SignedIn`/`SignedOut` exports and breaks our imports) |
-| Database | Supabase Postgres | |
+| File | Purpose |
+|------|---------|
+| `docs/design-doc.md` | Product + technical design (problem, demand evidence, phased approach, tech stack, data model, success criteria) |
+| `DESIGN.md` | Visual design system (Resy-inspired, Sora font, orange accents) |
+| `docs/backend-setup.md` | Step-by-step to wire Clerk + Supabase and run |
+| `docs/demo-script.md` | Step-by-step demo video recording guide (12 scenes, ~3 min) |
+| `docs/devpost-submission.md` | Devpost submission draft |
+| `TODO.md` | Prioritized backlog of remaining work |
+| `README.md` | Public-facing repo documentation |
+| This file (`HANDOFF.md`) | Current state, gaps, and context for future sessions |
+
+---
+
+## Tech stack
+
+| Layer | Choice | Pin reason |
+|-------|--------|-----------|
+| Framework | Next.js 16 (App Router) | |
+| Language | TypeScript 5 | Pin to `^5`; v7 untested |
+| Styling | Tailwind CSS v4 | Tokens in `:root`, NOT `@theme` |
+| Icons | Phosphor Icons v2 | SSR path: `@phosphor-icons/react/dist/ssr` |
+| Maps | MapLibre GL JS v5 + react-map-gl v8 | Pin maplibre `^5`; v6 breaks react-map-gl v8 |
+| Auth | Clerk v6 | Pin `^6`; v7 removes `SignedIn`/`SignedOut` exports |
+| Database | Supabase (PostgreSQL) | Transaction pooler port 6543 for Vercel |
 | ORM | Drizzle ORM | |
 | Validation | Zod | |
-| Email | Resend | planned, not yet wired |
-| Images | Cloudinary | demo URLs only so far |
-| Hosting | Vercel | not yet deployed |
-
-**Design direction:** "Warm Market" — warm orange (#F97316) + cream (#FFFBF5),
-Plus Jakarta Sans (headings) + Inter (body). Food photos are the visual hero.
+| Email | Resend | Configured, not yet triggered |
+| Images | Cloudinary | Demo URLs only |
+| Hosting | Vercel | Auto-deploy on push to main |
+| Font | Sora | Headings + body |
 
 ---
 
-## Current state — what's built and working
+## Current state
 
-Build is green: `npm run build` → 27 routes.
+Build is green. 31+ routes. Deployed on Vercel (paused for demo submission).
 
-### Phase 1 — Static catalog (DONE)
-- Homepage: photo hero, quick-explore chips (Near me / Collections), category
-  pills, Featured spots, Recently added
-- Listing detail page (`/[slug]`): hero photo, category, rating, photo gallery,
-  menu, "Our take", reviews section, location mini-map + directions, share
-- Map page (`/map`): full MapLibre map, category-icon pins, tap → popup → view
-- Categories (`/categories`, `/category/[id]`) with warm empty states
-- Search + filter (`/search`): by name/dish/barangay, category/area/rating filters
-- SEO: JSON-LD LocalBusiness per listing, OG tags, `sitemap.ts`, `robots.ts`
-- Responsive nav: desktop top bar (underline active), mobile floating dock +
-  slim mobile top bar with auth
-- Accessibility: focus-visible outline, prefers-reduced-motion, aria labels,
-  44px touch targets
-- Loading skeletons, 404 page
+### Phase 1 (Static catalog): DONE
+- Homepage with featured spot, category pills, enlarged listing grid
+- Listing detail (photo, menu, editorial review, reviews, location map, share)
+- Map with category pins, popups, sidebar
+- Categories (enlarged cards)
+- Search + filter (keyword, category, barangay, rating)
+- Near Me (geolocation sort with fallback)
+- Collections (Top Rated, Hidden Gems, Just Added)
+- SEO (JSON-LD, OG, sitemap, robots)
+- Legal pages (terms, privacy, guidelines)
+- Barangay dropdown in nav (all 16 official barangays)
 
-### Phase 2 — Backend / open platform (DONE, needs keys)
-- Clerk auth: `ClerkProvider`, `middleware.ts` (protects `/dashboard`,
-  `/for-businesses/new`), `/sign-in`, `/sign-up`
-- Supabase + Drizzle: schema in `src/db/schema.ts` (`users`, `businesses`,
-  `reviews` + enums), lazy client in `src/db/index.ts`
-- Clerk → Supabase user sync webhook: `/api/webhooks/clerk` (svix-verified).
-  Fallback upsert in `src/lib/current-user.ts` means auth works even before the
-  webhook is configured.
-- Reviews: `GET/POST /api/reviews` (auth-guarded, Zod-validated) + `Reviews`
-  client component on listing pages
-- Business submissions: `/for-businesses/new` (server action, stored as
-  `pending`)
-- DB scripts: `db:push`, `db:generate`, `db:migrate`, `db:studio`, `db:seed`
+### Phase 2 (Backend): DONE
+- Clerk auth (sign-in, sign-up, proxy middleware)
+- Supabase + Drizzle schema (users, businesses, reviews)
+- Clerk webhook user sync (svix-verified, fallback upsert)
+- Reviews API (GET + POST, auth-gated, Zod-validated)
+- Business submission form (stored as pending)
+- Owner dashboard (live review count, average rating from DB)
 
-### Phase 3 — Growth features (PARTIAL)
-- Owner dashboard (`/dashboard`): owner's spots + status + live review
-  count/avg from DB
-- Near Me (`/near-me`): geolocation sort by distance, graceful fallback to
-  top-rated
-- Collections (`/collections`): Top rated, Hidden gems, Just added (derived
-  from data)
+### Phase 3 (Growth): PARTIAL
+- Admin dashboard (stats, approve/reject submissions, moderate reviews)
+- Near Me geolocation
+- Curated collections
+- Share button (Web Share API + clipboard)
 
 ---
 
 ## What's NOT done (prioritized)
 
-**1. Catalog is not unified with the DB (highest priority).**
-Every browse surface (home, search, map, categories, near-me, collections, and
-`/[slug]`) reads from the **static** `src/data/listings.ts`. The DB only powers
-reviews, submissions, and the dashboard. Consequence: an approved owner
-submission does NOT appear anywhere on the site and has no detail page. The
-submit → approve → discover loop is currently a dead end. Fix: make the catalog
-read published businesses from the DB (or merge static + DB) and make `/[slug]`
-resolve DB businesses.
+**P1: Blocks the platform loop**
+- Catalog not unified with DB. Browse surfaces read `src/data/listings.ts` only. Approved submissions don't appear on the site. The submit/approve/discover loop is broken.
+- One-review-per-user constraint missing.
 
-**2. No curator approval tool.** `pending` businesses can only be published by
-hand via `db:studio`. Needs an admin page gated on the `admin` role (already in
-schema).
+**P2: Pre-launch**
+- Review aggregates on cards show seed values, not DB averages.
+- No Cloudinary upload widget (photos[] columns exist).
+- 7 sample listings with placeholder images. Need 20-30 real spots.
+- No rate limiting on POST /api/reviews.
+- No automated test suite.
 
-**3. Review aggregates are fake.** Cards/listing headers show the seed
-`rating`/`reviewCount`, not an average computed from DB reviews.
-
-**4. Photo uploads not built.** `photos[]` columns exist; no Cloudinary upload
-UI for reviews or submissions. Listings use Cloudinary demo URLs.
-
-**5. Trending feed** (Phase 3 design item) — needs Vercel Analytics page-view
-data + real traffic.
-
-**6. Smaller gaps:** "claim existing business" flow, Resend review
-notifications, one-review-per-user constraint, rate limiting on review POST,
-warm-toned custom map tiles, no automated tests.
-
-**7. Content (owner's task):** real food photos + 20-30 real Marikina listings.
-
-**Recommended next chunk:** #1 → #2 → #3 (makes the platform actually function
-end-to-end), then automated tests.
+**P3: Growth**
+- Trending feed (needs real traffic data).
+- Claim-your-business flow.
+- Email notifications via Resend.
+- Warm-toned custom map tiles.
 
 ---
 
-## Setup & run
+## Environment variables
 
-```
-cp .env.example .env.local        # then fill in real values
+All required for the platform to function:
+
+| Variable | Source |
+|----------|--------|
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk API Keys |
+| `CLERK_SECRET_KEY` | Clerk API Keys |
+| `CLERK_WEBHOOK_SECRET` | Clerk Webhooks endpoint Signing Secret |
+| `DATABASE_URL` | Supabase Project Settings, Database URI (pooler, port 6543) |
+| `NEXT_PUBLIC_SITE_URL` | Your domain or `http://localhost:3000` |
+
+Set in `.env.local` for local dev (gitignored). Set in Vercel Settings for production.
+
+The layout includes a build-safe Clerk key fallback so `next build` succeeds
+without env vars. Auth only works when the real key is present at runtime.
+
+---
+
+## Setup and run
+
+```bash
+git clone https://github.com/gtapp1/G-sa-Marikina.git
+cd G-sa-Marikina
 npm install
-npm run db:push                   # create tables (needs DATABASE_URL)
-npm run db:seed                   # load sample catalog
-npm run dev                       # http://localhost:3000
+cp .env.example .env.local   # fill in real values
+npm run db:push              # create tables
+npm run db:seed              # load 7 sample listings
+npm run dev                  # http://localhost:3000
 ```
 
-### Environment status
-- `.env.local` exists with the user's real Supabase + Clerk keys.
-- **Remaining:** `CLERK_WEBHOOK_SECRET` (set up the Clerk webhook endpoint —
-  see `docs/backend-setup.md` step 4). NOT required to test reviews/dashboard
-  locally (fallback upsert covers it).
-- The `.env.local` originally shipped a DUMMY Clerk publishable key so the build
-  could complete without secrets. Confirm real keys are in place.
+---
 
-### How to test
-See the manual test checklist in this repo's chat handoff / `docs/backend-setup.md`.
-Quick version: browse everything logged out, then sign up → post a review →
-submit a business → check `/dashboard`.
+## Admin access
+
+1. Sign in to the app (creates your user row via fallback upsert).
+2. Set your role to admin:
+   ```sql
+   UPDATE users SET role = 'admin' WHERE email = 'your-email@example.com';
+   ```
+   Or use `npm run db:studio` and edit the row directly.
+3. Visit `/admin`. The nav shows an "Admin" link when signed in.
 
 ---
 
-## Important gotchas (learned the hard way)
-
-1. **Tailwind v4 token naming.** Do NOT put custom tokens named `--spacing-lg`,
-   `--radius-md`, etc. inside `@theme` — they collide with Tailwind's built-in
-   `max-w-lg` / `rounded-md` scales and silently shrink them (this collapsed the
-   hero to one word per line). All custom tokens live in `:root` in
-   `globals.css` and are used via arbitrary values like
-   `bg-[var(--color-primary)]`.
-
-2. **Dependency versions are pinned for a reason.** Clerk `^6` (v7 breaks
-   imports), maplibre-gl `^5` (v6 breaks react-map-gl v8), TypeScript `^5`
-   (v7 is the new Go compiler, untested here). If you run `npm install <pkg>`
-   without a range, npm may pull a breaking major.
-
-3. **Never rewrite `package.json` wholesale.** A full rewrite once dropped the
-   `dependencies` block and a concurrent install pruned `node_modules`. Edit
-   surgically. If deps ever vanish, reinstall by name (npm re-resolves).
-
-4. **Don't run installs while `npm run dev` is running** — the dev server locks
-   `.node` binaries (next-swc, lightningcss, tailwind-oxide) and installs fail
-   with EPERM, corrupting `node_modules`.
-
-5. **Phosphor icon types.** `IconProps` / `Icon` type exports differ by import
-   path; we define minimal local prop types in `category-icon.tsx` instead of
-   importing Phosphor's types. Icon component names (Cookie, Coffee, etc.) work
-   fine; the SSR path is `@phosphor-icons/react/dist/ssr` (use in server
-   components), the client path is `@phosphor-icons/react`.
-
-6. **Build without a live DB is fine.** `src/db/index.ts` lazily connects, and
-   DB-reading routes are dynamic (`force-dynamic`) or client-fetched, so
-   `next build` succeeds without `DATABASE_URL`. The catalog stays SSG.
-
-7. **`middleware.ts` deprecation warning** in Next 16 (wants `proxy.ts`). It
-   still works; left as-is to avoid risking Clerk integration. Migrate later.
-
----
-
-## Key files map
+## Key files
 
 ```
 src/
   app/
-    layout.tsx                     ClerkProvider + fonts + NavBar
-    page.tsx                       homepage
-    globals.css                    design tokens (:root) + a11y
-    [slug]/page.tsx                listing detail (static + Reviews)
-    map/page.tsx                   map page
-    categories/, category/[id]/    category browse
-    search/page.tsx                search + filters
-    near-me/page.tsx               geolocation discovery
-    collections/page.tsx           curated collections
-    about/page.tsx
-    dashboard/page.tsx             owner dashboard (DB, dynamic)
-    for-businesses/new/            submit a spot (page + form + action)
-    sign-in/, sign-up/             Clerk pages
-    api/reviews/route.ts           reviews GET/POST
-    api/webhooks/clerk/route.ts    user sync webhook
+    layout.tsx                 ClerkProvider + Sora fonts + NavBar + Footer
+    page.tsx                   Homepage (hero, categories, all spots grid)
+    [slug]/page.tsx            Listing detail (static SSG)
+    map/page.tsx               Map view
+    search/page.tsx            Search + filters
+    categories/, category/[id] Category pages
+    collections/               Curated collections
+    near-me/                   Geolocation discovery
+    dashboard/page.tsx         Owner dashboard (auth, DB)
+    for-businesses/new/        Submit a spot (auth, server action)
+    admin/page.tsx             Admin dashboard (admin role, DB)
+    admin/actions.ts           Approve/reject/keep/remove server actions
+    sign-in/, sign-up/         Clerk auth pages
+    terms/, privacy/, guidelines/ Legal pages
+    api/reviews/route.ts       Reviews GET + POST
+    api/webhooks/clerk/route.ts Clerk user sync
     sitemap.ts, robots.ts
-  components/
-    nav-bar, listing-card, category-pills, category-icon,
-    photo-placeholder, photo-gallery, star-rating, share-button,
-    food-map, listing-location, reviews, search-filters, near-me,
-    listing-card-skeleton
-  data/listings.ts                 static catalog (7 sample spots, source of truth for browse)
-  db/schema.ts, db/index.ts        Drizzle schema + client
-  lib/current-user.ts              Clerk→DB user resolver (with fallback upsert)
-  lib/distance.ts                  haversine for Near Me
-  lib/collections.ts               derived collections
-  types/listing.ts                 Zod schema + Category enum + labels
-  middleware.ts                    Clerk route protection
-scripts/seed.ts                    static catalog → DB seed
-drizzle.config.ts
+  components/                  Shared UI
+  data/
+    listings.ts                Static catalog (7 spots)
+    barangays.ts               All 16 official Marikina barangays
+  db/
+    schema.ts                  Drizzle schema
+    index.ts                   Lazy DB client
+  lib/
+    current-user.ts            Clerk to DB user resolver
+    distance.ts                Haversine for Near Me
+    collections.ts             Derived collections
+  types/listing.ts             Zod schema + Category enum
+  middleware.ts                Clerk route protection (/dashboard, /for-businesses/new, /admin)
+scripts/seed.ts                DB seed script
+docs/
+  design-doc.md, backend-setup.md, demo-script.md, devpost-submission.md
 ```
 
 ---
 
-## Data model (Phase 2)
+## Data model
 
-- `users` (clerk_id unique join key, email, display_name, role: consumer/
-  business_owner/admin)
-- `businesses` (slug unique, category enum, barangay, lat/lng, photos[],
-  status: pending/published/rejected, is_claimed, owner_id → users)
-- `reviews` (business_id → businesses, business_slug denormalized, user_id →
-  users, rating 1-5, body, photos[], is_reported)
+```
+users       | clerk_id (unique), email, display_name, role (consumer/business_owner/admin)
+businesses  | slug (unique), name, category, barangay, lat/lng, photos[], status (pending/published/rejected), owner_id
+reviews     | business_id, business_slug, user_id, rating (1-5), body, photos[], is_reported
+```
 
-Auth model: Clerk owns identity; our DB owns app data, joined by `clerk_id`.
-Authorization is enforced in server code (route handlers + server actions check
-Clerk auth). `DATABASE_URL` is server-only (no `NEXT_PUBLIC_`), bypasses RLS, so
-keep it server-side.
+Auth model: Clerk owns identity. DB owns app data joined by `clerk_id`.
+`DATABASE_URL` is server-only. Never expose to client.
 
 ---
 
-## Deploy (when ready)
+## Gotchas (learned the hard way)
 
-Not yet deployed. Target: Vercel (auto-deploy on git push). Before shipping:
-set all env vars in Vercel, point the Clerk webhook at the production URL, and
-secure the domain (gsamarikina.com). See the design doc's Distribution Plan.
+1. **Tailwind v4 token naming:** custom tokens named `--spacing-lg` or `--radius-md` inside `@theme` silently override Tailwind's `max-w-lg` / `rounded-md` scales. Keep tokens in `:root` only.
+
+2. **Dependency versions pinned for a reason:** Clerk `^6` (v7 breaks imports), maplibre-gl `^5` (v6 breaks react-map-gl v8), TypeScript `^5` (v7 untested). Always specify a range when installing.
+
+3. **Never rewrite package.json wholesale.** A full rewrite once dropped the dependencies block. Edit surgically.
+
+4. **Don't install packages while dev server is running.** The server locks `.node` binaries and npm corrupts node_modules with EPERM errors.
+
+5. **Phosphor icon types:** `Icon`/`IconProps` types differ by import path. Use locally-defined prop types in `category-icon.tsx`. SSR: `@phosphor-icons/react/dist/ssr`. Client: `@phosphor-icons/react`.
+
+6. **Build without DB is fine.** `src/db/index.ts` lazily connects. Static pages compile without `DATABASE_URL`. DB routes are `force-dynamic` or client-fetched.
+
+7. **Clerk build-safe fallback:** `layout.tsx` passes an explicit `publishableKey` to `ClerkProvider` with a dummy fallback so prerendering `/_not-found` never crashes. Real key wins at runtime.
+
+8. **middleware.ts vs proxy.ts:** Next.js 16 deprecated `middleware.ts` in favor of `proxy.ts`. The rename fixes `MIDDLEWARE_INVOCATION_FAILED` on Vercel. Currently using `middleware.ts` (still works, shows a deprecation warning in build logs).
+
+9. **Design system divergence:** The codebase went through multiple design passes (original DESIGN.md warm-market tokens, then a Resy-inspired redesign). The current source of truth is `globals.css`. Some components reference both naming conventions. Missing tokens are bridged via CSS aliases in `globals.css`.
+
+---
+
+## Deploy
+
+Target: Vercel (auto-deploy on push to `main`).
+
+1. Set all 5 env vars in Vercel Settings (all environments).
+2. Set up the Clerk webhook (see `docs/backend-setup.md` step 4).
+3. Unpause the project when ready to go live.
+
+Current state: deployed but paused (demo mode).
