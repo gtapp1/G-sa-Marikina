@@ -35,13 +35,25 @@ export const metadata: Metadata = {
   },
 };
 
+/*
+  Build-safe Clerk key: real key from env when present (local + Vercel),
+  syntactically valid dummy when absent so prerendering never crashes the build.
+  Auth only works when the real key is set — this just prevents build failures.
+*/
+const CLERK_PUBLISHABLE_KEY =
+  process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY ||
+  "pk_test_ZHVtbXktYnVpbGQuY2xlcmsuYWNjb3VudHMuZGV2JA==";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ variables: { colorPrimary: "#E8590C" } }}>
+    <ClerkProvider
+      publishableKey={CLERK_PUBLISHABLE_KEY}
+      appearance={{ variables: { colorPrimary: "#E8590C" } }}
+    >
       <html lang="en" className={`${sora.variable} ${soraBody.variable}`}>
         <body>
           <NavBar />
