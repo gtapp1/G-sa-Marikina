@@ -14,10 +14,6 @@ A food directory for Marikina City, Philippines.
 
 <br/>
 
-<!-- Replace these placeholders with real screenshots.
-     Save images to docs/screenshots/ and update the src paths.
-     Recommended sizes: homepage 1440×900, map 1440×900, listing 1440×900 -->
-
 | Homepage | Map | Listing |
 |:---:|:---:|:---:|
 | ![Homepage](docs/screenshots/homepage.png) | ![Map](docs/screenshots/map.png) | ![Listing](docs/screenshots/listing.png) |
@@ -28,9 +24,95 @@ A food directory for Marikina City, Philippines.
 
 ## Problem
 
-Small food businesses in Marikina City cannot get found online. Home bakers, milk tea shops, karinderyas, and street vendors post the same photos to multiple Facebook groups every day. Each post gets buried within hours. There is no single place where a business owner can send a customer.
+Small food businesses in Marikina City cannot get found online.
 
-This platform gives each business one URL. The URL shows photos, a menu, a location map, contact buttons, and customer reviews. Consumers use the platform to browse, search by barangay, and explore the map.
+Home bakers, milk tea shops, karinderyas, and street vendors post the same product photos to multiple Facebook groups every day. Each post disappears within hours. There is no permanent page they can send to a customer.
+
+Consumers scroll through hundreds of unrelated posts in the same groups, trying to find food nearby. There is no way to search by location, category, or rating.
+
+Existing solutions do not fit:
+- **Facebook groups** bury posts in hours. Business owners have no persistent presence.
+- **Google Maps** has no menus, no founder reviews, and many small home-based businesses are not listed.
+- **Food delivery apps** (GrabFood, FoodPanda) charge 20-30% commission. Many home-based sellers do not do delivery at all.
+- **Marikeño (marikeno.com)** writes about Marikina food but does not let business owners self-list.
+
+No self-service food directory exists specifically for Marikina.
+
+---
+
+## Solution
+
+G sa Marikina gives every food business one URL. That URL is the product.
+
+Each business page shows:
+- Photos and a menu with prices
+- A location map with a "Get directions" link
+- Contact buttons (phone, Facebook)
+- Customer star ratings and written reviews
+- A founder editorial review ("Our take")
+
+Consumers get:
+- An interactive map with all listed spots
+- Search by keyword, category, barangay, or rating
+- "Near Me" sorting by distance
+- Curated collections (Top Rated, Hidden Gems, Just Added)
+
+Business owners get:
+- A submission form (no technical knowledge needed)
+- A dashboard showing submission status, review count, and average rating
+
+The platform operator (me) gets:
+- An admin dashboard with platform stats
+- A pending submissions queue with approve/reject buttons
+- A reported reviews section with keep/remove actions
+
+---
+
+## Scope
+
+This platform is built for:
+- **Geography:** Marikina City and nearby areas (Antipolo, Cainta, San Mateo, Montalban)
+- **Industry:** Food only. Cookies, milk tea, street food, home-cooked meals, restaurants, bakeries.
+- **Users:** Marikina residents looking for food, and small food business owners trying to get found.
+
+This platform does not:
+- Process payments or handle delivery (not competing with GrabFood)
+- Cover non-food businesses
+- Operate outside Metro Manila East
+
+The 16 official barangays of Marikina City are built into the platform as the primary geographic filter.
+
+---
+
+## Privacy and Security
+
+**Data collection:**
+- Account info (email, display name) provided at sign-up through Clerk
+- Reviews and business submissions the user writes
+- Anonymized page-view analytics (Vercel Analytics, no PII)
+- Location coordinates (Near Me feature) processed in the browser only, never stored server-side
+
+**What is not collected:**
+- No tracking cookies or third-party advertising
+- No browsing history stored
+- No data sold to third parties
+
+**Authentication and access control:**
+- Clerk manages all user identity. Passwords and credentials are stored by Clerk, not in the app database.
+- The app database stores only: clerk_id, email, display_name, role.
+- `DATABASE_URL` is server-only. Never exposed to the client (no `NEXT_PUBLIC_` prefix).
+- API routes verify auth before any write operation. Unsigned requests cannot post reviews or submit businesses.
+- The Clerk webhook verifies the svix signature before writing to the database. Invalid signatures are rejected.
+- Admin routes check `role = 'admin'` server-side. Non-admin users who navigate to `/admin` are redirected.
+
+**Philippine law compliance:**
+- Privacy Policy references the Philippine Data Privacy Act of 2012 (Republic Act 10173).
+- Users can request access, correction, or deletion of their personal data.
+- Terms of Service, Privacy Policy, and Community Guidelines are accessible at `/terms`, `/privacy`, and `/guidelines`.
+
+**Production notes:**
+- Development keys (pk_test/sk_test) are used in the demo. Production deployment should use Clerk production keys (pk_live/sk_live).
+- The Clerk publishable key fallback in `layout.tsx` is a build-safety measure only. It does not connect to a real Clerk app.
 
 ---
 
@@ -38,11 +120,11 @@ This platform gives each business one URL. The URL shows photos, a menu, a locat
 
 **Browse**
 
-- Homepage with a featured spot, category filters, and a full listing grid
+- Homepage with a featured spot, category filters, and a listing grid
 - Map view with category pins, popup previews, and a sidebar list
 - Search by keyword, category, barangay, or minimum star rating
-- Barangay dropdown: all 16 official Marikina barangays link to filtered results
-- Near Me: sorts results by distance; falls back to top-rated when location is denied
+- Barangay dropdown in the nav linking to all 16 official Marikina barangays
+- Near Me: sorts results by distance from the user's location
 - Collections: Top Rated, Hidden Gems, Just Added
 
 **Listing page**
@@ -50,20 +132,26 @@ This platform gives each business one URL. The URL shows photos, a menu, a locat
 - Hero photo and photo gallery
 - Prices menu and founder review
 - Star rating summary
-- Mini location map with Google Maps directions link
+- Mini location map with directions link
 - Phone and Facebook contact buttons
-- Share button (Web Share API on mobile; clipboard fallback on desktop)
+- Share button (Web Share API on mobile, clipboard on desktop)
 
 **Reviews**
 
-- Signed-in users leave a star rating (1–5) and a written review
+- Signed-in users leave a star rating (1-5) and a written review
 - Guests see a sign-in prompt inline
 
 **Business owners**
 
 - Submit a listing at `/for-businesses/new`
-- The platform stores submissions as `pending` until a curator approves them
-- Owner dashboard at `/dashboard` shows listing status, review count, and average rating
+- Submissions are stored as `pending` until the admin approves them
+- Owner dashboard at `/dashboard` shows status, review count, and average rating
+
+**Admin**
+
+- Stats overview: published businesses, pending submissions, total reviews, total users
+- Pending queue: approve or reject submissions
+- Reported reviews: keep or remove flagged content
 
 ---
 
@@ -71,17 +159,16 @@ This platform gives each business one URL. The URL shows photos, a menu, a locat
 
 | Layer | Technology | Notes |
 |-------|-----------|-------|
-| Framework | Next.js 16 (App Router) | SSG for the catalog; dynamic for auth and reviews |
+| Framework | Next.js 16 (App Router) | SSG for catalog, dynamic for auth/reviews |
 | Language | TypeScript 5 | |
-| Styling | Tailwind CSS v4 | Tokens go in `:root`, not `@theme` |
-| Icons | Phosphor Icons v2 | Use SSR import path in server components |
-| Maps | MapLibre GL JS v5 + react-map-gl v8 | OpenStreetMap tiles; no API key required |
-| Auth | Clerk v6 | Pin to v6; v7 removes `SignedIn` and `SignedOut` exports |
-| Database | Supabase (PostgreSQL) | Use the Transaction pooler on port 6543 for Vercel |
+| Styling | Tailwind CSS v4 | Tokens in `:root`, not `@theme` |
+| Icons | Phosphor Icons v2 | SSR-safe imports |
+| Maps | MapLibre GL JS v5 + react-map-gl v8 | OpenStreetMap tiles, no API key |
+| Auth | Clerk v6 | Pinned; v7 breaks imports |
+| Database | Supabase (PostgreSQL) | Transaction pooler port 6543 |
 | ORM | Drizzle ORM | |
 | Validation | Zod | |
 | Images | Cloudinary | |
-| Email | Resend | Keys configured; trigger not yet implemented |
 | Hosting | Vercel | |
 | Font | Sora | |
 
@@ -91,11 +178,11 @@ This platform gives each business one URL. The URL shows photos, a menu, a locat
 
 ### Requirements
 
-- Node.js 18 or later
-- A [Clerk](https://clerk.com) account (free tier)
-- A [Supabase](https://supabase.com) project (free tier)
+- Node.js 18+
+- [Clerk](https://clerk.com) account (free)
+- [Supabase](https://supabase.com) project (free)
 
-### Install dependencies
+### Install
 
 ```bash
 git clone https://github.com/gtapp1/G-sa-Marikina.git
@@ -103,48 +190,32 @@ cd G-sa-Marikina
 npm install
 ```
 
-### Set environment variables
+### Environment variables
 
 ```bash
 cp .env.example .env.local
 ```
 
-Open `.env.local` and set these values:
-
-| Variable | Where to find it |
-|----------|-----------------|
+| Variable | Source |
+|----------|--------|
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk → API Keys |
 | `CLERK_SECRET_KEY` | Clerk → API Keys |
-| `CLERK_WEBHOOK_SECRET` | Clerk → Webhooks → your endpoint → Signing Secret |
-| `DATABASE_URL` | Supabase → Project Settings → Database → URI (Transaction pooler, port **6543**) |
-| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` for local dev; your domain on Vercel |
+| `CLERK_WEBHOOK_SECRET` | Clerk → Webhooks → Signing Secret |
+| `DATABASE_URL` | Supabase → Database → URI (pooler, port 6543) |
+| `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` or your domain |
 
-### Create tables and load data
+### Database
 
 ```bash
-npm run db:push   # create tables in Supabase
+npm run db:push   # create tables
 npm run db:seed   # load 7 sample listings
 ```
 
-### Start the dev server
+### Run
 
 ```bash
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000).
-
----
-
-## Database Scripts
-
-| Command | Action |
-|---------|--------|
-| `npm run db:push` | Push schema to Supabase without a migration file |
-| `npm run db:generate` | Generate SQL migration files from schema changes |
-| `npm run db:migrate` | Apply pending migration files |
-| `npm run db:studio` | Open Drizzle Studio in the browser |
-| `npm run db:seed` | Load the sample catalog into the `businesses` table |
 
 ---
 
@@ -156,30 +227,30 @@ src/
 │   ├── page.tsx                      Homepage
 │   ├── [slug]/page.tsx               Listing detail
 │   ├── map/                          Map view
-│   ├── search/                       Search and filters
+│   ├── search/                       Search + filters
 │   ├── categories/, category/[id]/   Category pages
 │   ├── collections/                  Curated collections
 │   ├── near-me/                      Geolocation sort
-│   ├── dashboard/                    Owner dashboard (auth required)
-│   ├── for-businesses/new/           Submit a spot (auth required)
-│   ├── sign-in/, sign-up/            Clerk auth pages
+│   ├── dashboard/                    Owner dashboard (auth)
+│   ├── admin/                        Admin dashboard (admin role)
+│   ├── for-businesses/new/           Submit a spot (auth)
+│   ├── sign-in/, sign-up/            Clerk pages
 │   ├── terms/, privacy/, guidelines/ Legal pages
 │   └── api/
-│       ├── reviews/route.ts          GET and POST reviews
-│       └── webhooks/clerk/route.ts   Sync Clerk users to Supabase
+│       ├── reviews/route.ts          Reviews GET + POST
+│       └── webhooks/clerk/route.ts   User sync
 ├── components/
 ├── data/
-│   ├── listings.ts                   Static catalog (7 sample spots)
-│   └── barangays.ts                  All 16 official Marikina barangays
+│   ├── listings.ts                   Static catalog (7 spots)
+│   └── barangays.ts                  16 official Marikina barangays
 ├── db/
 │   ├── schema.ts                     Drizzle schema
-│   └── index.ts                      Lazy DB client
+│   └── index.ts                      DB client
 ├── lib/
-│   ├── current-user.ts               Resolve Clerk user to DB row
-│   ├── distance.ts                   Haversine distance
-│   └── collections.ts                Derive collections from catalog
-└── types/
-    └── listing.ts                    Zod schema and Category enum
+│   ├── current-user.ts               Clerk to DB resolver
+│   ├── distance.ts                   Haversine
+│   └── collections.ts                Derived collections
+└── types/listing.ts                  Zod schema + types
 ```
 
 ---
@@ -187,66 +258,57 @@ src/
 ## Data Model
 
 ```
-users       — clerk_id (join key), email, display_name, role
-businesses  — slug (unique), name, category, barangay, lat/lng, photos[], status
-reviews     — business_id, user_id, rating (1–5), body, is_reported
+users       | clerk_id (unique), email, display_name, role (consumer/business_owner/admin)
+businesses  | slug (unique), name, category, barangay, lat/lng, photos[], status (pending/published/rejected)
+reviews     | business_id, user_id, rating (1-5), body, is_reported
 ```
-
-`DATABASE_URL` is a server-only variable. Do not prefix it with `NEXT_PUBLIC_`.
-
----
-
-## Deploy to Vercel
-
-Add these variables in Vercel → Settings → Environment Variables for all environments. Then redeploy.
-
-```
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-CLERK_SECRET_KEY
-CLERK_WEBHOOK_SECRET
-DATABASE_URL
-NEXT_PUBLIC_SITE_URL
-```
-
-### Set up the Clerk webhook
-
-1. Go to Clerk → Webhooks → Add Endpoint.
-2. Set the URL to `https://your-domain.vercel.app/api/webhooks/clerk`.
-3. Subscribe to `user.created`, `user.updated`, and `user.deleted`.
-4. Copy the Signing Secret and set it as `CLERK_WEBHOOK_SECRET`.
-
-The webhook is not required for local development. The platform creates a DB user row on the first authenticated action.
 
 ---
 
 ## Known Gaps
 
-These items are not yet built. See [`TODO.md`](./TODO.md) for full detail.
+See [`TODO.md`](./TODO.md) for the full backlog.
 
-**Blocks the platform loop**
-- Browse surfaces read `src/data/listings.ts` only. Approved submissions do not appear on the site yet.
-- No admin page exists to approve or reject pending submissions.
-- The reviews table has no one-per-user constraint.
+- Catalog not unified with DB (approved submissions don't auto-appear in browse)
+- Review aggregates show seed values, not DB averages
+- No photo upload UI (columns exist)
+- 7 sample listings with placeholder images (need 20-30 real spots)
+- No automated tests
+- No rate limiting on review POST
 
-**Required before launch**
-- Review aggregates on listing cards still show seed values, not DB averages.
-- No Cloudinary upload widget (the `photos[]` columns exist).
-- 20–30 real Marikina listings with real photos are still needed.
-- No rate limiting on `POST /api/reviews`.
-- No automated tests.
+---
 
-**Growth**
-- Trending feed (requires real traffic data).
-- Claim-your-business flow for existing listings.
-- Email notifications via Resend.
+## Future Improvements
+
+**Short-term (next sprint)**
+- Unify the catalog with the database so approved submissions appear on all browse surfaces automatically
+- Compute real review averages on listing cards from DB data
+- Add Cloudinary photo upload widget for business submissions and review photos
+- Add one-review-per-user constraint (unique index on business_id + user_id)
+- Add rate limiting on `POST /api/reviews`
+
+**Medium-term (pre-public launch)**
+- Onboard 20-30 real Marikina food businesses with real photos
+- Set up automated tests (Vitest for units, Playwright for E2E)
+- "Claim your business" flow: existing curated listings can be claimed by the real owner via email verification
+- Email notifications via Resend when a business receives a new review
+- Warm-toned custom MapLibre tile style (replace default gray OSM tiles)
+
+**Long-term (post-launch, based on real usage)**
+- Trending feed: rank spots by (recent reviews x2 + page views x1) with daily decay
+- Barangay boundary polygons on the map (highlight a barangay's real geographic area on selection)
+- AI-powered search: natural language queries like "masarap na milk tea malapit sa Sta. Elena"
+- Expand to nearby cities (Antipolo, Cainta, San Mateo, Montalban) using the same architecture
+- Promoted listings as monetization (only after confirmed product-market fit)
+- Mobile app wrapper (PWA or React Native) if mobile usage justifies it
 
 ---
 
 ## Contributing
 
 1. Create a branch: `git checkout -b feature/your-feature`
-2. Make changes and verify the build passes: `npm run build`
-3. Open a pull request with a description of the change.
+2. Verify the build: `npm run build`
+3. Open a pull request.
 
 ---
 
