@@ -121,7 +121,7 @@ export async function POST(req: Request) {
       config: {
         systemInstruction: buildSystemPrompt(),
         temperature: 0.7,
-        maxOutputTokens: 300,
+        maxOutputTokens: 800,
       },
     });
 
