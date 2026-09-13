@@ -29,11 +29,17 @@ const soraBody = Sora({
 
 /*
   metadataBase makes relative OG/Twitter image URLs resolve to absolute ones,
-  which social scrapers require. Uses the deployed site URL when set, else a
-  localhost fallback for dev.
+  which social scrapers require. Resolution order:
+    1. NEXT_PUBLIC_SITE_URL   — set this to the real domain (best).
+    2. VERCEL_PROJECT_PRODUCTION_URL — auto-provided by Vercel, so previews and
+       prod never fall back to localhost even if step 1 is unset.
+    3. http://localhost:3000  — local dev only.
 */
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
 
 const SITE_TITLE = "G sa Marikina | Local Food Directory";
 const SITE_DESCRIPTION =

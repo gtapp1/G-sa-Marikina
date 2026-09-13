@@ -1,6 +1,6 @@
 # G sa Marikina | Project Handoff
 
-Last updated: 2026-09-13 · Release: v0.2.1 (pre-1.0, not yet stable)
+Last updated: 2026-09-13 · Release: v0.2.2 (pre-1.0, not yet stable)
 
 This document captures the full context of the project so any future session
 can pick up without re-deriving decisions.
@@ -21,10 +21,14 @@ with one real user (a friend who sells cookies across FB groups).
 
 **Current status:** Demo-complete, now an installable PWA. Deployed on Vercel
 (currently paused). Repo is public on GitHub at `github.com/gtapp1/G-sa-Marikina`.
-Submitted to Devpost. Latest tagged release **v0.2.1** (pre-1.0; feature-complete
+Submitted to Devpost. Latest tagged release **v0.2.2** (pre-1.0; feature-complete
 for the PWA layer but the platform is not yet stable — see "What's NOT done").
-v0.2.1 adds OpenGraph/Twitter share metadata and a branded share image
-(`public/og.png`, generated via `npm run og`).
+v0.2.1 added OpenGraph/Twitter share metadata and a branded share image
+(`public/og.png`, generated via `npm run og`). v0.2.2 uses that branded card as
+the share image on every page (including listings) and adds a
+`VERCEL_PROJECT_PRODUCTION_URL` fallback for `metadataBase` so absolute OG URLs
+never fall back to localhost. NOTE: set `NEXT_PUBLIC_SITE_URL` in Vercel to the
+real domain for correct share URLs.
 
 ---
 

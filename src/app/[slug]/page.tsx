@@ -26,8 +26,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!listing) return { title: "Not Found" };
 
   const title = `${listing.name} — G sa Marikina`;
-  // Share the spot's own photo when it has one; fall back to the branded card.
-  const ogImage = listing.photos[0] ?? "/og.png";
+  // Use the branded red "G!" card everywhere for a consistent share image.
+  const ogImage = "/og.png";
 
   return {
     title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description: listing.description,
       url: `/${listing.slug}`,
-      images: [{ url: ogImage, alt: listing.name }],
+      images: [{ url: ogImage, alt: "G sa Marikina" }],
     },
     twitter: {
       card: "summary_large_image",
