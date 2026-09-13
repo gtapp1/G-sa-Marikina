@@ -12,9 +12,9 @@ import {
 /*
   Shared PWA-install state.
 
-  One place owns the non-standard `beforeinstallprompt` event so the banner,
-  the nav bar, and the footer can all trigger the same native install flow,
-  read the same availability signal, and show the same manual fallback.
+  One place owns the non-standard `beforeinstallprompt` event so the banner
+  and the nav button can trigger the same native install flow, read the same
+  availability signal, and show the same manual fallback.
 
   Cross-browser reality:
     - Chrome / Edge / Android: fire `beforeinstallprompt`. We capture it and
@@ -22,11 +22,25 @@ import {
     - iOS Safari, Firefox, other browsers: no such event. Install is manual,
       and the steps differ per browser. We expose `platform` so callers can
       show the right instructions instead of a dead button.
+
+  "Already installed" detection has three layers, so the install triggers hide
+  correctly in every context:
+    1. display-mode: standalone   — true inside the installed app window.
+    2. appinstalled event         — fires the moment the user installs.
+    3. getInstalledRelatedApps()  — lets a *regular tab* learn the PWA is
+                                     already installed (Chromium only).
 */
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
+}
+
+/** Minimal shape of the Chromium-only getInstalledRelatedApps() result. */
+interface RelatedApp {
+  platform?: string;
+  url?: string;
+  id?: string;
 }
 
 /** Which manual-install instructions to show when there's no native prompt. */
@@ -81,6 +95,24 @@ export function PwaInstallProvider({
   useEffect(() => {
     setIsInstalled(detectStandalone());
     setPlatform(detectPlatform());
+
+    // Layer 3: in a regular tab, ask the browser whether this PWA is already
+    // installed. Chromium-only; other browsers just skip this.
+    const nav = navigator as Navigator & {
+      getInstalledRelatedApps?: () => Promise<RelatedApp[]>;
+    };
+    if (typeof nav.getInstalledRelatedApps === "function") {
+      nav
+        .getInstalledRelatedApps()
+        .then((apps) => {
+          if (apps.some((app) => app.platform === "webapp")) {
+            setIsInstalled(true);
+          }
+        })
+        .catch(() => {
+          /* not supported / not permitted — ignore, other layers still apply */
+        });
+    }
 
     const onBeforeInstallPrompt = (e: Event) => {
       e.preventDefault(); // suppress the default mini-infobar; we drive the UI

@@ -161,7 +161,7 @@ The 16 official barangays of Marikina City are built into the platform as the pr
 - Installable to the home screen with a branded icon (exact Sora ExtraBold "G!" on brand red)
 - One-tap install on Chromium browsers; per-browser install guidance on iOS Safari and others
 - Offline fallback page and cached app shell via a service worker
-- "Install app" triggers in the nav bar and footer, plus an auto-surfacing install banner
+- "Install app" trigger in the nav bar, plus an auto-surfacing install banner
 
 ---
 
@@ -178,7 +178,7 @@ the app can live on the home screen and open full-screen, no browser chrome.
 | Service worker | `public/sw.js` | Precaches the app shell, network-first navigations, offline fallback |
 | Registration | `src/components/pwa-register.tsx` | Registers the SW (production only by default) |
 | Install state | `src/components/pwa-install-provider.tsx` | Shared `beforeinstallprompt` handling + platform detection |
-| Install triggers | `src/components/install-button.tsx`, `install-prompt.tsx` | Nav/footer buttons and the auto banner |
+| Install triggers | `src/components/install-button.tsx`, `install-prompt.tsx` | Nav button and the auto banner |
 
 **Install behavior by browser:**
 

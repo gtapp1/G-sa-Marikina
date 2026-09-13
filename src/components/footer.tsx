@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { InstallButton } from "./install-button";
 
 const DISCOVER = [
   { href: "/search", label: "Nearby Spots" },
@@ -74,14 +73,6 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
-
-          {/* App — install trigger (hidden when not installable) */}
-          <div>
-            <h4 className="text-[11px] font-bold text-[var(--color-text-secondary)] tracking-[0.08em] uppercase mb-5">
-              App
-            </h4>
-            <InstallButton variant="footer" />
           </div>
         </div>
 

@@ -13,7 +13,7 @@ import { InstallInstructions } from "./install-button";
 
   When a native prompt is available (Chromium) it offers a one-tap Install.
   Otherwise it shows the correct manual steps for the user's browser, reusing
-  the shared InstallInstructions so wording stays consistent with the nav/footer.
+  the shared InstallInstructions so wording stays consistent with the nav button.
 */
 
 const DISMISS_KEY = "gsm-install-dismissed";

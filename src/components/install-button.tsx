@@ -5,10 +5,10 @@ import { DownloadSimple, ShareNetwork, DotsThreeVertical } from "@phosphor-icons
 import { usePwaInstall } from "./pwa-install-provider";
 
 /*
-  On-demand "Install app" trigger for the nav bar and footer.
+  On-demand "Install app" trigger for the nav bar (desktop links + mobile menu).
 
-  Always visible (so it's never mysteriously missing in prod), except when the
-  app is already installed or the browser has no install path at all.
+  Renders nothing when the app is already installed or the browser has no
+  install path at all, so it never shows a dead action.
 
   Behavior on click:
     - Native prompt available (Chromium): fire it — true one-tap install.
@@ -17,17 +17,12 @@ import { usePwaInstall } from "./pwa-install-provider";
 */
 
 interface InstallButtonProps {
-  variant?: "nav" | "footer";
   className?: string;
   /** Called after a native prompt resolves (e.g. to close a mobile menu). */
   onDone?: () => void;
 }
 
-export function InstallButton({
-  variant = "nav",
-  className = "",
-  onDone,
-}: InstallButtonProps) {
+export function InstallButton({ className = "", onDone }: InstallButtonProps) {
   const { canInstall, isInstalled, platform, promptInstall } = usePwaInstall();
   const [hintOpen, setHintOpen] = useState(false);
 
@@ -44,26 +39,19 @@ export function InstallButton({
     setHintOpen((v) => !v);
   }
 
-  const base =
-    variant === "footer"
-      ? "inline-flex items-center gap-2 text-[15px] tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
-      : "inline-flex items-center gap-1.5 font-semibold tracking-tight text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors";
-
   return (
-    <div className={variant === "footer" ? "" : "relative"}>
-      <button type="button" onClick={handleClick} className={`${base} ${className}`}>
+    <div className="relative">
+      <button
+        type="button"
+        onClick={handleClick}
+        className={`inline-flex items-center gap-1.5 font-semibold tracking-tight text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors ${className}`}
+      >
         <DownloadSimple size={16} weight="bold" />
         Install app
       </button>
 
       {hintOpen && (
-        <div
-          className={
-            variant === "footer"
-              ? "mt-2 max-w-[240px]"
-              : "absolute right-0 top-full mt-2 w-60 bg-white border border-[var(--color-border)] rounded-[var(--radius-md)] shadow-lg p-3 z-50"
-          }
-        >
+        <div className="absolute right-0 top-full mt-2 w-60 bg-white border border-[var(--color-border)] rounded-[var(--radius-md)] shadow-lg p-3 z-50">
           <InstallInstructions platform={platform} />
         </div>
       )}

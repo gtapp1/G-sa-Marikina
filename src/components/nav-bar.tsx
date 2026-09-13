@@ -104,7 +104,7 @@ export function NavBar() {
           >
             Guides
           </Link>
-          <InstallButton variant="nav" />
+          <InstallButton />
           <SignedOut>
             <Link
               href="/sign-in"
@@ -205,11 +205,7 @@ export function NavBar() {
 
             {/* Install app (hidden when not installable) */}
             <div className="py-3 border-b border-[var(--color-border)]">
-              <InstallButton
-                variant="nav"
-                className="text-[16px]"
-                onDone={closeMenu}
-              />
+              <InstallButton className="text-[16px]" onDone={closeMenu} />
             </div>
 
             <SignedOut>

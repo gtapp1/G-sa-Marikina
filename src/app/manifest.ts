@@ -23,6 +23,15 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["food", "lifestyle", "shopping"],
     lang: "en",
     dir: "ltr",
+    // Lets getInstalledRelatedApps() recognize THIS PWA as installed, so the
+    // "Install app" trigger can hide even in a regular browser tab (Chromium).
+    prefer_related_applications: false,
+    related_applications: [
+      {
+        platform: "webapp",
+        url: "/manifest.webmanifest",
+      },
+    ],
     icons: [
       // Raster PNGs first: Chromium uses these for install eligibility and
       // the installed app/home-screen icon.
