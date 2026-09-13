@@ -1,10 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Sora } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { NavBar } from "@/components/nav-bar";
 import { Footer } from "@/components/footer";
 import { ChatWidget } from "@/components/chat-widget";
+import { PwaRegister } from "@/components/pwa-register";
+import { InstallPrompt } from "@/components/install-prompt";
+import { PwaInstallProvider } from "@/components/pwa-install-provider";
 
 /*
   Sora — geometric, tightly-spaced bold sans. Closest free match to Beatrice
@@ -28,11 +31,25 @@ export const metadata: Metadata = {
   title: "G sa Marikina | Local Food Directory",
   description:
     "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
+  manifest: "/manifest.webmanifest",
+  applicationName: "G sa Marikina",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "G sa Marikina",
+  },
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
     apple: "/icon.svg",
   },
+};
+
+// Next.js 16: themeColor / viewport live in the viewport export, not metadata.
+export const viewport: Viewport = {
+  themeColor: "#E8590C",
+  width: "device-width",
+  initialScale: 1,
 };
 
 /*
@@ -56,12 +73,16 @@ export default function RootLayout({
     >
       <html lang="en" className={`${sora.variable} ${soraBody.variable}`}>
         <body>
-          <NavBar />
-          <div className="pt-16 md:pt-20">
-            {children}
-          </div>
-          <Footer />
-          <ChatWidget />
+          <PwaInstallProvider>
+            <NavBar />
+            <div className="pt-16 md:pt-20">
+              {children}
+            </div>
+            <Footer />
+            <ChatWidget />
+            <InstallPrompt />
+            <PwaRegister />
+          </PwaInstallProvider>
         </body>
       </html>
     </ClerkProvider>

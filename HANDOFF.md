@@ -10,7 +10,7 @@ can pick up without re-deriving decisions.
 ## What this is
 
 **G sa Marikina** is a hyperlocal food discovery and review platform for
-Marikina City, Philippines. Small food businesses (home bakers, milk tea shops,
+Marikina City, Philippines. Small food businesses e(home bakers, milk tea shops,
 karinderyas, street-food vendors) get a shareable page with photos, menu,
 location, and reviews. Consumers browse, search, explore the map, and review
 local spots. An admin dashboard lets the curator approve submissions and

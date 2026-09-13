@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Full-bleed brand red so any OS mask (circle, squircle, rounded square) stays on-brand -->
+  <rect width="512" height="512" fill="#EB1700"/>
+  <!-- Mark kept within the maskable safe zone (center 80%) -->
+  <text x="256" y="330" font-family="'Segoe UI', system-ui, sans-serif" font-size="210" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-6">G!</text>
+</svg>
