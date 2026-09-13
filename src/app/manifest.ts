@@ -10,7 +10,7 @@ import type { MetadataRoute } from "next";
 */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "G sa Marikina — Local Food Directory",
+    name: "G! sa Marikina",
     short_name: "G sa Marikina",
     description:
       "Discover Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",

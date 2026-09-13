@@ -2,7 +2,10 @@
   Generates the brand app-icon SVGs using the EXACT Sora glyph outlines for
   "G!" on brand red, matching the in-app badge (tracking-tight).
 
-  Weight is tunable via WEIGHT below (Sora axis range 100-800).
+  Weight is tunable via WEIGHT (Sora axis 100-800). Sora tops out at 800, so
+  to go heavier than that we stroke the glyph outline in the same white
+  (STROKE, in canvas units) — this thickens every stroke uniformly while
+  keeping the authentic Sora letterforms.
 
   Pipeline:
     scripts/.fonts/Sora.ttf (variable font)  ->  opentype.js
@@ -28,7 +31,8 @@ const RED = "#EB1700";
 const WHITE = "#FFFFFF";
 const FONT_SIZE = 300; // glyph cap size on the 512 canvas
 const TRACKING = -0.03; // "tracking-tight" ~= -0.03em, matches the app badge
-const WEIGHT = 700; // Sora wght axis (100-800). 800 = ExtraBold, 700 = Bold.
+const WEIGHT = 800; // Sora wght axis (100-800). Match the in-app badge's font-extrabold (800).
+const STROKE = 24; // extra outline thickness (canvas units) to push past Sora's 800 ceiling
 
 const font = opentype.loadSync(fontPath);
 
@@ -78,8 +82,8 @@ const gBang = buildPaths("G!");
 const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${CANVAS} ${CANVAS}" fill="none">
   <!-- Full-bleed brand red, matching the in-app G! badge (#EB1700). -->
   <rect width="${CANVAS}" height="${CANVAS}" fill="${RED}"/>
-  <!-- Exact Sora (wght ${WEIGHT}) outlines for "G!", generated from Sora.ttf. -->
-  <path d="${gBang}" fill="${WHITE}"/>
+  <!-- Exact Sora (wght ${WEIGHT}) outlines for "G!", stroked +${STROKE} to read heavier. -->
+  <path d="${gBang}" fill="${WHITE}" stroke="${WHITE}" stroke-width="${STROKE}" stroke-linejoin="miter" stroke-miterlimit="2" stroke-linecap="square"/>
 </svg>
 `;
 
@@ -89,7 +93,7 @@ const maskableSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${CANV
   <rect width="${CANVAS}" height="${CANVAS}" fill="${RED}"/>
   <!-- Same Sora (wght ${WEIGHT}) "G!", scaled to the maskable safe zone. -->
   <g transform="translate(${CANVAS / 2} ${CANVAS / 2}) scale(0.8) translate(${-CANVAS / 2} ${-CANVAS / 2})">
-    <path d="${gBang}" fill="${WHITE}"/>
+    <path d="${gBang}" fill="${WHITE}" stroke="${WHITE}" stroke-width="${STROKE}" stroke-linejoin="miter" stroke-miterlimit="2" stroke-linecap="square"/>
   </g>
 </svg>
 `;
