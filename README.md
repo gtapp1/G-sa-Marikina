@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="public/icon.svg" alt="G sa Marikina logo" width="96" height="96" />
+
 # G sa Marikina
 
 A food directory for Marikina City, Philippines.
@@ -10,6 +12,7 @@ A food directory for Marikina City, Philippines.
 [![Clerk](https://img.shields.io/badge/Auth-Clerk-6C47FF?style=flat-square&logo=clerk&logoColor=white)](https://clerk.com)
 [![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)](https://supabase.com)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com)
+[![PWA](https://img.shields.io/badge/PWA-installable-5A0FC8?style=flat-square&logo=pwa&logoColor=white)](#progressive-web-app-pwa)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F97316?style=flat-square)](./LICENSE)
 
 <br/>
@@ -153,6 +156,46 @@ The 16 official barangays of Marikina City are built into the platform as the pr
 - Pending queue: approve or reject submissions
 - Reported reviews: keep or remove flagged content
 
+**Progressive Web App**
+
+- Installable to the home screen with a branded icon (exact Sora ExtraBold "G!" on brand red)
+- One-tap install on Chromium browsers; per-browser install guidance on iOS Safari and others
+- Offline fallback page and cached app shell via a service worker
+- "Install app" triggers in the nav bar and footer, plus an auto-surfacing install banner
+
+---
+
+## Progressive Web App (PWA)
+
+G sa Marikina is installable. Mobile is the primary surface for finding food, so
+the app can live on the home screen and open full-screen, no browser chrome.
+
+**How it works (native, no PWA library):**
+
+| Piece | File | Role |
+|-------|------|------|
+| Manifest | `src/app/manifest.ts` | Name, icons, theme color, `display: standalone` — served at `/manifest.webmanifest` |
+| Service worker | `public/sw.js` | Precaches the app shell, network-first navigations, offline fallback |
+| Registration | `src/components/pwa-register.tsx` | Registers the SW (production only by default) |
+| Install state | `src/components/pwa-install-provider.tsx` | Shared `beforeinstallprompt` handling + platform detection |
+| Install triggers | `src/components/install-button.tsx`, `install-prompt.tsx` | Nav/footer buttons and the auto banner |
+
+**Install behavior by browser:**
+
+- **Chrome / Edge / Android Chrome:** the Install button fires the native install dialog directly (one tap).
+- **iOS Safari / Firefox:** browsers block programmatic install, so the button shows the correct manual steps (Share → Add to Home Screen, etc.).
+
+**Icons:** the brand icon uses the exact Sora ExtraBold (800) glyph outlines for
+"G!" on brand red (`#EB1700`), matching the in-app badge. Regenerate them with:
+
+```bash
+npm run icons   # rasterize PNGs (192/512 + maskable) from the brand SVGs
+```
+
+> The service worker registers in production builds. To test the full install
+> flow locally, set `NEXT_PUBLIC_PWA_DEV=true` in `.env.local`, or run
+> `npm run build && npm start`.
+
 ---
 
 ## Tech Stack
@@ -170,7 +213,8 @@ The 16 official barangays of Marikina City are built into the platform as the pr
 | Validation | Zod | |
 | Images | Cloudinary | |
 | Hosting | Vercel | |
-| Font | Sora | |
+| Font | Sora | Also used for the brand app icon (Sora 800 outlines) |
+| PWA | Native (manifest + service worker) | No library; App Router conventions |
 
 ---
 
@@ -203,6 +247,7 @@ cp .env.example .env.local
 | `CLERK_WEBHOOK_SECRET` | Clerk → Webhooks → Signing Secret |
 | `DATABASE_URL` | Supabase → Database → URI (pooler, port 6543) |
 | `NEXT_PUBLIC_SITE_URL` | `http://localhost:3000` or your domain |
+| `NEXT_PUBLIC_PWA_DEV` | Optional. Set to `true` to register the service worker in `npm run dev` |
 
 ### Database
 
@@ -300,7 +345,7 @@ See [`TODO.md`](./TODO.md) for the full backlog.
 - AI-powered search: natural language queries like "masarap na milk tea malapit sa Sta. Elena"
 - Expand to nearby cities (Antipolo, Cainta, San Mateo, Montalban) using the same architecture
 - Promoted listings as monetization (only after confirmed product-market fit)
-- Mobile app wrapper (PWA or React Native) if mobile usage justifies it
+- Richer offline support (cache browsed listings and map tiles) building on the existing PWA foundation
 
 ---
 
