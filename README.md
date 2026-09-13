@@ -13,6 +13,7 @@ A food directory for Marikina City, Philippines.
 [![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white)](https://supabase.com)
 [![Vercel](https://img.shields.io/badge/Deploy-Vercel-000000?style=flat-square&logo=vercel&logoColor=white)](https://vercel.com)
 [![PWA](https://img.shields.io/badge/PWA-installable-5A0FC8?style=flat-square&logo=pwa&logoColor=white)](#progressive-web-app-pwa)
+[![Release](https://img.shields.io/badge/release-v0.2.0-F97316?style=flat-square)](https://github.com/gtapp1/G-sa-Marikina/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-F97316?style=flat-square)](./LICENSE)
 
 <br/>

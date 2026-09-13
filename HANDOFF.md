@@ -1,6 +1,6 @@
 # G sa Marikina | Project Handoff
 
-Last updated: 2026-08-15
+Last updated: 2026-09-13 · Release: v0.2.0 (pre-1.0, not yet stable)
 
 This document captures the full context of the project so any future session
 can pick up without re-deriving decisions.
@@ -10,7 +10,7 @@ can pick up without re-deriving decisions.
 ## What this is
 
 **G sa Marikina** is a hyperlocal food discovery and review platform for
-Marikina City, Philippines. Small food businesses e(home bakers, milk tea shops,
+Marikina City, Philippines. Small food businesses (home bakers, milk tea shops,
 karinderyas, street-food vendors) get a shareable page with photos, menu,
 location, and reviews. Consumers browse, search, explore the map, and review
 local spots. An admin dashboard lets the curator approve submissions and
@@ -19,8 +19,10 @@ moderate reviews.
 **Origin:** the founder noticed the gap while scrolling their own feed. Validated
 with one real user (a friend who sells cookies across FB groups).
 
-**Current status:** Demo-complete. Deployed on Vercel (currently paused). Repo
-is public on GitHub at `github.com/gtapp1/G-sa-Marikina`. Submitted to Devpost.
+**Current status:** Demo-complete, now an installable PWA. Deployed on Vercel
+(currently paused). Repo is public on GitHub at `github.com/gtapp1/G-sa-Marikina`.
+Submitted to Devpost. Tagged release **v0.2.0** (pre-1.0; feature-complete for
+the PWA layer but the platform is not yet stable — see "What's NOT done").
 
 ---
 
@@ -55,7 +57,8 @@ is public on GitHub at `github.com/gtapp1/G-sa-Marikina`. Submitted to Devpost.
 | Email | Resend | Configured, not yet triggered |
 | Images | Cloudinary | Demo URLs only |
 | Hosting | Vercel | Auto-deploy on push to main |
-| Font | Sora | Headings + body |
+| Font | Sora | Headings + body; also the brand app icon (Sora 800 outlines) |
+| PWA | Native (manifest + service worker) | No library; App Router conventions |
 
 ---
 
@@ -88,6 +91,15 @@ Build is green. 31+ routes. Deployed on Vercel (paused for demo submission).
 - Near Me geolocation
 - Curated collections
 - Share button (Web Share API + clipboard)
+
+### PWA (v0.2.0): DONE
+- Native web app manifest (`src/app/manifest.ts`) — installable, standalone, brand theme
+- Service worker (`public/sw.js`) — precached app shell, network-first navigations, offline fallback (`public/offline.html`)
+- One-tap install on Chromium via `beforeinstallprompt`; per-browser manual guidance (iOS Safari, Android, desktop) otherwise
+- "Install app" trigger in the nav bar + auto-surfacing install banner
+- Install triggers hide once installed (3 detection layers: standalone display-mode, `appinstalled` event, `getInstalledRelatedApps()`)
+- Brand icons generated from exact Sora 800 glyph outlines, stroked for a heavier/blockier match to the in-app G! badge (`scripts/gen-brand-svg.mjs` → `scripts/gen-icons.mjs`)
+- SW registers in production; set `NEXT_PUBLIC_PWA_DEV=true` to test in dev
 
 ---
 
@@ -178,8 +190,13 @@ src/
     terms/, privacy/, guidelines/ Legal pages
     api/reviews/route.ts       Reviews GET + POST
     api/webhooks/clerk/route.ts Clerk user sync
+    manifest.ts                PWA web app manifest (/manifest.webmanifest)
     sitemap.ts, robots.ts
   components/                  Shared UI
+    pwa-install-provider.tsx   Shared install state (beforeinstallprompt + platform + installed detection)
+    install-button.tsx         Nav "Install app" trigger + per-browser instructions
+    install-prompt.tsx         Auto-surfacing install banner
+    pwa-register.tsx           Registers /sw.js (prod, or NEXT_PUBLIC_PWA_DEV=true)
   data/
     listings.ts                Static catalog (7 spots)
     barangays.ts               All 16 official Marikina barangays
@@ -193,6 +210,13 @@ src/
   types/listing.ts             Zod schema + Category enum
   middleware.ts                Clerk route protection (/dashboard, /for-businesses/new, /admin)
 scripts/seed.ts                DB seed script
+scripts/gen-brand-svg.mjs      Generates brand icon SVGs from Sora 800 glyph outlines
+scripts/gen-icons.mjs          Rasterizes SVGs to PNGs (npm run icons)
+public/
+  sw.js                        Service worker
+  offline.html                 Offline fallback page
+  icon.svg, icon-maskable.svg  Brand app icons (source)
+  icon-192/512/maskable-512.png Rasterized install icons
 docs/
   design-doc.md, backend-setup.md, demo-script.md, devpost-submission.md
 ```
