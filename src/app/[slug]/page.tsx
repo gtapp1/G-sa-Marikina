@@ -24,9 +24,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const listing = listings.find((l) => l.slug === slug);
   if (!listing) return { title: "Not Found" };
+
+  const title = `${listing.name} — G sa Marikina`;
+  // Share the spot's own photo when it has one; fall back to the branded card.
+  const ogImage = listing.photos[0] ?? "/og.png";
+
   return {
-    title: `${listing.name} — G sa Marikina`,
+    title,
     description: listing.description,
+    openGraph: {
+      type: "article",
+      title,
+      description: listing.description,
+      url: `/${listing.slug}`,
+      images: [{ url: ogImage, alt: listing.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description: listing.description,
+      images: [ogImage],
+    },
   };
 }
 

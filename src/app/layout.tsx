@@ -27,10 +27,22 @@ const soraBody = Sora({
   weight: ["400", "500", "600", "700"],
 });
 
+/*
+  metadataBase makes relative OG/Twitter image URLs resolve to absolute ones,
+  which social scrapers require. Uses the deployed site URL when set, else a
+  localhost fallback for dev.
+*/
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+const SITE_TITLE = "G sa Marikina | Local Food Directory";
+const SITE_DESCRIPTION =
+  "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.";
+
 export const metadata: Metadata = {
-  title: "G sa Marikina | Local Food Directory",
-  description:
-    "A directory of Marikina food spots: home bakers, milk tea shops, karinderyas, and street eats.",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
   manifest: "/manifest.webmanifest",
   applicationName: "G sa Marikina",
   appleWebApp: {
@@ -42,6 +54,28 @@ export const metadata: Metadata = {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
     apple: "/icon.svg",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "G sa Marikina",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    locale: "en_PH",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "G sa Marikina — local food directory for Marikina City",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/og.png"],
   },
 };
 
