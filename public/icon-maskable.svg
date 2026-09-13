@@ -1,6 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
   <!-- Full-bleed brand red so any OS mask (circle, squircle, rounded square) stays on-brand -->
   <rect width="512" height="512" fill="#EB1700"/>
-  <!-- Mark kept within the maskable safe zone (center 80%) -->
-  <text x="256" y="330" font-family="'Segoe UI', system-ui, sans-serif" font-size="210" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-6">G!</text>
+  <!--
+    Same vector "G!" as icon.svg, scaled to ~80% and centered so it stays
+    within the maskable safe zone and never gets clipped by an OS mask.
+  -->
+  <g fill="#FFFFFF" transform="translate(256 256) scale(0.8) translate(-256 -256)">
+    <path d="M212 118
+             C147 118 104 165 104 256
+             C104 347 147 394 214 394
+             C252 394 283 379 302 352
+             L302 244
+             L208 244
+             L208 296
+             L246 296
+             L246 330
+             C238 339 227 344 214 344
+             C178 344 160 314 160 256
+             C160 198 177 168 212 168
+             C233 168 248 178 258 197
+             L302 172
+             C285 137 255 118 212 118 Z"/>
+    <path d="M330 122 L388 122 L380 300 L338 300 Z"/>
+    <rect x="333" y="330" width="52" height="56" rx="8"/>
+  </g>
 </svg>
