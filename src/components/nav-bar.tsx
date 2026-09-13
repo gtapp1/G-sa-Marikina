@@ -4,22 +4,27 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { MagnifyingGlass } from "@phosphor-icons/react";
+import { MagnifyingGlass, List, X } from "@phosphor-icons/react";
 import { MARIKINA_BARANGAYS } from "@/data/barangays";
+import { InstallButton } from "./install-button";
 
 export function NavBar() {
   const pathname = usePathname();
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    setMenuOpen(false);
     if (query.trim()) {
       router.push(`/search?q=${encodeURIComponent(query.trim())}`);
     } else {
       router.push("/search");
     }
   };
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-[var(--color-border)]">
@@ -99,6 +104,7 @@ export function NavBar() {
           >
             Guides
           </Link>
+          <InstallButton />
           <SignedOut>
             <Link
               href="/sign-in"
@@ -118,18 +124,102 @@ export function NavBar() {
           </SignedIn>
         </div>
 
-        {/* Mobile login */}
-        <div className="md:hidden ml-auto">
-          <SignedOut>
-            <Link href="/sign-in" className="text-[13px] font-bold tracking-tight text-[var(--color-accent-red)]">
-              Log in
-            </Link>
-          </SignedOut>
+        {/* Mobile actions: auth + burger */}
+        <div className="md:hidden ml-auto flex items-center gap-3">
           <SignedIn>
             <UserButton />
           </SignedIn>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            className="flex items-center justify-center w-9 h-9 -mr-1 text-[var(--color-text-secondary)]"
+          >
+            {menuOpen ? <X size={24} weight="bold" /> : <List size={24} weight="bold" />}
+          </button>
         </div>
       </nav>
+
+      {/* Mobile slide-down menu */}
+      {menuOpen && (
+        <div
+          id="mobile-menu"
+          className="md:hidden border-t border-[var(--color-border)] bg-white shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto"
+        >
+          <nav className="flex flex-col px-5 py-4">
+            <Link
+              href="/map"
+              onClick={closeMenu}
+              className={`py-3 text-[16px] font-semibold tracking-tight border-b border-[var(--color-border)] ${
+                pathname.startsWith("/map") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)]"
+              }`}
+            >
+              Map
+            </Link>
+            <Link
+              href="/categories"
+              onClick={closeMenu}
+              className={`py-3 text-[16px] font-semibold tracking-tight border-b border-[var(--color-border)] ${
+                pathname.startsWith("/categories") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)]"
+              }`}
+            >
+              Browse
+            </Link>
+            <Link
+              href="/collections"
+              onClick={closeMenu}
+              className={`py-3 text-[16px] font-semibold tracking-tight border-b border-[var(--color-border)] ${
+                pathname.startsWith("/collections") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)]"
+              }`}
+            >
+              Guides
+            </Link>
+            <Link
+              href="/near-me"
+              onClick={closeMenu}
+              className={`py-3 text-[16px] font-semibold tracking-tight border-b border-[var(--color-border)] ${
+                pathname.startsWith("/near-me") ? "text-[var(--color-accent)]" : "text-[var(--color-text-secondary)]"
+              }`}
+            >
+              Near Me
+            </Link>
+
+            <SignedIn>
+              <Link
+                href="/for-businesses/new"
+                onClick={closeMenu}
+                className="py-3 text-[16px] font-semibold tracking-tight text-[var(--color-text-secondary)] border-b border-[var(--color-border)]"
+              >
+                List a spot
+              </Link>
+              <Link
+                href="/admin"
+                onClick={closeMenu}
+                className="py-3 text-[16px] font-semibold tracking-tight text-[var(--color-text-secondary)] border-b border-[var(--color-border)]"
+              >
+                Admin
+              </Link>
+            </SignedIn>
+
+            {/* Install app (hidden when not installable) */}
+            <div className="py-3 border-b border-[var(--color-border)]">
+              <InstallButton className="text-[16px]" onDone={closeMenu} />
+            </div>
+
+            <SignedOut>
+              <Link
+                href="/sign-in"
+                onClick={closeMenu}
+                className="mt-4 inline-flex items-center justify-center border border-[var(--color-accent-red)] px-4 py-3 text-[15px] font-bold tracking-tight text-[var(--color-accent-red)] hover:bg-[var(--color-accent-red)] hover:text-white transition-all duration-[var(--motion-fast)]"
+              >
+                Log in
+              </Link>
+            </SignedOut>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
